@@ -10,12 +10,14 @@ block scripts
   script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false')
   script.
     var map;
+    var myLatlng = new google.maps.LatLng(51.496214,-0.145226);
     function initialise() {
       var mapOptions = {
         zoom: 8,
-        center: new google.maps.LatLng(-34.397, 150.644),
+        center: new google.maps.LatLng(51.512268, -0.158272),
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      var marker = new google.maps.Marker({position: myLatlng, map: map, title: 'Buckingham Palace'});
     }
     google.maps.event.addDomListener(window, 'load', initialise);
