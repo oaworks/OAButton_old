@@ -52,6 +52,9 @@ mongoose.connect app.get 'connstr'
 app.get '/', (req, res) -> res.render 'index.jade',
   title: 'Open Access Button'
 
+app.get '/about', (req, res) -> res.render 'about.jade',
+  title: 'Open Access Button – About'
+
 app.get '/add', routes.Event.add
 
 ## Run the server
