@@ -8,6 +8,7 @@ Event    = require './routes/Event'
 
 APP_HOST_ADDRESS     = process.env.HOST || "0.0.0.0"
 APP_PORT_NUMBER      = process.env.PORT || 3000
+APP_DOMAIN           = process.env.HOST || APP_HOST_ADDRESS + ":" + APP_PORT_NUMBER
 APP_MONGODB_URL      = process.env.MONGOLAB_URI || 'mongodb://'+APP_HOST_ADDRESS+'/'+manifest.name
 
 app = module.exports = express()
@@ -52,7 +53,7 @@ mongoose.connect app.get 'connstr'
 app.get '/', (req, res) -> res.render 'index.jade',
   title: 'Open Access Button'
   vars:
-    domain: APP_HOST_ADDRESS + ":" + APP_PORT_NUMBER
+    domain: APP_DOMAIN
 
 app.get '/about', (req, res) -> res.render 'about.jade',
   title: 'Open Access Button – About'
