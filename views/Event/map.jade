@@ -9,13 +9,14 @@ block content
 block scripts
   script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false')
   script.
-    var locations = events.coords
+    var coords_str = !{event_coords};
+    var coords = $.parseJSON(coords_str);
     var map;
     var marker, i;
 
-    for (i = 0; i < locations.length; i++) {  
+    for (i = 0; i < coords.length; i++) {  
       marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations.coords.lat[i], locations.coords.lng[i]),
+        position: new google.maps.LatLng(coords[i].lat, coords[i].lng),
         map: map
       });
     }

@@ -17,9 +17,11 @@ module.exports =
       Event.find({}).count (err, count) ->
         if err then res.send 500
         else
+          coords = (event.coords for event in events)
           res.render 'Event/map',
             title: 'Map view'
             events: events
+            event_coords: JSON.stringify coords
             count: count
 
   # Display data as JSON
