@@ -17,7 +17,8 @@ block scripts
           console.log(coords[i].lng);
           marker = new google.maps.Marker({
             position: new google.maps.LatLng(coords[i].lat, coords[i].lng),
-            map: map
+            map: map,
+            icon: 'img/oalogo.png'
           });
         }
       }
