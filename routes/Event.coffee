@@ -20,8 +20,7 @@ module.exports =
           coords = (event.coords for event in events)
           res.render 'Event/map',
             title: 'Map view'
-            events: events
-            event_coords: JSON.stringify coords
+            events: JSON.stringify events
             count: count
 
   # Display data as JSON

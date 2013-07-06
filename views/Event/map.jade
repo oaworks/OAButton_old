@@ -7,18 +7,19 @@ block content
 block scripts
   script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false')
   script.
-    var coords = !{event_coords};
+    var events = !{events};
     var map;
     var marker, i;
 
     function addMarkers(map) {
-      for (i = 0; i < coords.length; i++) {
-        if(coords[i].length !== 0) {
-          console.log(coords[i].lng);
+      for (i = 0; i < events.length; i++) {
+        if(events[i].coords.length !== 0) {
+          console.log(events[i].coords.lng);
           marker = new google.maps.Marker({
-            position: new google.maps.LatLng(coords[i].lat, coords[i].lng),
+            position: new google.maps.LatLng(events[i].coords.lat, events[i].coords.lng),
             map: map,
-            icon: 'img/oalogo.png'
+            icon: 'img/oalogo.png',
+            dataContent: '<p>'+events[i].story+'</p><a href="http://dx.doi.org/'+events[i].doi+'">doi</a>|<a href="'+events[i].url+'">url</a>, Accessed '+events[i].accessed,
           });
         }
       }
