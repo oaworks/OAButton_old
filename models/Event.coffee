@@ -1,4 +1,7 @@
 mongoose = require 'mongoose'
+moment   = require 'moment'
+
+moment.lang 'en-gb'
 
 EventSchema = new mongoose.Schema
   name: String
@@ -7,7 +10,9 @@ EventSchema = new mongoose.Schema
   coords:
     lat: Number
     lng: Number
-  accessed: Date
+  accessed:
+    type: Date
+    get: (dt) -> moment dt
   doi: String
   url: String
   story: String
