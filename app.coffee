@@ -51,6 +51,8 @@ mongoose.connect app.get 'connstr'
 
 app.get '/', (req, res) -> res.render 'index.jade',
   title: 'Open Access Button'
+  locals:
+    domain: APP_HOST_ADDRESS + ':' + APP_PORT_NUMBER
 
 app.get '/about', (req, res) -> res.render 'about.jade',
   title: 'Open Access Button – About'
