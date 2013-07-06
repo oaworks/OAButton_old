@@ -9,8 +9,7 @@ block content
 block scripts
   script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false')
   script.
-    var coords_str = !{event_coords};
-    var coords = $.parseJSON(coords_str);
+    var coords = !{event_coords};
     var map;
     var marker, i;
 
