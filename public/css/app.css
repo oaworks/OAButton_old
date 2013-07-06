@@ -2,3 +2,8 @@
 body {
   padding-top: 60px;
 }
+
+#map-canvas {
+  height: 400px;
+  width: 600px;
+}
