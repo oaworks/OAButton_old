@@ -14,8 +14,8 @@ html(lang='en')
     link(rel='stylesheet', href='/css/app.css')
 
   body
-    block header
-      header
+    header
+      block header
         .navbar.navbar-inverse.navbar-fixed-top
           .navbar-inner
             .container
@@ -27,17 +27,17 @@ html(lang='en')
               .nav-collapse.collapse
                 ul.nav
                   li.active: a(href='/') Home
-                  li: a(href='/submit') Submit
+                  li: a(href='/add') Add
                   li: a(href='/about') About
                   li: a(href='/contact') Contact
 
     // Main body
-    .container
+    .continer
       block content
 
     footer
-      .container
-        block footer
+      block footer
+        .container
 
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js')
     script(src='/js/bootstrap.min.js')

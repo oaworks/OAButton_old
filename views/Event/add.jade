@@ -1,3 +1,4 @@
+extends ../layout
 block content
   h3= title
   form#event.form-horizontal(action='', method='post')
@@ -5,17 +6,17 @@ block content
 
     .control-group
       label.control-label(for='id_name') Your name
-      .control
+      .controls
         input#id_name.input-block-level(type='text', name='name', placeholder='John Doe')
 
     .control-group
         label.control-label(for='id_profession') Profession
-        .control
+        .controls
           input#id_profession.input-block-level(type='text', name='profession', placeholder='Student')
 
     .control-group
       label.control-label(for='id_location') Location
-      .control
+      .controls
         input#id_location.input-block-level(type='text', name='location', placeholder='London, United Kingdom')
 
     .control-group
