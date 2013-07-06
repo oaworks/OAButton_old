@@ -11,12 +11,6 @@ block scripts
   script.
     var map;
 
-    for (var i = 0; i < events.length; i++) {
-      var loc = events[i];
-      var myLatlng = new google.maps.LatLng(loc.coords);
-      new google.maps.Marker({position: myLatlng, map: map, title: loc.story});
-    }
-
     function initialise() {
       var mapOptions = {
         zoom: 8,
