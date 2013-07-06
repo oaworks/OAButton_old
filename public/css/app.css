@@ -3,7 +3,7 @@ body {
   padding-top: 60px;
 }
 
-#map-canvas {
+#map_canvas {
   height: 400px;
   width: 600px;
 }

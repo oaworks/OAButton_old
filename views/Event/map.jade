@@ -2,7 +2,7 @@ extends ../layout
 block content
   h1= count
     small  Scholarly pursuits denied
-  div#map-canvas
+  div#map_canvas
 
 block scripts
   script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false')
@@ -30,7 +30,7 @@ block scripts
         center: new google.maps.LatLng(51.512268, -0.158272),
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
-      map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
       addMarkers(map);
     }
     google.maps.event.addDomListener(window, 'load', initialise);
