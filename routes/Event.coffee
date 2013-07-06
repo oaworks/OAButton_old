@@ -4,22 +4,18 @@ module.exports =
 
   # Display a list of story
   index: (req, res) ->
-    Event
-      .find {}
-      .exec (err, events) ->
-        if err then res.send 500
-        else
-          res.render 'Event/list',
-            events: events
+    Event.find({}).exec (err, events) ->
+      if err then res.send 500
+      else
+        res.render 'Event/list',
+          events: events
 
   # Display data as JSON
   index_json: (req, res) ->
-    Event
-      .find {}
-      .exec (err, events) ->
-        if err then res.send 500
-        else
-          res.json events
+    Event.find({}).exec (err, events) ->
+      if err then res.send 500
+      else
+        res.json events
 
   # Display an entry page
   add: (req, res) ->
