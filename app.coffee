@@ -32,7 +32,7 @@ app.configure ->
 
 
 app.configure 'development', ->
-  app.set 'connstr', APP_MONGODB_URL+'-dev'
+  app.set 'connstr', APP_MONGODB_URL
   app.use express.errorHandler
     dumpExceptions: true
     showStack: true
@@ -49,6 +49,8 @@ db = mongoose.connection
 db.on 'error', (console.error.bind console, 'connection error: ')
 db.on 'open', -> console.log 'Connected to '+(app.get 'connstr')
 mongoose.connect app.get 'connstr'
+
+console.log 'Connecting to: '+(app.get 'connstr')
 
 app.get '/', (req, res) -> res.render 'index.jade',
   title: 'Open Access Button'
