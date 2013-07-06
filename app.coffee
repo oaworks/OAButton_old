@@ -3,7 +3,7 @@ flash    = require 'connect-flash'
 manifest = require './package.json'
 mongoose = require 'mongoose'
 path     = require 'path'
-routes   = require './routes'
+Event    = require './routes/Event'
 
 
 APP_HOST_ADDRESS     = process.env.HOST || "0.0.0.0"
@@ -57,7 +57,9 @@ app.get '/', (req, res) -> res.render 'index.jade',
 app.get '/about', (req, res) -> res.render 'about.jade',
   title: 'Open Access Button – About'
 
-app.get '/add', routes.Event.add
+app.get  '/add',     Event.add
+app.post '/add',     Event.add_post
+app.get  '/_iframe', Event.add_iframe
 
 ## Run the server
 
