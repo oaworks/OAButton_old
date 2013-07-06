@@ -11,11 +11,16 @@ block scripts
     var map;
     var marker, i;
 
-    for (i = 0; i < coords.length; i++) {  
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(coords[i].lat, coords[i].lng),
-        map: map
-      });
+    function addMarkers(map) {
+      for (i = 0; i < coords.length; i++) {
+        if(coords[i].length !== 0) {
+          console.log(coords[i].lng);
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(coords[i].lat, coords[i].lng),
+            map: map
+          });
+        }
+      }
     }
 
     function initialise() {
@@ -25,5 +30,6 @@ block scripts
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      addMarkers(map);
     }
     google.maps.event.addDomListener(window, 'load', initialise);
