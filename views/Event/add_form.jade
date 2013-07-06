@@ -25,7 +25,10 @@ form#event.form-horizontal(action='/add', method='post')
   .control-group
     label.control-label(for='id_url') URL
     .controls
-      input#id_url.input-block-level(type='text', name='url', placeholder='http://www.publisher.com/journal?id=XXXX')
+      if vars.url
+        input#id_url.input-block-level(readonly='readonly', type='text', name='url', value='#{vars.url}')
+      else
+        input#id_url.input-block-level(type='text', name='url', placeholder='http://www.publisher.com/journal?id=XXXX')
 
   .control-group
     label.control-label(for='id_story') Story

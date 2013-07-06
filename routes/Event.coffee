@@ -21,6 +21,8 @@ module.exports =
   add: (req, res) ->
     res.render 'Event/add_iframe',
       title: 'Add entry'
+      vars:
+        url: req.query.url
 
   # Handle POST
   add_post: (req, res) ->
