@@ -14,7 +14,7 @@ block scripts
         base_url = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=';
         var location;
         $.ajax({
-          url: base_url + $('input#id_location').value,
+          url: base_url + encodeURIComponent($('input#id_location').val()),
           async: false,
           success: function(response) {
             location = response.results[0].geometry.location;
