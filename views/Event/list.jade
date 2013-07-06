@@ -1,0 +1,9 @@
+extends ../layout
+block content
+  each event in events
+    article
+      h3= event.doi
+      p= event.story
+      small
+        em= event.accessed
+        span: #{event.profession} from #{event.location}

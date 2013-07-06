@@ -1,0 +1,44 @@
+doctype 5
+html(lang='en')
+
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(name='description', content='Open Access Button')
+    title= title
+    // link(rel='shortcut icon', type='image/x-icon', href='/img/favicon.ico')
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/bootstrap-responsive.min.css')
+    link(rel='stylesheet', href='/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/css/app.css')
+
+  body
+    block header
+      header
+        .navbar.navbar-inverse.navbar-fixed-top
+          .navbar-inner
+            .container
+              button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+              a.brand(href='http://oabutton.wordpress.com') Open Access Button
+              .nav-collapse.collapse
+                ul.nav
+                  li.active: a(href='/') Home
+                  li: a(href='/submit') Submit
+                  li: a(href='/about') About
+                  li: a(href='/contact') Contact
+
+    // Main body
+    .container
+      block content
+
+    footer
+      .container
+        block footer
+
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js')
+    script(src='/js/bootstrap.min.js')
+    block scripts
