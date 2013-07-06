@@ -1,4 +1,4 @@
-Evt = '../models/Event'
+Event = require '../models/Event'
 
 module.exports =
 
@@ -7,12 +7,19 @@ module.exports =
     Event
       .find {}
       .exec (err, events) ->
-        if err
-          res.send 500
-          console.log err
+        if err then res.send 500
         else
           res.render 'Event/list',
             events: events
+
+  # Display data as JSON
+  index_json: (req, res) ->
+    Event
+      .find {}
+      .exec (err, events) ->
+        if err then res.send 500
+        else
+          res.json events
 
   # Display an entry page
   add: (req, res) ->
@@ -21,8 +28,8 @@ module.exports =
 
   # Handle POST
   add_post: (req, res) ->
-    evt = new Evt req.body
-    evt.save (err, evt) ->
+    event = new Event req.body
+    event.save (err, event) ->
       if err then res.send 500, err.message
       else
         res.redirect '/'
