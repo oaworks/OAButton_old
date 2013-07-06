@@ -9,7 +9,7 @@ Event    = require './routes/Event'
 APP_HOST_ADDRESS     = process.env.HOST || "0.0.0.0"
 APP_PORT_NUMBER      = process.env.PORT || 3000
 APP_DOMAIN           = process.env.HOST || APP_HOST_ADDRESS + ":" + APP_PORT_NUMBER
-APP_MONGODB_URL      = process.env.MONGOLAB_URI || 'mongodb://'+APP_HOST_ADDRESS+'/'+manifest.name
+APP_MONGODB_URL      = process.env.MONGOLAB_URI || 'mongodb://'+APP_HOST_ADDRESS+'/'+manifest.name+'-dev'
 
 app = module.exports = express()
 
@@ -29,16 +29,14 @@ app.configure ->
   app.use flash()
   app.use app.router
   app.use express.static path.join(__dirname, "public")
-
+  app.set 'connstr', APP_MONGODB_URL
 
 app.configure 'development', ->
-  app.set 'connstr', APP_MONGODB_URL + '-dev'
   app.use express.errorHandler
     dumpExceptions: true
     showStack: true
 
 app.configure 'production', ->
-  app.set 'connstr', APP_MONGODB_URL
   app.use express.errorHandler
     dumpExceptions: false
     showStack: false
