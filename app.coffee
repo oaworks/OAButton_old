@@ -58,7 +58,11 @@ app.get '/', (req, res) -> res.render 'index.jade',
 app.get '/about', (req, res) -> res.render 'about.jade',
   title: 'Open Access Button – About'
 
-app.get  '/index.json', Event.index_json
+app.get '/download.json', Event.get_json
+app.get '/map',           Event.show_map
+app.get '/stories',       Event.show_stories
+
+# These are hidden from main page for bookmarklet
 app.get  '/add', Event.add
 app.post '/add', Event.add_post
 

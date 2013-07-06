@@ -3,15 +3,26 @@ Event = require '../models/Event'
 module.exports =
 
   # Display a list of story
-  index: (req, res) ->
+  show_stories: (req, res) ->
     Event.find({}).exec (err, events) ->
       if err then res.send 500
       else
         res.render 'Event/list',
+          title: 'Stories'
           events: events
 
+  show_map: (req, res) ->
+    Event.find({}).exec (err, events) ->
+      Event.find({}).count (err, count) ->
+        if err then res.send 500
+        else
+          res.render 'Event/map',
+            title: 'Map view'
+            events: events
+            count: count
+
   # Display data as JSON
-  index_json: (req, res) ->
+  get_json: (req, res) ->
     Event.find({}).exec (err, events) ->
       if err then res.send 500
       else
