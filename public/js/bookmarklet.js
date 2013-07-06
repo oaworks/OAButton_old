@@ -6,7 +6,7 @@ function applyCss(el, css) {
 
 body = document.getElementsByTagName("body")[0];
 iframe = document.createElement("iframe");
-iframe.src = "/add";
+iframe.src = "http://oabutton.herokuapp.com/add?page=" + window.location;
 iframe.allowTransparency = true;
 iframe.height = "100%";
 iframe.width = "350px";
