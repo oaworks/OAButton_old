@@ -1,12 +1,24 @@
+function removeScriptTag() {
+    var scriptNode = document.getElementsByTagName("body")[0].lastChild;
+    var src = scriptNode.getAttribute("src");
+    try {
+        scriptNode.parentNode.removeChild(scriptNode)
+    } catch (e) {}
+    return src
+}
+
 function applyCss(el, css) {
     var s = "";
     for (var p in css) s += p + ":" + css[p] + ";";
     el.style.cssText = el.style.cssText + s;
 }
 
+var source = removeScriptTag();
+var domain = source.match(/^https?:\/\/[^/]+/);
+
 body = document.getElementsByTagName("body")[0];
 iframe = document.createElement("iframe");
-iframe.src = "http://oabutton.herokuapp.com/add?page=" + window.location;
+iframe.src = domain + "/add?url=" + window.location;
 iframe.allowTransparency = true;
 iframe.height = "100%";
 iframe.width = "350px";

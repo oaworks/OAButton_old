@@ -6,7 +6,7 @@ path     = require 'path'
 Event    = require './routes/Event'
 
 
-APP_HOST_ADDRESS     = "oabutton.herokuapp.com"
+APP_HOST_ADDRESS     = process.env.HOST || "0.0.0.0"
 APP_PORT_NUMBER      = process.env.PORT || 3000
 APP_MONGODB_URL      = process.env.MONGOLAB_URI || 'mongodb://'+APP_HOST_ADDRESS+'/'+manifest.name
 
@@ -51,8 +51,8 @@ mongoose.connect app.get 'connstr'
 
 app.get '/', (req, res) -> res.render 'index.jade',
   title: 'Open Access Button'
-  locals:
-    domain: APP_HOST_ADDRESS
+  vars:
+    domain: APP_HOST_ADDRESS + ":" + APP_PORT_NUMBER
 
 app.get '/about', (req, res) -> res.render 'about.jade',
   title: 'Open Access Button – About'
