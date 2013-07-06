@@ -32,7 +32,7 @@ app.configure ->
 
 
 app.configure 'development', ->
-  app.set 'connstr', APP_MONGODB_URL
+  app.set 'connstr', APP_MONGODB_URL + '-dev'
   app.use express.errorHandler
     dumpExceptions: true
     showStack: true
