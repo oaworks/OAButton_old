@@ -1,4 +1,5 @@
 Event = require '../models/Event'
+http  = require 'http'
 
 module.exports =
 
@@ -38,7 +39,11 @@ module.exports =
   # Handle POST
   add_post: (req, res) ->
     event = new Event req.body
+    coords = req.body['coords'].split ','
+    event.coords.lat = coords[0]
+    event.coords.lng = coords[1]
     event.save (err, event) ->
       if err then res.send 500, err.message
       else
         res.redirect '/'
+

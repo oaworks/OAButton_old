@@ -4,7 +4,9 @@ EventSchema = new mongoose.Schema
   name: String
   profession: String
   location: String
-  coords: [ Number, Number ]
+  coords:
+    lat: Number
+    lng: Number
   accessed: Date
   doi: String
   url: String
