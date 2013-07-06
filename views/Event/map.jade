@@ -9,7 +9,16 @@ block content
 block scripts
   script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false')
   script.
+    var locations = events.coords
     var map;
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations.coords.lat[i], locations.coords.lng[i]),
+        map: map
+      });
+    }
 
     function initialise() {
       var mapOptions = {
