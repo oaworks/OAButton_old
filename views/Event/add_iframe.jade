@@ -3,3 +3,23 @@ block content
   include add_form
 block header
 block footer
+
+block scripts
+  script(type='text/javascript').
+    var accessed = document.getElementById('id_accessed');
+    if (accessed) accessed.value = new Date();
+
+    $(function() {
+      $('form').submit(function() {
+        base_url = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=';
+        var location;
+        $.ajax({
+          url: base_url + $('input#id_location').value,
+          async: false,
+          success: function(response) {
+            location = response.results[0].geometry.location;
+          }
+        });
+        $('<input>').attr({'type': 'hidden', 'name': 'coords', 'value': [location.lat, location.lng]}).appendTo('form');
+      });
+    });

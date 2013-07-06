@@ -10,7 +10,6 @@
   , "express": "3.2.0"
   , "jade": "0.29.0"
   , "mongoose": "3.6.7"
-  , "jquery": "1.8.3"
   }
 , "engines": {
     "node": "0.10.x"
