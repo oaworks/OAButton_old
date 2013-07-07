@@ -11,8 +11,7 @@ function getLocation() {
 
 function showPosition(position) {
   $('#id_coords').val([position.coords.latitude, position.coords.longitude]);
-  $('#id_location').attr('required', false);
-  $('#id_location').attr('placeholder', 'Detected from browser');
+  $('#id_location').attr({'placeholder': 'Detected from browser', 'required': false, 'readonly': 'readonly'});
 }
 
 getLocation();
