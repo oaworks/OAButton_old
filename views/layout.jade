@@ -6,7 +6,10 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
     meta(name='description', content='Open Access Button')
-    title= title
+    if typeof(title) !== 'undefined'
+      title= 'Open Access Button - ' + title
+    else
+      title= 'Open Access Button'
     link(rel='shortcut icon', type='image/x-icon', href='/img/favicon.ico')
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     link(rel='stylesheet', href='/css/bootstrap-responsive.min.css')

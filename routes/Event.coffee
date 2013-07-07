@@ -19,7 +19,7 @@ module.exports =
         else
           coords = (event.coords for event in events)
           res.render 'Event/map',
-            title: 'Map view'
+            title: 'Map'
             events: JSON.stringify events
             count: count
 
@@ -33,7 +33,6 @@ module.exports =
   # Display an entry page
   add: (req, res) ->
     res.render 'Event/add_iframe',
-      title: 'Add entry'
       vars:
         url: req.query.url
 

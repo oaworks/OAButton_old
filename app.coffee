@@ -51,12 +51,11 @@ mongoose.connect app.get 'connstr'
 console.log 'Connecting to: '+(app.get 'connstr')
 
 app.get '/', (req, res) -> res.render 'index.jade',
-  title: 'Open Access Button'
   vars:
     domain: APP_DOMAIN
 
 app.get '/about', (req, res) -> res.render 'about.jade',
-  title: 'Open Access Button – About'
+  title: 'About'
 
 app.get '/download.json', Event.get_json
 app.get '/map',           Event.show_map
