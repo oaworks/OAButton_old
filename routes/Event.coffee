@@ -14,14 +14,13 @@ module.exports =
 
   show_map: (req, res) ->
     Event.find({}).exec (err, events) ->
-      Event.find({}).count (err, count) ->
-        if err then res.send 500
-        else
-          coords = (event.coords for event in events)
-          res.render 'Event/map',
-            title: 'Map'
-            events: JSON.stringify events
-            count: count
+      if err then res.send 500
+      else
+        coords = (event.coords for event in events)
+        res.render 'Event/map',
+          title: 'Map'
+          events: JSON.stringify events
+          count: events.length
 
   # Display data as JSON
   get_json: (req, res) ->
