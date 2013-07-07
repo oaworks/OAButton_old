@@ -1,9 +1,13 @@
 /* App-specific CSS */
-body {
-  padding-top: 60px;
-}
-
 #map_canvas {
   height: 700px;
   width: 100%;
+}
+
+.thumbnail .caption {
+  padding: 0px;
+}
+
+.thumbnail .caption p {
+  font-size: 95%;
 }
