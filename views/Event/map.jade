@@ -18,7 +18,7 @@ block scripts
           marker = new google.maps.Marker({
             position: new google.maps.LatLng(events[i].coords.lat, events[i].coords.lng),
             map: map,
-            icon: 'img/oalogo.png',
+            icon: 'img/noalogo.png',
             dataContent: '<p>'+events[i].story+'</p><a href="http://dx.doi.org/'+events[i].doi+'">doi</a>|<a href="'+events[i].url+'">url</a>, Accessed '+events[i].accessed,
           });
         }
