@@ -1,5 +1,7 @@
 extends ../layout
 block content
+  img(src='/img/oalogo.png', style='position: absolute; top: 0; right: 0;')
+
   form#event.form-horizontal(action='/add', method='post')
     input#id_accessed(type='hidden', name='accessed')
 
@@ -40,7 +42,7 @@ block content
 
     .control-group
       .controls
-        button.btn.btn-primary Open Access please!
+        button.btn.btn-primary.pull-right Open Access, please!
 
 block header
 
