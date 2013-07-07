@@ -31,6 +31,7 @@ function applyCss(el, css) {
 }
 
 function ready() {
+    doi_pattern = /\b(10[.][0-9]{4,}(?:[.][0-9]+)*\/(?:(?!["&\'<>])[[:graph:]])+)\b/;
     body = $('body');
 
     source = removeScriptTag();
