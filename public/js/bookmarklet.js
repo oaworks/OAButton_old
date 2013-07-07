@@ -1,3 +1,20 @@
+function loadScript(url, callback)
+{
+    // adding the script tag to the head as suggested before
+   var head = document.getElementsByTagName('head')[0];
+   var script = document.createElement('script');
+   script.type = 'text/javascript';
+   script.src = url;
+
+   // then bind the event to the callback function 
+   // there are several events for cross browser compatibility
+   script.onreadystatechange = callback;
+   script.onload = callback;
+
+   // fire the loading
+   head.appendChild(script);
+}
+
 function removeScriptTag() {
     var scriptNode = document.getElementsByTagName("body")[0].lastChild;
     var src = scriptNode.getAttribute("src");
@@ -13,27 +30,28 @@ function applyCss(el, css) {
     el.style.cssText = el.style.cssText + s;
 }
 
-var source = removeScriptTag();
-var domain = source.match(/^https?:\/\/[^/]+/);
+function ready() {
+    body = $('body');
 
-body = document.getElementsByTagName("body")[0];
-iframe = document.createElement("iframe");
-iframe.src = domain + "/add?url=" + window.location;
-iframe.allowTransparency = true;
-iframe.height = "100%";
-iframe.width = "350px";
-applyCss(iframe, {
-    "position": "fixed",
-    "z-index": 2147483640,
-    "-moz-box-sizing": "border-box",
-    "box-sizing": "border-box",
-    "padding": "15px",
-    "border": "0",
-    "background": "white",
-    "height": "100%",
-    "width": "350px",
-    "top": "0",
-    "right": "0",
-    "overflow": "hidden"
-});
-body.appendChild(iframe);
+    source = removeScriptTag();
+    domain = source.match(/^https?:\/\/[^/]+/);
+    iframe_css = {
+        "position": "fixed",
+        "z-index": 2147483640,
+        "-moz-box-sizing": "border-box",
+        "box-sizing": "border-box",
+        "padding": "15px",
+        "border": "0",
+        "background": "white",
+        "height": "100%",
+        "width": "350px",
+        "top": "0",
+        "right": "0",
+        "overflow": "hidden"
+    };
+    iframe_src = domain + "/add?url=" + window.location;
+    iframe = $("<iframe>").attr({'allowTransparency': true, 'width': '350px', 'height': '100%', 'src': iframe_src}).css(iframe_css);
+    body.append(iframe);
+}
+
+loadScript("//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", ready);
