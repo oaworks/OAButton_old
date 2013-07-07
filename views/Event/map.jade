@@ -38,7 +38,15 @@ block scripts
             icon: 'img/noalogo.png'
           });
 
-          bubble_content = '<p>' + events[i].story + '</p><a href="http://dx.doi.org/' + events[i].doi + '">doi</a>|<a href="' + events[i].url + '">url</a>';
+          bubble_content = '<h4>' + events[i].name;
+          if (events[i].profession != '') {
+            bubble_content += ' <em>(' + events[i].profession + ')</em>';
+          }
+          bubble_content += '</h4>';
+          bubble_content += '<p>' + events[i].story + '</p>';
+          bubble_content += '<a href="http://dx.doi.org/' + events[i].doi + '">doi</a>';
+          bubble_content += '|';
+          bubble_content += '<a href="' + events[i].url + '">url</a>';
           
           makeInfoWindowEvent(map, infowindow, bubble_content, marker);
         }
