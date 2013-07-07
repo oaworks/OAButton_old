@@ -37,10 +37,11 @@ block scripts
             map: map,
             icon: 'img/noalogo.png'
           });
+
+          bubble_content = '<p>' + events[i].story + '</p><a href="http://dx.doi.org/' + events[i].doi + '">doi</a>|<a href="' + events[i].url + '">url</a>';
+          
+          makeInfoWindowEvent(map, infowindow, bubble_content, marker);
         }
-        bubble_content = '<p>' + events[i].story + '</p><a href="http://dx.doi.org/' + events[i].doi + '">doi</a>|<a href="' + events[i].url + '">url</a>, Accessed ' + events[i].accessed;
-        
-        makeInfoWindowEvent(map, infowindow, bubble_content, marker);
       }
     }
 
