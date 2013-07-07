@@ -11,6 +11,7 @@ module.exports =
         res.render 'Event/list',
           title: 'Stories'
           events: events
+          count: events.length
 
   show_map: (req, res) ->
     Event.find({}).exec (err, events) ->

@@ -1,9 +1,12 @@
 extends ../layout
 block content
+  h1= count
+    small  Scholarly pursuits denied
   each event in events
-    article
-      h3= event.doi
-      p= event.story
+    .well
+      h3 #{event.name}
+        em  (#{event.profession})
+      blockquote #{event.story}
       small
         em= event.accessed.calendar()
-        span: #{event.profession} from #{event.location}
+        span: #{event.profession}  from #{event.location}
