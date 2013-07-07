@@ -45,8 +45,10 @@ block scripts
           bubble_content += '</h4>';
           bubble_content += '<p>' + events[i].story + '</p>';
           bubble_content += '<a href="http://dx.doi.org/' + events[i].doi + '">doi</a>';
-          bubble_content += '|';
+          bubble_content += ' | ';
           bubble_content += '<a href="' + events[i].url + '">url</a>';
+          bubble_content += ' | ';
+          bubble_content += events[i].calendar_date || '';
           
           makeInfoWindowEvent(map, infowindow, bubble_content, marker);
         }

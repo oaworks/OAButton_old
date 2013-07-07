@@ -13,6 +13,7 @@ EventSchema = new mongoose.Schema
   accessed:
     type: Date
     get: (dt) -> moment dt
+  calendar_date: String
   doi: String
   url: String
   story: String

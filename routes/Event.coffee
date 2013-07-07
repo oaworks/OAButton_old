@@ -14,13 +14,15 @@ module.exports =
           count: events.length
 
   show_map: (req, res) ->
+    add_calendar_date = (event) ->
+      event.calendar_date = event.accessed.calendar()
+      return event
     Event.find({}).exec (err, events) ->
       if err then res.send 500
       else
-        coords = (event.coords for event in events)
         res.render 'Event/map',
           title: 'Map'
-          events: JSON.stringify events
+          events: JSON.stringify (add_calendar_date event for event in events)
           count: events.length
 
   # Display data as JSON
