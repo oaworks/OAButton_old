@@ -45,5 +45,4 @@ module.exports =
     event.save (err, event) ->
       if err then res.send 500, err.message
       else
-        res.redirect '/'
-
+        res.render 'Event/success'
