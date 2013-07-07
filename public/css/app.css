@@ -1,4 +1,8 @@
 /* App-specific CSS */
+body {
+    margin-top: 60px;
+}
+
 #map_canvas {
   height: 700px;
   width: 100%;
