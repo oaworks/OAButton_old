@@ -7,40 +7,41 @@ block content
 block scripts
   script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false')
   script.
-    var events = !{events};
     var map;
-    var marker, i;
+    var marker;
 
-    function addMarkers(map) {
-      for (i = 0; i < events.length; i++) {
-        if(events[i].coords.length !== 0) {
-          console.log(events[i].coords.lng);
-          marker = new google.maps.Marker({
-            position: new google.maps.LatLng(events[i].coords.lat, events[i].coords.lng),
-            map: map,
-            icon: 'img/noalogo.png',
-            dataContent: '<p>'+events[i].story+'</p><a href="http://dx.doi.org/'+events[i].doi+'">doi</a>|<a href="'+events[i].url+'">url</a>, Accessed '+events[i].accessed,
-          });
-        }
-      }
-    }
-
-    function initialise() {
-      var mapOptions = {
-        zoom: 2,
-        center: new google.maps.LatLng(51.512268, -0.158272),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-      map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-      addMarkers(map);
-      
-      var popup = new google.maps.InfoWindow({
-        content:'<p id="hook">Hello World!</p>'
-      });
-      
+    function makeInfoWindowEvent(map, infowindow, contentString, marker) {
       google.maps.event.addListener(marker, 'click', function() {
-        popup.open(map,marker);
+        infowindow.setContent(contentString);
+        infowindow.open(map, marker);
       });
     }
     
+    function initialise() {
+      var events = !{events};
+      var mapOptions = {
+        zoom: 2,
+        center: new google.maps.LatLng(0, 0),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+      addMarkers(map, events);
+    }
+    
+    function addMarkers(map, events) {
+      var infowindow = new google.maps.InfoWindow();
+      for (var i = 0; i < events.length; i++) {
+        if(events[i].coords.length !== 0) {
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(events[i].coords.lat, events[i].coords.lng),
+            map: map,
+            icon: 'img/noalogo.png'
+          });
+        }
+        bubble_content = '<p>' + events[i].story + '</p><a href="http://dx.doi.org/' + events[i].doi + '">doi</a>|<a href="' + events[i].url + '">url</a>, Accessed ' + events[i].accessed;
+        
+        makeInfoWindowEvent(map, infowindow, bubble_content, marker);
+      }
+    }
+
     google.maps.event.addDomListener(window, 'load', initialise);
