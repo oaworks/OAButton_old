@@ -42,7 +42,7 @@ function ready() {
         "-moz-box-sizing": "border-box",
         "box-sizing": "border-box",
         "padding": "15px",
-        "border": "0",
+        "border-left": "2px #555 dashed",
         "background": "white",
         "height": "100%",
         "width": "350px",
