@@ -1,58 +1,72 @@
-function loadScript(url, callback)
-{
-    // adding the script tag to the head as suggested before
-   var head = document.getElementsByTagName('head')[0];
-   var script = document.createElement('script');
-   script.type = 'text/javascript';
-   script.src = url;
+(function() {
+  var detectDOI = function() {
+    var nodes, node, childNode, matches, i, j;
 
-   // then bind the event to the callback function 
-   // there are several events for cross browser compatibility
-   script.onreadystatechange = callback;
-   script.onload = callback;
+    // match DOI: test on http://t.co/eIJciunBRJ
+    var re = /10\.\d{4,}(?:\.\d+)*\/\S+/;
 
-   // fire the loading
-   head.appendChild(script);
-}
+    // look for meta[name=citation_doi][content]
+    nodes = document.getElementsByTagName("meta");
+    for (i = 0; i < nodes.length; i++) {
+      node = nodes[i];
 
-function removeScriptTag() {
-    var scriptNode = document.getElementsByTagName("body")[0].lastChild;
-    var src = scriptNode.getAttribute("src");
-    try {
-        scriptNode.parentNode.removeChild(scriptNode)
-    } catch (e) {}
-    return src
-}
+      if (node.getAttribute("name") == "citation_doi") {
+        return node.getAttribute("content").replace(/^doi:/, "");
+      }
+    }
 
-function applyCss(el, css) {
-    var s = "";
-    for (var p in css) s += p + ":" + css[p] + ";";
-    el.style.cssText = el.style.cssText + s;
-}
+    // look in all text nodes for a DOI
+    nodes = document.getElementsByTagName("*");
+    for (i = 0; i < nodes.length; i++) {
+      node = nodes[i];
 
-function ready() {
-    doi_pattern = /\b(10[.][0-9]{4,}(?:[.][0-9]+)*\/(?:(?!["&\'<>])[[:graph:]])+)\b/;
-    body = $('body');
+      if (!node.hasChildNodes()) {
+        continue;
+      }
 
-    source = removeScriptTag();
-    domain = source.match(/^https?:\/\/[^/]+/);
-    iframe_css = {
-        "position": "fixed",
-        "z-index": 2147483640,
-        "-moz-box-sizing": "border-box",
-        "box-sizing": "border-box",
-        "padding": "15px",
-        "border-left": "2px #555 dashed",
-        "background": "white",
-        "height": "100%",
-        "width": "350px",
-        "top": "0",
-        "right": "0",
-        "overflow": "hidden"
-    };
-    iframe_src = domain + "/add?url=" + window.location;
-    iframe = $("<iframe>").attr({'allowTransparency': true, 'width': '350px', 'height': '100%', 'src': iframe_src}).css(iframe_css);
-    body.append(iframe);
-}
+      for (j = 0; j < node.childNodes.length; j++) {
+        childNode = node.childNodes[j];
 
-loadScript("//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", ready);
+        // only text nodes
+        if (childNode.nodeType !== 3) {
+          continue;
+        }
+
+        if (matches = re.exec(childNode.nodeValue)) {
+          return matches[0];
+        }
+      }
+    }
+
+    return null;
+  };
+
+  // get the base URL
+  var loader = document.body.lastChild;
+  var base = loader.getAttribute("src").match(/^https?:\/\/[^/]+/)[0];
+  loader.parentNode.removeChild(loader);
+
+  // build the iframe URL
+  var url = base + "/add?url=" + encodeURIComponent(window.location) + "&doi=" + encodeURIComponent(detectDOI())
+
+  // add the iframe
+  var iframe = document.createElement("iframe");
+  iframe.setAttribute("allowTransparency", "true");
+  iframe.setAttribute("src", url);
+
+  iframe.style.position = "fixed";
+  iframe.style.zIndex = "2147483640";
+  iframe.style.boxSizing = "border-box";
+  iframe.style.MozBoxSizing = "border-box";
+  iframe.style.padding = "15px";
+  iframe.style.borderLeft = "2px #555 dashed";
+  iframe.style.background = "white";
+  iframe.style.height = "100%";
+  iframe.style.width = "350px";
+  iframe.style.top = "0";
+  iframe.style.right = "0";
+  iframe.style.overflow = "hidden";
+
+  document.body.appendChild(iframe);
+})();
+
