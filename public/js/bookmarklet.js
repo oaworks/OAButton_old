@@ -3,7 +3,7 @@
     var nodes, node, childNode, matches, i, j;
 
     // match DOI: test on http://t.co/eIJciunBRJ
-    var re = /10\.\d{4,}(?:\.\d+)*\/\S+/;
+    var doi_re = /10\.\d{4,}(?:\.\d+)*\/\S+/;
 
     // look for meta[name=citation_doi][content]
     nodes = document.getElementsByTagName("meta");
@@ -32,7 +32,7 @@
           continue;
         }
 
-        if (matches = re.exec(childNode.nodeValue)) {
+        if (matches = doi_re.exec(childNode.nodeValue)) {
           return matches[0];
         }
       }
