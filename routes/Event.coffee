@@ -37,6 +37,7 @@ module.exports =
     res.render 'Event/add_iframe',
       vars:
         url: req.query.url
+        doi: req.query.doi
 
   # Handle POST
   add_post: (req, res) ->

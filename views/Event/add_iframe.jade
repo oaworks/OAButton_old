@@ -32,7 +32,10 @@ block content
     .control-group
       label.control-label(for='id_doi') DOI
       .controls
-        input#id_doi.input-block-level(type='text', name='doi', placeholder='e.g. 10.1136/bmj.c7086')
+        if vars.doi
+          input#id_doi.input-block-level(readonly='readonly', type='text', name='doi', value='#{vars.doi}')
+        else
+          input#id_doi.input-block-level(type='text', name='doi', placeholder='e.g. 10.1136/bmj.c7086')
         p.help-text Document Object Identifier (DOI)
 
     .control-group

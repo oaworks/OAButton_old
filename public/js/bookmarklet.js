@@ -47,7 +47,11 @@
   loader.parentNode.removeChild(loader);
 
   // build the iframe URL
-  var url = base + "/add?url=" + encodeURIComponent(window.location) + "&doi=" + encodeURIComponent(detectDOI())
+  var url = base + "/add?url=" + encodeURIComponent(window.location);
+  var doi = detectDOI();
+  if(doi !== null) {
+    url += "&doi=" + encodeURIComponent(doi);
+  }
 
   // add the iframe
   var iframe = document.createElement("iframe");
