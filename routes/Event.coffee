@@ -1,5 +1,4 @@
 Event = require '../models/Event'
-http  = require 'http'
 
 module.exports =
 
@@ -11,18 +10,6 @@ module.exports =
         res.render 'stories',
           title: 'Stories'
           events: events
-          count: events.length
-
-  show_map: (req, res) ->
-    add_calendar_date = (event) ->
-      event.calendar_date = event.accessed.calendar()
-      return event
-    Event.find({}).exec (err, events) ->
-      if err then res.send 500
-      else
-        res.render 'map',
-          title: 'Map'
-          events: JSON.stringify (add_calendar_date event for event in events)
           count: events.length
 
   # Display data as JSON
