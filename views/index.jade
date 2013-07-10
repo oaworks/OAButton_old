@@ -133,9 +133,10 @@ block body
     function initialise() {
       var events = !{events};
       var mapOptions = {
-        zoom: 2,
-        center: new google.maps.LatLng(0, 0),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        "zoom": 2,
+        "center": new google.maps.LatLng(0, 0),
+        "scrollwheel": false,
+        "mapTypeId": google.maps.MapTypeId.ROADMAP
       };
       map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
       addMarkers(map, events);
