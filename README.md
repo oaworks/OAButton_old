@@ -6,3 +6,4 @@ A prototype version of the Open Access Button idea explained in [this blog](http
 
 Powered by [express.js](http://expressjs.com) and [MongoDB](http://www.mongodb.org).
 
+Licensed under the MIT license.
