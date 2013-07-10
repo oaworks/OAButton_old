@@ -3,7 +3,8 @@ flash    = require 'connect-flash'
 manifest = require './package.json'
 mongoose = require 'mongoose'
 path     = require 'path'
-Event    = require './routes/Event'
+Event    = require './models/Event'
+Event_route = require './routes/Event'
 
 
 APP_HOST_ADDRESS     = process.env.HOST || "0.0.0.0"
@@ -51,20 +52,24 @@ mongoose.connect app.get 'connstr'
 
 console.log 'Connecting to: '+(app.get 'connstr')
 
-app.get '/', (req, res) -> res.render 'index.jade',
-  vars:
-    domain: APP_DOMAIN
+app.get '/', (req, res) ->
+  add_calendar_date = (event) ->
+    event.calendar_date = event.accessed.calendar()
+    return event
+  Event.find({}).exec (err, events) ->
+    if err then res.send 500
+    else
+      res.render 'index.jade',
+        events: JSON.stringify (add_calendar_date event for event in events)
+        count: events.length
+        domain: APP_DOMAIN
 
-app.get '/about', (req, res) -> res.render 'about.jade',
-  title: 'About'
-
-app.get '/download.json', Event.get_json
-app.get '/map',           Event.show_map
-app.get '/stories',       Event.show_stories
+app.get '/download.json', Event_route.get_json
+app.get '/stories',       Event_route.show_stories
 
 # These are hidden from main page for bookmarklet
-app.get  '/add', Event.add
-app.post '/add', Event.add_post
+app.get  '/add', Event_route.add
+app.post '/add', Event_route.add_post
 
 ## Run the server
 
