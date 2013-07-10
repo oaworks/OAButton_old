@@ -64,7 +64,13 @@ app.get '/', (req, res) ->
         count: events.length
         domain: APP_DOMAIN
 
-app.get '/download.json', Event_route.get_json
+# Display data as JSON
+app.get '/api', (req, res) ->
+  Event.find({}).exec (err, events) ->
+    if err then res.send 500
+    else
+      res.json events
+
 app.get '/stories',       Event_route.show_stories
 
 # These are hidden from main page for bookmarklet

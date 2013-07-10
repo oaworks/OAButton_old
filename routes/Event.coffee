@@ -12,13 +12,6 @@ module.exports =
           events: events
           count: events.length
 
-  # Display data as JSON
-  get_json: (req, res) ->
-    Event.find({}).exec (err, events) ->
-      if err then res.send 500
-      else
-        res.json events
-
   # Display an entry page
   add: (req, res) ->
     res.render 'sidebar/index',
