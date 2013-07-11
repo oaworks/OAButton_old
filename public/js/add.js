@@ -1,6 +1,5 @@
 $(function() {
-  var accessed = document.getElementById('id_accessed');
-  if (accessed) accessed.value = new Date();
+  $('#id_accessed').val(new Date());
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -76,19 +75,31 @@ $(function() {
 
   rememberDetails();
 
-  $('form').submit(function() {
+  function geocode() {
+    return $.ajax({
+      url: 'http://maps.googleapis.com/maps/api/geocode/json',
+      data: {
+        sensor: 'false',
+        address: $('#id_location').val()
+      },
+      success: function(response) {
+        var location = response.results[0].geometry.location;
+        $('#id_coords').val([location.lat, location.lng]);
+      }
+    });
+  }
+
+  function onSubmit(event) {
+    var form = $(this);
+
     // Do geocoding only if needed
-    if ($('#id_coords').val() === "") {
-      base_url = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=';
-      var location;
-      $.ajax({
-        url: base_url + encodeURIComponent($('input#id_location').val()),
-        async: false,
-        success: function(response) {
-          location = response.results[0].geometry.location;
-        }
+    if (!$('#id_coords').val()) {
+      event.preventDefault();
+      geocode().then(function() {
+        form.submit();
       });
-      $('#id_coords').val([location.lat, location.lng]);
     }
-  });
+  }
+
+  $('form').on("submit", onSubmit);
 });
