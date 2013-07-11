@@ -39,7 +39,11 @@ block content
           input#id_doi.input-block-level(readonly='readonly', type='text', name='doi', value='#{vars.doi}')
         else
           input#id_doi.input-block-level(type='text', name='doi', placeholder='e.g. 10.1136/bmj.c7086')
-        p.help-text Document Object Identifier (DOI)
+
+    .control-group
+      label.control-label(for='id_description') Description
+      .controls
+        textarea#id_description.input-block-level(name='description', rows=6, placeholder='Title, Authors, Journal, etc')
 
     .control-group
       label.control-label(for='id_story') Why do you need access?
