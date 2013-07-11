@@ -16,6 +16,34 @@ $(function() {
 
   getLocation();
 
+  function pmc() {
+    var doi = $('#id_doi').val();
+
+    if (doi) {
+      $.ajax({
+          url: 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi',
+          data: {
+            db: "pmc",
+            retmax: 1,
+            term: doi + "[DOI]",
+            tool: "oabutton",
+          },
+          dataType: "xml",
+          success: function(response) {
+            if (response.getElementsByTagName('Count')[0].textContent == 0) {
+              return;
+            }
+
+            var pmcid = response.getElementsByTagName('Id')[0].textContent;
+            var url = "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC" + pmcid + "/";
+            $("#id_pmc").attr("href", url).show();
+          }
+      });
+    }
+  }
+
+  pmc();
+
   function parseCrossRef(entry) {
     var description = [],
         item = entry["pam:message"]["pam:article"];
