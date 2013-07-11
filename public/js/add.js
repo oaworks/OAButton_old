@@ -15,6 +15,53 @@ function showPosition(position) {
 
 getLocation();
 
+function parseCrossRef(entry) {
+  var description = [],
+      item = entry["pam:message"]["pam:article"];
+
+  if (item["dc:title"]) {
+    description.push(item["dc:title"]);
+  }
+
+  if (item["dc:creator"]) {
+    if (!$.isArray(item["dc:creator"])) {
+      item["dc:creator"] = [item["dc:creator"]];
+    }
+
+    description.push(item["dc:creator"].join(", "));
+  }
+
+  if (item["prism:publicationName"]) {
+    description.push(item["prism:publicationName"]);
+  }
+
+  if (item["prism:publicationDate"]) {
+    // TODO: zero-pad or reformat the date, using Moment.js?
+    description.push(item["prism:publicationDate"]);
+  }
+
+  return description.join("\n");
+}
+
+function lookup() {
+  var doi = $('#id_doi').val();
+
+  if (doi) {
+    $.ajax({
+        url: 'http://data.crossref.org/' + encodeURIComponent(doi),
+        dataType: "json",
+        success: function(response) {
+          if (response.feed.entry) {
+            var description = parseCrossRef(response.feed.entry);
+            $('#id_description').val(description);
+          }
+        }
+    });
+  }
+}
+
+lookup();
+
 function geocode() {
   return $.ajax({
     url: 'http://maps.googleapis.com/maps/api/geocode/json',
