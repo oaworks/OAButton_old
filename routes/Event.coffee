@@ -48,4 +48,9 @@ module.exports =
     event.save (err, event) ->
       if err then res.send 500, err.message
       else
-        res.render 'Event/success'
+        scholar_url = ''
+        if req.body['doi']
+          scholar_url = 'http://scholar.google.com/scholar?cluster=' + encodeURIComponent('http://dx.doi.org/' + req.body['doi'])
+        res.render 'Event/success',
+          scholar_url: scholar_url
+
