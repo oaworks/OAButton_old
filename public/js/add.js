@@ -16,16 +16,6 @@ function showPosition(position) {
 
 getLocation();
 
-function addScholarLink() {
-  var doi = $('#id_doi').val();
-
-  if (doi) {
-    var url = 'http://scholar.google.com/scholar?cluster=' + encodeURIComponent('http://dx.doi.org/' + doi);
-    $('#id_scholar').attr('href', url).show();
-  }
-}
-
-addScholarLink();
 
 $(function() {
   $('form').submit(function() {

@@ -1,8 +1,6 @@
 extends ../layout
 block content
   img(src='/img/oalogo.png', style='position: absolute; top: 0; right: 0;')
-  a#id_scholar(title='Find in Google Scholar', target='_new', style='position: absolute; top: 0; right: 64px; display: none;')
-    img(src='/img/scholar.png')
 
   form#event.form-horizontal(action='/add', method='post')
     input#id_accessed(type='hidden', name='accessed')

@@ -2,6 +2,10 @@ extends ../layout
 block content
   h2 Thanks!
   p Now to find an Open Access version…
+  if scholar_url != ''
+    a#id_scholar(title='Find in Google Scholar', target='_blank', href=scholar_url)
+      img(src='/img/scholar.png')
+      |Search Google Scholar
 
 block header
 
