@@ -24,6 +24,10 @@
         continue;
       }
 
+      if (node.nodeName == "SCRIPT") {
+        continue;
+      }
+
       for (j = 0; j < node.childNodes.length; j++) {
         childNode = node.childNodes[j];
 
