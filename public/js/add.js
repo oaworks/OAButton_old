@@ -1,81 +1,81 @@
-var accessed = document.getElementById('id_accessed');
-if (accessed) accessed.value = new Date();
+$(function() {
+  var accessed = document.getElementById('id_accessed');
+  if (accessed) accessed.value = new Date();
 
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    $('#id_location').attr('required', 'true');
-  }
-}
-
-function showPosition(position) {
-  $('#id_coords').val([position.coords.latitude, position.coords.longitude]);
-  $('#id_location').attr({'placeholder': 'Detected from browser', 'required': false, 'readonly': 'readonly'});
-}
-
-getLocation();
-
-// save details in localstorage
-function rememberDetails() {
-  // test for localstorage support (from Modernizr)
-  // fails if third-party data is not allowed (in an iframe)
-  try {
-      localStorage.setItem('test', 'test');
-      localStorage.removeItem('test');
-  } catch(e) {
-      return;
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      $('#id_location').attr('required', 'true');
+    }
   }
 
-  var rememberMeInput = $('#id_remember'),
-      rememberNodes = $('[data-remember]');
-
-  var stored = localStorage.getItem('id_remember');
-
-  // can't always store booleans in localstorage, so "false" (string) = "don't store"
-  var remember = stored === null || stored === true || stored.toString() === 'true';
-
-  if (remember) {
-    rememberMeInput.prop('checked', true);
+  function showPosition(position) {
+    $('#id_coords').val([position.coords.latitude, position.coords.longitude]);
+    $('#id_location').attr({'placeholder': 'Detected from browser', 'required': false, 'readonly': 'readonly'});
   }
 
-  rememberMeInput.parent().show();
+  getLocation();
 
-  // store/load details
-  rememberNodes
-    // save the details
-    .on('change', function(){
-      if (!remember) {
+  // save details in localstorage
+  function rememberDetails() {
+    // test for localstorage support (from Modernizr)
+    // fails if third-party data is not allowed (in an iframe)
+    try {
+        localStorage.setItem('test', 'test');
+        localStorage.removeItem('test');
+    } catch(e) {
         return;
-      }
+    }
 
-      localStorage.setItem(this.getAttribute('id'), $(this).val());
-    })
-    // load the details
-    .each(function() {
-      $(this).val(localStorage.getItem(this.getAttribute('id')));
-    });
+    var rememberMeInput = $('#id_remember'),
+        rememberNodes = $('[data-remember]');
 
-  // when "remember me" is unchecked, delete stored details
-  rememberMeInput.on('change', function() {
-    remember = rememberMeInput.prop('checked');
-    localStorage.setItem('id_remember', remember);
+    var stored = localStorage.getItem('id_remember');
+
+    // can't always store booleans in localstorage, so "false" (string) = "don't store"
+    var remember = stored === null || stored === true || stored.toString() === 'true';
 
     if (remember) {
-      // save the current values
-      rememberNodes.trigger('change');
-    } else {
-      // remove the stored values
-      rememberNodes.each(function() {
-        localStorage.removeItem(this.getAttribute('id'));
-      });
+      rememberMeInput.prop('checked', true);
     }
-  });
-};
 
-rememberDetails();
+    rememberMeInput.parent().show();
 
-$(function() {
+    // store/load details
+    rememberNodes
+      // save the details
+      .on('change', function(){
+        if (!remember) {
+          return;
+        }
+
+        localStorage.setItem(this.getAttribute('id'), $(this).val());
+      })
+      // load the details
+      .each(function() {
+        $(this).val(localStorage.getItem(this.getAttribute('id')));
+      });
+
+    // when "remember me" is unchecked, delete stored details
+    rememberMeInput.on('change', function() {
+      remember = rememberMeInput.prop('checked');
+      localStorage.setItem('id_remember', remember);
+
+      if (remember) {
+        // save the current values
+        rememberNodes.trigger('change');
+      } else {
+        // remove the stored values
+        rememberNodes.each(function() {
+          localStorage.removeItem(this.getAttribute('id'));
+        });
+      }
+    });
+  }
+
+  rememberDetails();
+
   $('form').submit(function() {
     // Do geocoding only if needed
     if ($('#id_coords').val() === "") {
