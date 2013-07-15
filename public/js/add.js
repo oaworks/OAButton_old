@@ -20,7 +20,7 @@ function parseCrossRef(entry) {
       item = entry["pam:message"]["pam:article"];
 
   if (item["dc:title"]) {
-    description.push(item["dc:title"]);
+    description.push("title: " + item["dc:title"].replace(/\s+/, " "));
   }
 
   if (item["dc:creator"]) {
@@ -28,16 +28,16 @@ function parseCrossRef(entry) {
       item["dc:creator"] = [item["dc:creator"]];
     }
 
-    description.push(item["dc:creator"].join(", "));
+    description.push("creator: " + item["dc:creator"].join(", "));
   }
 
   if (item["prism:publicationName"]) {
-    description.push(item["prism:publicationName"]);
+    description.push("publication: " + item["prism:publicationName"]);
   }
 
   if (item["prism:publicationDate"]) {
     // TODO: zero-pad or reformat the date, using Moment.js?
-    description.push(item["prism:publicationDate"]);
+    description.push("date: " + item["prism:publicationDate"]);
   }
 
   return description.join("\n");
