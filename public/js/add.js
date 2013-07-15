@@ -18,23 +18,28 @@ getLocation();
 
 // save details in localstorage
 function rememberDetails() {
-  var rememberMeInput = $('#id_remember');
-  var rememberNodes = $('[data-remember]');
-  var remember = false;
-
   // test for localstorage support (from Modernizr)
   // fails if third-party data is not allowed (in an iframe)
   try {
       localStorage.setItem('test', 'test');
       localStorage.removeItem('test');
   } catch(e) {
-      rememberMeInput.prop('checked', false).parent().hide();
       return;
   }
 
-  // can't store booleans in localstorage, so "false" (string) = "don't store"
-  remember = localStorage.getItem('id_remember') !== 'false';
-  rememberMeInput.prop('checked', remember);
+  var rememberMeInput = $('#id_remember'),
+      rememberNodes = $('[data-remember]');
+
+  var stored = localStorage.getItem('id_remember');
+
+  // can't always store booleans in localstorage, so "false" (string) = "don't store"
+  var remember = stored === null || stored === true || stored.toString() === 'true';
+
+  if (remember) {
+    rememberMeInput.prop('checked', true);
+  }
+
+  rememberMeInput.parent().show();
 
   // store/load details
   rememberNodes
