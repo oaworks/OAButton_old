@@ -18,5 +18,6 @@ EventSchema = new mongoose.Schema
   url: String
   story: String
   email: String
+  description: String
 
 module.exports = mongoose.model 'Event', EventSchema
