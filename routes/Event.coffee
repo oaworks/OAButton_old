@@ -34,7 +34,7 @@ module.exports =
 
   # Display an entry page
   add: (req, res) ->
-    res.render 'Event/add_iframe',
+    res.render 'sidebar/index',
       vars:
         url: req.query.url
         doi: req.query.doi
@@ -51,6 +51,6 @@ module.exports =
         scholar_url = ''
         if req.body['doi']
           scholar_url = 'http://scholar.google.com/scholar?cluster=' + encodeURIComponent('http://dx.doi.org/' + req.body['doi'])
-        res.render 'Event/success',
+        res.render 'sidebar/success',
           scholar_url: scholar_url
 
