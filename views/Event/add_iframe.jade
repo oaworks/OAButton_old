@@ -8,12 +8,15 @@ block content
     .control-group
       label.control-label(for='id_name') Your name
       .controls
-        input#id_name.input-block-level(type='text', name='name', placeholder='e.g. Dr John Doe')
+        input#id_name.input-block-level(type='text', name='name', placeholder='e.g. Dr John Doe', data-remember)
 
     .control-group
         label.control-label(for='id_profession') Profession
         .controls
-          input#id_profession.input-block-level(type='text', name='profession', placeholder='e.g. Doctor')
+          input#id_profession.input-block-level(type='text', name='profession', placeholder='e.g. Doctor', data-remember)
+
+    label.checkbox(for='id_remember', style='display:none') Remember me
+      input#id_remember.input-block-level(type='checkbox', name='remember')
 
     .control-group
       label.control-label(for='id_location') Location

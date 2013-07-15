@@ -16,6 +16,64 @@ function showPosition(position) {
 
 getLocation();
 
+// save details in localstorage
+function rememberDetails() {
+  // test for localstorage support (from Modernizr)
+  // fails if third-party data is not allowed (in an iframe)
+  try {
+      localStorage.setItem('test', 'test');
+      localStorage.removeItem('test');
+  } catch(e) {
+      return;
+  }
+
+  var rememberMeInput = $('#id_remember'),
+      rememberNodes = $('[data-remember]');
+
+  var stored = localStorage.getItem('id_remember');
+
+  // can't always store booleans in localstorage, so "false" (string) = "don't store"
+  var remember = stored === null || stored === true || stored.toString() === 'true';
+
+  if (remember) {
+    rememberMeInput.prop('checked', true);
+  }
+
+  rememberMeInput.parent().show();
+
+  // store/load details
+  rememberNodes
+    // save the details
+    .on('change', function(){
+      if (!remember) {
+        return;
+      }
+
+      localStorage.setItem(this.getAttribute('id'), $(this).val());
+    })
+    // load the details
+    .each(function() {
+      $(this).val(localStorage.getItem(this.getAttribute('id')));
+    });
+
+  // when "remember me" is unchecked, delete stored details
+  rememberMeInput.on('change', function() {
+    remember = rememberMeInput.prop('checked');
+    localStorage.setItem('id_remember', remember);
+
+    if (remember) {
+      // save the current values
+      rememberNodes.trigger('change');
+    } else {
+      // remove the stored values
+      rememberNodes.each(function() {
+        localStorage.removeItem(this.getAttribute('id'));
+      });
+    }
+  });
+};
+
+rememberDetails();
 
 $(function() {
   $('form').submit(function() {
