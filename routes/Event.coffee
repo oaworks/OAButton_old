@@ -3,12 +3,12 @@ http  = require 'http'
 
 module.exports =
 
-  # Display a list of story
+  # Display a list of stories
   show_stories: (req, res) ->
     Event.find({}).exec (err, events) ->
       if err then res.send 500
       else
-        res.render 'Event/list',
+        res.render 'stories',
           title: 'Stories'
           events: events
           count: events.length
@@ -20,7 +20,7 @@ module.exports =
     Event.find({}).exec (err, events) ->
       if err then res.send 500
       else
-        res.render 'Event/map',
+        res.render 'map',
           title: 'Map'
           events: JSON.stringify (add_calendar_date event for event in events)
           count: events.length
