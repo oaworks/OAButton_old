@@ -30,7 +30,7 @@ $(function() {
           },
           dataType: "xml",
           success: function(response) {
-            if (response.getElementsByTagName('Count')[0].textContent === 0) {
+            if (response.getElementsByTagName('Count')[0].textContent === '0') {
               return;
             }
 
