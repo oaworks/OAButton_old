@@ -1,6 +1,7 @@
 express  = require 'express'
 flash    = require 'connect-flash'
 manifest = require './package.json'
+minify   = require 'express-minify'
 mongoose = require 'mongoose'
 path     = require 'path'
 Event    = require './models/Event'
@@ -28,6 +29,7 @@ app.configure ->
   app.use express.session
     secret: 'bmjhack'
   app.use flash()
+  app.use minify()
   app.use app.router
   app.use express.static path.join(__dirname, "public")
   app.set 'connstr', APP_MONGODB_URL

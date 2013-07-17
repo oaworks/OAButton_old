@@ -8,6 +8,7 @@
   , "connect": "2.7.6"
   , "connect-flash": "0.1.1"
   , "express": "3.2.0"
+  , "express-minify": "*"
   , "jade": "0.29.0"
   , "mongoose": "3.6.7"
   , "moment": "*"
