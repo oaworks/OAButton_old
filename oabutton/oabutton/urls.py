@@ -7,6 +7,8 @@ admin.autodiscover()
 from oabutton.apps.bookmarklet import views as bm
 
 urlpatterns = patterns('',
+    url(r'^$', bm.homepage, name="homepage"),
+    url(r'^about/$', bm.about, name="about"),
     url(r'^show_stories/$', bm.show_stories, name="show_stories"),
     url(r'^show_map/$', bm.show_map, name="show_map"),
 
