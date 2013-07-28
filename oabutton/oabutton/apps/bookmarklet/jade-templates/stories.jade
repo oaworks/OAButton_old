@@ -1,0 +1,13 @@
+extends layout
+block content
+  h1= count
+    small  Scholarly pursuits denied
+  each event in events
+    .well
+      h3 #{event.name}
+        em  (#{event.profession})
+      blockquote #{event.story}
+      small
+        em= event.accessed.calendar()
+        | 
+        span from #{event.location}
