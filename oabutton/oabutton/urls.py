@@ -12,6 +12,12 @@ urlpatterns = patterns('',
     url(r'^stories/$', bm.show_stories, name="show_stories"),
     url(r'^map/$', bm.show_map, name="show_map"),
 
+    # TODO: this should really be pushed into a /api/ URL
+    # since we don't want to clutter up the top level URL namespace
+    url(r'^download.json$', bm.get_json, name="get_json"),
+
+    # I just jammed this in here while i sort out all the URL
+    # mappings.
     url(r'^bookmarklet/', include('oabutton.apps.bookmarklet.urls')),
 
     # Uncomment the next line to enable the admin:
