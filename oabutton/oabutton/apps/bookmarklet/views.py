@@ -11,6 +11,12 @@ except:
 # TODO: we should really break up the view URLs here to separate the
 # OAButton facing website from the bookmarklet URLs.
 
+def homepage(req):
+    return render(req, 'bookmarklet/site/index.html')
+
+def about(req):
+    return render(req, 'bookmarklet/site/about.html')
+
 def show_stories(req):
     # we only grab the 50 latest stories
     # the original node code grabbed all stories which will kill your
