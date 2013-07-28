@@ -1,8 +1,14 @@
 from django.conf.urls import patterns, include, url
 
-from views import show_stories
+from views import show_stories, show_map
+from views import add, post, get_json
 
 urlpatterns = patterns('',
-    url(r'^show_stories/$', show_stories, name="show_stories"),
+
+    # I think these 3 should be broken out to an API URL handler so we
+    # can evolve it
+    url(r'^get_json/$', get_json, name="get_json"),
+    url(r'^add/$', add, name="add"),
+    url(r'^post/$', post, name="post"),
 )
 

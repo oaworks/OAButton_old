@@ -17,7 +17,7 @@ def show_stories(req):
     # database
     latest_stories = Event.objects.all().order_by('-pub_date')[:50]
     count = Event.objects.count()
-    context = {'events': latest_stories, 'count': count}
+    context = {'title': 'Stories', 'events': latest_stories, 'count': count}
     return render(req, 'bookmarklet/site/stories.html', context)
 
 
@@ -27,7 +27,7 @@ def show_map(req):
     # points would mean we throw less data down to the browser
     count = Event.objects.count()
     json_data = serializers.serialize("json", Event.objects.all())
-    context = {title: 'Map', events: json_data, count: count }
+    context = {'title': 'Map', 'events': json_data, 'count': count }
     return render(req, 'bookmarklet/site/map.html', context)
 
 
