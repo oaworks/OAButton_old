@@ -44,12 +44,13 @@ def get_json(req):
     return HttpResponse(json_data, content_type="application/json")
 
 def add(req):
-  # How does the DOI get in automatically?  This seems really wrong.
-  # At the least, we need a test here to illustrate why this should
-  # work at all.
-  return render('sidebar/index.html', context={'url': req.query.url, 'doi': req.query.doi})
+    # Display an entry page
+    # How does the DOI get in automatically?  This seems really wrong.
+    # At the least, we need a test here to illustrate why this should
+    # work at all.
+    return render('sidebar/index.html', context={'url': req.query.url, 'doi': req.query.doi})
 
-def post(req):
+def add_post(req):
     # Handle POST
     event = Event()
     # Where does the coords come from? This seems like it's using the
