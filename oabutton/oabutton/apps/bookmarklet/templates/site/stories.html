@@ -5,7 +5,7 @@
 <div class="well">
   <h3>{{event.name}}<em>({{event.profession}})</em>
   </h3>
-  <blockquote>{{event.story}}</blockquote><small><em>{{event.accessed.calendar()|force_escape}}</em> 
+  <blockquote>{{event.story}}</blockquote><small><em>{{event.last_accessed|force_escape}}</em> 
 <span>from {{event.location}}</span></small>
 </div>
 {% endfor %}
