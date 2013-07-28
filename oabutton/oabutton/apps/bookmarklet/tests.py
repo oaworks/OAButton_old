@@ -14,3 +14,8 @@ class SimpleTest(TestCase):
         Tests that 1 + 1 always equals 2.
         """
         self.assertEqual(1 + 1, 2)
+
+    def test_stories(self):
+        # TODO: add a test to make sure we're grabbing only the last
+        # 50 stories in reverse chronological order
+        pass
