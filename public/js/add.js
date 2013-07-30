@@ -10,7 +10,9 @@ $(function() {
   }
 
   function showPosition(position) {
-    $('#id_coords').val([position.coords.latitude, position.coords.longitude]);
+    rounded_lat = Math.round(position.coords.latitude * 10) / 10;
+    rounded_long = Math.round(position.coords.longitude * 10) / 10;
+    $('#id_coords').val([rounded_lat, rounded_long]);
     $('#id_location').attr({'placeholder': 'Detected from browser', 'required': false, 'readonly': 'readonly'});
   }
 
