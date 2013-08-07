@@ -12,6 +12,13 @@
   font-size: 95%;
 }
 
+#github_ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  z-index: 1;
+}
 
 /* Start of stolen bootstrap docs css */
 
