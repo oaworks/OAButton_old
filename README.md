@@ -7,4 +7,6 @@ Our code is completely open source and we invite/need developers to get involved
 
 Powered by [express.js](http://expressjs.com) and [MongoDB](http://www.mongodb.org).
 
+If you want to contribute, we have some [instructions for setting up your local dev environment](https://github.com/OAButton/server/blob/develop/instructions.md).
+
 Licensed under the MIT license.
