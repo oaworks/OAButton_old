@@ -9,4 +9,4 @@ except:
 
 
 def homepage(req):
-    return render(req, 'web/index.jade')
+    return render(req, 'web/index.html')
