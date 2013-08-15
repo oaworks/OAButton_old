@@ -79,8 +79,10 @@ var detectAuthorEmail = function() {
   return null;
 };
 
-{
+var data = {
 	url: document.location.href,
 	doi: detectDOI(),
 	email: detectAuthorEmail()
 }
+
+data
