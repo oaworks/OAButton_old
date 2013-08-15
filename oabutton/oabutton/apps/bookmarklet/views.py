@@ -39,7 +39,7 @@ def add(req):
     # How does the DOI get in automatically?  This seems really wrong.
     # At the least, we need a test here to illustrate why this should
     # work at all.
-    return render('sidebar/index.html', context={'url': req.query.url, 'doi': req.query.doi})
+    return render('bookmarklet/index.html', context={'url': req.query.url, 'doi': req.query.doi})
 
 def add_post(req):
     # Handle POST
@@ -58,5 +58,5 @@ def add_post(req):
     scholar_url = ''
     if req.body['doi']:
         scholar_url = 'http://scholar.google.com/scholar?cluster=' + 'http://dx.doi.org/' + req['doi']
-    return render('sidebar/success.html', {'scholar_url': scholar_url})
+    return render('bookmarklet/success.html', {'scholar_url': scholar_url})
 
