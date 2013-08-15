@@ -9,11 +9,10 @@
 ### Installing
 
  * [Clone the repo](https://github.com/OAButton/server.git) (the project code)
- * [Install mongo db](http://www.mongodb.org/downloads) (the database engine). If you use brew, `brew install mongodb` works for us!
- * Go to the directory where you’ve cloned the repo (`/path/to/server`)
+ * Go to the directory where you’ve cloned the repo (`cd /path/to/repo`)
+ * Switch to the django branch (`git checkout django`)
+ * Run `make`
 
-### Running the server
+### You’re done!
 
- * if it’s not already running, start mongo with `mongod`
- * then in a new tab, start the webserver
  * visit <http://localhost:8080>. Hooray!
