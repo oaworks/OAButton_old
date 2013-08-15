@@ -128,7 +128,12 @@ INSTALLED_APPS = (
 
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+
+    # The bookmarklet app is really just the REST API
     'oabutton.apps.bookmarklet',
+
+    # The web app is the main website
+    'oabutton.apps.web',
 )
 
 # A sample logging configuration. The only tangible logging
