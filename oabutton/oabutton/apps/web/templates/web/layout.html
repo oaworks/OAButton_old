@@ -6,11 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="Open Access Button">
     <title>{{'Open Access Button'|force_escape}}{% if  title %} - {{ title|force_escape }}{% endif %}</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/static/css/app.css">
   </head>
   <body data-spy="scroll" data-target=".bs-docs-sidebar">{% block body %}{% endblock %}
   </body>
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 </html>
