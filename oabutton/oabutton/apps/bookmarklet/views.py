@@ -53,18 +53,14 @@ def add(req):
     return render_to_response('bookmarklet/index.html', c)
 
 def add_post(req):
-    # Handle POST
-    import pdb
-    pdb.set_trace()
-
     # TODO: convert this to use PyMongo
     event = Event()
     # Where does the coords come from? This seems like it's using the
     # HTML5 locationAPI.  Need to dig around a bit
     coords = req.POST['coords'].split(',')
 
-    event.coords_lat = coords[0]
-    event.coords_lng = coords[1]
+    event.coords = coords
+
     try:
         event.save()
     except Exception, e:

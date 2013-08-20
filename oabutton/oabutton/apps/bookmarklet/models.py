@@ -1,5 +1,10 @@
 from django.db import models
 
+try:
+    import simplejson as json
+except:
+    import json
+
 # Create your models here.
 
 class Event(models.Model):
@@ -12,6 +17,16 @@ class Event(models.Model):
     coords_lat = models.DecimalField(max_digits=19, decimal_places=10)
     coords_lng = models.DecimalField(max_digits=19, decimal_places=10)
 
+    def set_coords(self, coord):
+        """Expect a comma separated string of float """
+        self.coords_lat, self.coords_lng = coord.split(",")
+
+    def get_coords(self):
+        """Return a comma separated string of floats"""
+        return ",".join([str(self.coords_lat), str(self.coords_lng)])
+
+    coords = property(get_coords, set_coords)
+
     last_accessed = models.DateTimeField(auto_now=True)
 
     pub_date = models.DateTimeField(auto_now=True)
@@ -20,3 +35,32 @@ class Event(models.Model):
     url = models.URLField()
     story = models.TextField()
     email = models.EmailField()
+
+    def from_json(self, jdata):
+        data = json.loads(jdata)
+
+        self.id = data['id']
+        self.name = data['name']
+        self.profession = data['profession']
+        self.location = data['location']
+        self.coords = data['coords']
+        #self.last_accessed = data['last_accessed']
+        #self.pub_date = data['pub_date']
+        self.doi = data['doi']
+        self.url = data['url']
+        self.story = data['story']
+        self.email = data['email']
+
+    def to_json(self):
+        doc = {'id': self.id,
+               'name': self.name,
+               'profession': self.profession,
+               'location': self.location,
+               'coords': self.coords,
+               #'last_accessed': self.last_accessed,
+               #'pub_date': self.pub_date,
+               'doi': self.doi,
+               'url': self.url,
+               'story': self.story,
+               'email': self.email, }
+        return json.dumps(doc)
