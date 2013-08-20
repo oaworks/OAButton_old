@@ -2,15 +2,25 @@ from django.http import HttpResponse, HttpResponseServerError
 from django.core import serializers
 from django.shortcuts import render_to_response
 from django.core import serializers
+from django.conf import settings
 
-from oabutton.apps.bookmarklet.models import Event
+from json import dumps
+from json import JSONEncoder
+from bson.objectid import ObjectId
 
-try:
-    from simplejson import dumps
-except:
-    from json import dumps
-
+class MongoEncoder(JSONEncoder):
+    def default(self, obj, **kwargs):
+        if isinstance(obj, ObjectId):
+            return str(obj)
+        else:            
+            return JSONEncoder.default(obj, **kwargs)
 
 def homepage(req):
-    data = serializers.serialize("json", Event.objects.all())
-    return render_to_response('web/index.html', {'events': data})
+    db = settings.MONGO_CLIENT.oabutton_db
+    
+    # TODO: this needs to get cleaned up to not eat all memory
+
+    data = [obj for obj in db.events.find()]
+
+    return render_to_response('web/index.html', 
+            {'events': dumps(data, cls=MongoEncoder)})

@@ -17,13 +17,13 @@ class Event(models.Model):
     coords_lat = models.DecimalField(max_digits=19, decimal_places=10)
     coords_lng = models.DecimalField(max_digits=19, decimal_places=10)
 
-    def set_coords(self, coord):
+    def set_coords(self, coords):
         """Expect a comma separated string of float """
-        self.coords_lat, self.coords_lng = coord.split(",")
+        self.coords_lat, self.coords_lng = coords['lat'], coords['lng']
 
     def get_coords(self):
         """Return a comma separated string of floats"""
-        return ",".join([str(self.coords_lat), str(self.coords_lng)])
+        return {'lat': str(self.coords_lat), 'lng': str(self.coords_lng)}
 
     coords = property(get_coords, set_coords)
 
@@ -51,7 +51,7 @@ class Event(models.Model):
         self.story = data['story']
         self.email = data['email']
 
-    def to_json(self):
+    def to_dict(self):
         doc = {'id': self.id,
                'name': self.name,
                'profession': self.profession,
@@ -63,4 +63,4 @@ class Event(models.Model):
                'url': self.url,
                'story': self.story,
                'email': self.email, }
-        return json.dumps(doc)
+        return doc

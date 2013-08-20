@@ -38,4 +38,7 @@ python manage.py runserver
 
 ### Running the tests
 
-
+From the directory with the file manage.py in it :
+```
+python manage.py test bookmarklet
+```

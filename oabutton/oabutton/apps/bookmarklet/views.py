@@ -4,6 +4,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core import serializers
 from models import Event
+from django.conf import settings
+
 
 try:
     from simplejson import dumps
@@ -53,16 +55,27 @@ def add(req):
     return render_to_response('bookmarklet/index.html', c)
 
 def add_post(req):
+    import pdb
+    pdb.set_trace()
     # TODO: convert this to use PyMongo
-    event = Event()
-    # Where does the coords come from? This seems like it's using the
-    # HTML5 locationAPI.  Need to dig around a bit
-    coords = req.POST['coords'].split(',')
 
-    event.coords = coords
+    data = req.POST
+    event = Event(
+            story=data['story'],
+            doi=data['doi'],
+            url=data['url'],
+            #description=data['description'],
+            profession=data['profession'],
+            last_accessed=data['accessed'],
+            )
+
+    lat, lng = data['coords'].split(',')
+    event.coords = {'lat': lat, 'lng': lng}
 
     try:
-        event.save()
+        event_dict = event.to_dict()
+        db = settings.MONGO_CLIENT.oabutton_db
+        doc_id = db.events.insert(event_dict)
     except Exception, e:
       return HttpResponseServerError(e)
 

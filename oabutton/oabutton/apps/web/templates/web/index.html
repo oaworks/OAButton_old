@@ -175,9 +175,9 @@ function initialise() {
 function addMarkers(map, events) {
   var infowindow = new google.maps.InfoWindow();
   for (var i = 0; i < events.length; i++) {
-    var evt = events[i].fields
+    var evt = events[i]
     var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(evt.coords_lat, evt.coords_lng),
+        position: new google.maps.LatLng(evt.coords.lat, evt.coords.lng),
         map: map,
         icon: 'static/img/noalogo.png'
     });
