@@ -156,8 +156,12 @@ function makeInfoWindowEvent(map, infowindow, contentString, marker) {
   });
 }
 
+{% comment %}
+Passing in events like this won't scale with large numbers of
+events...
+{% endcomment %}
 function initialise() {
-  var events = {{events}};
+  var events = {{events|safe}};
   var mapOptions = {
     "zoom": 2,
     "center": new google.maps.LatLng(0, 0),
@@ -171,28 +175,27 @@ function initialise() {
 function addMarkers(map, events) {
   var infowindow = new google.maps.InfoWindow();
   for (var i = 0; i < events.length; i++) {
-    if(events[i].coords.length !== 0) {
-      var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(events[i].coords.lat, events[i].coords.lng),
+    var evt = events[i].fields
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(evt.coords_lat, evt.coords_lng),
         map: map,
-        icon: 'img/noalogo.png'
-      });
+        icon: 'static/img/noalogo.png'
+    });
 
-      bubble_content = '<h4>' + events[i].name;
-      if (events[i].profession != '') {
-        bubble_content += ' <em>(' + events[i].profession + ')</em>';
-      }
-      bubble_content += '</h4>';
-      bubble_content += '<p>' + events[i].story + '</p>';
-      bubble_content += '<a target="_blank" href="http://dx.doi.org/' + events[i].doi + '">doi</a>';
-      bubble_content += ' | ';
-      bubble_content += '<a target="_blank" href="' + events[i].url + '">url</a>';
-      bubble_content += ' | ';
-      bubble_content += events[i].calendar_date || '';
+    bubble_content = '<h4>' + evt.name;
+        if (evt.profession != '') {
+            bubble_content += ' <em>(' + evt.profession + ')</em>';
+        }
+        bubble_content += '</h4>';
+    bubble_content += '<p>' + evt.story + '</p>';
+    bubble_content += '<a target="_blank" href="http://dx.doi.org/' + evt.doi + '">doi</a>';
+    bubble_content += ' | ';
+    bubble_content += '<a target="_blank" href="' + evt.url + '">url</a>';
+    bubble_content += ' | ';
+    bubble_content += evt.calendar_date || '';
 
-      makeInfoWindowEvent(map, infowindow, bubble_content, marker);
-    }
-  }
+    makeInfoWindowEvent(map, infowindow, bubble_content, marker);
+}
 }
 
 google.maps.event.addDomListener(window, 'load', initialise);
