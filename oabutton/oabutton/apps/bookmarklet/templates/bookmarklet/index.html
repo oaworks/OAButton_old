@@ -25,16 +25,22 @@
   </div>
   <div class="control-group">
     <label for="id_url" class="control-label">Article URL</label>
-    <div class="controls">{% if  vars.url %}
-      <input id="id_url" readonly="readonly" type="text" name="url"{% __pyjade_attrs attrs=[('value',(''+vars.url+''))] %} class="input-block-level"/>{% else %}
-      <input id="id_url" type="text" name="url" placeholder="http://www.publisher.com/journal?id=XXXX" class="input-block-level"/>{% endif %}
+    <div class="controls">
+      {% if url %}
+      <input id="id_url" readonly="readonly" type="text" name="url" value="{{ url }}" class="input-block-level"/>
+      {% else %}
+      <input id="id_url" type="text" name="url" placeholder="http://www.publisher.com/journal?id=XXXX" class="input-block-level"/>
+      {% endif %}
     </div>
   </div>
   <div class="control-group">
     <label for="id_doi" class="control-label">DOI</label>
-    <div class="controls">{% if  vars.doi %}
-      <input id="id_doi" readonly="readonly" type="text" name="doi"{% __pyjade_attrs attrs=[('value',(''+vars.doi+''))] %} class="input-block-level"/>{% else %}
-      <input id="id_doi" type="text" name="doi" placeholder="e.g. 10.1136/bmj.c7086" class="input-block-level"/>{% endif %}
+    <div class="controls">
+      {% if  doi %}
+      <input id="id_doi" readonly="readonly" type="text" name="doi" value="{{ doi }}" class="input-block-level"/>
+      {% else %}
+      <input id="id_doi" type="text" name="doi" placeholder="e.g. 10.1136/bmj.c7086" class="input-block-level"/>
+      {% endif %}
       <p class="help-text">Document Object Identifier (DOI)</p>
     </div>
   </div>
