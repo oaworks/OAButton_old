@@ -1,5 +1,7 @@
 from django.http import HttpResponse, HttpResponseServerError
-from django.shortcuts import render, render_to_response
+from django.core.context_processors import csrf
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.core import serializers
 from models import Event
 
@@ -35,31 +37,41 @@ def get_json(req):
     return HttpResponse(json_data, content_type="application/json")
 
 def add(req):
+    c = {}
+    c.update(csrf(req))
     # Display an entry page
     # How does the DOI get in automatically?  This seems really wrong.
     # At the least, we need a test here to illustrate why this should
     # work at all.
+
     url =  req.GET['url']
     doi = req.GET['doi']
 
-    return render_to_response('bookmarklet/index.html', {'url': url, 'doi': doi})
+    c.update({'url': url, 'doi': doi})
+
+
+    return render_to_response('bookmarklet/index.html', c)
 
 def add_post(req):
     # Handle POST
+    import pdb
+    pdb.set_trace()
+
+    # TODO: convert this to use PyMongo
     event = Event()
     # Where does the coords come from? This seems like it's using the
     # HTML5 locationAPI.  Need to dig around a bit
-    coords = req['coords'].split(',')
+    coords = req.POST['coords'].split(',')
 
-    event.coords_lat = float(coords[0])
-    event.coords_lng = float(coords[1])
+    event.coords_lat = coords[0]
+    event.coords_lng = coords[1]
     try:
         event.save()
     except Exception, e:
       return HttpResponseServerError(e)
 
     scholar_url = ''
-    if req.body['doi']:
-        scholar_url = 'http://scholar.google.com/scholar?cluster=' + 'http://dx.doi.org/' + req['doi']
-    return render('bookmarklet/success.html', {'scholar_url': scholar_url})
+    if req.POST['doi']:
+        scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST['doi']
+    return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url})
 

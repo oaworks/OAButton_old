@@ -1,5 +1,5 @@
 {% extends "bookmarklet/layout.html" %}{% block content %}<img src="/static/img/oalogo.png" style="position: absolute; top: 0; right: 0;"/><a id="id_pmc" title="Available at PMC" target="_new" style="position: absolute; top: 0; right: 32px; display: none;"><img src="/static/img/pmc.png"/></a>
-<form id="event" action="/add" method="post" class="form-horizontal">
+<form id="event" action="/api/post/" method="post" class="form-horizontal">{% csrf_token %}
   <input id="id_accessed" type="hidden" name="accessed"/>
   <div class="control-group">
     <label for="id_name" class="control-label">Your name</label>
