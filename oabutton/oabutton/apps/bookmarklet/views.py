@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseServerError
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.core import serializers
 from models import Event
 
@@ -39,7 +39,10 @@ def add(req):
     # How does the DOI get in automatically?  This seems really wrong.
     # At the least, we need a test here to illustrate why this should
     # work at all.
-    return render('bookmarklet/index.html', context={'url': req.query.url, 'doi': req.query.doi})
+    url =  req.GET['url']
+    doi = req.GET['doi']
+
+    return render_to_response('bookmarklet/index.html', {'url': url, 'doi': doi})
 
 def add_post(req):
     # Handle POST
