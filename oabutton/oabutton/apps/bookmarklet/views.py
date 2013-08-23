@@ -26,10 +26,22 @@ def show_map(req):
     # TODO: we need to make this smarter.  Coallescing the lat/long
     # data on a nightly basis and folding that down into clustered
     # points would mean we throw less data down to the browser
-    count = Event.objects.count()
-    json_data = serializers.serialize("json", Event.objects.all())
-    context = {'title': 'Map', 'events': json_data, 'count': count }
-    return render(req, 'bookmarklet/site/map.html', context)
+    try:
+        db = settings.MONGO_DB()
+        all_events = [evt for evt in db.events.find()]
+
+        # TODO: use a mongo count function here
+        count = len(all_events)
+
+        # TODO: Need to do this an async call and roll up stuff using
+        # clustering
+        json_data = serializers.serialize("json", all_events)
+
+        context = {'title': 'Map', 'events': json_data, 'count': count }
+        return render_to_response(req, 'bookmarklet/site/map.html', context)
+    except Exception, e:
+      return HttpResponseServerError(e)
+
 
 
 def get_json(req):
@@ -46,8 +58,14 @@ def add(req):
     # At the least, we need a test here to illustrate why this should
     # work at all.
 
-    url =  req.GET['url']
-    doi = req.GET['doi']
+    # TODO: use a form thing here
+    doi = ''
+    url = ''
+    if 'url' in req.GET:
+        url =  req.GET['url']
+
+    if 'doi' in req.GET:
+        doi = req.GET['doi']
 
     c.update({'url': url, 'doi': doi})
 
@@ -55,18 +73,13 @@ def add(req):
     return render_to_response('bookmarklet/index.html', c)
 
 def add_post(req):
-    import pdb
-    pdb.set_trace()
-    # TODO: convert this to use PyMongo
-
     data = req.POST
     event = Event(
             story=data['story'],
             doi=data['doi'],
             url=data['url'],
-            #description=data['description'],
             profession=data['profession'],
-            last_accessed=data['accessed'],
+            accessed=data['accessed'],
             )
 
     lat, lng = data['coords'].split(',')
@@ -74,13 +87,14 @@ def add_post(req):
 
     try:
         event_dict = event.to_dict()
-        db = settings.MONGO_CLIENT.oabutton_db
+        db = settings.MONGO_DB()
         doc_id = db.events.insert(event_dict)
     except Exception, e:
       return HttpResponseServerError(e)
 
     scholar_url = ''
     if req.POST['doi']:
+
         scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST['doi']
     return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url})
 

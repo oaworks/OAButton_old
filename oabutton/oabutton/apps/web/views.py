@@ -7,20 +7,29 @@ from django.conf import settings
 from json import dumps
 from json import JSONEncoder
 from bson.objectid import ObjectId
+import datetime
 
-class MongoEncoder(JSONEncoder):
-    def default(self, obj, **kwargs):
+class MyEncoder(JSONEncoder):
+    def default(self, obj):
         if isinstance(obj, ObjectId):
             return str(obj)
-        else:            
-            return JSONEncoder.default(obj, **kwargs)
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+        return JSONEncoder.default(self, obj)
 
 def homepage(req):
-    db = settings.MONGO_CLIENT.oabutton_db
-    
     # TODO: this needs to get cleaned up to not eat all memory
 
-    data = [obj for obj in db.events.find()]
+    try:
+        db = settings.MONGO_DB()
+        all_events = [evt for evt in db.events.find()]
 
-    return render_to_response('web/index.html', 
-            {'events': dumps(data, cls=MongoEncoder)})
+        # TODO: Need to do this an async call and roll up stuff using
+        # clustering
+        json_data = dumps(all_events, cls=MyEncoder)
+        return render_to_response('web/index.html', {'events': json_data})
+    except Exception, e:
+      return HttpResponseServerError(e)
+
+
+
