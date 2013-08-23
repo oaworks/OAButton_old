@@ -22,6 +22,16 @@ cd oabutton  # Switch to the django home directory
 python manage.py syncdb  # sync the database
 ```
 
+
+### Start mongodb
+
+If the mongodb daemon is not running yet, you can start it locally
+with :
+```
+mongod --smallfiles -v
+```
+
+
 ### Start the webserver
 
 ```
