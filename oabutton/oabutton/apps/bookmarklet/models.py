@@ -27,7 +27,7 @@ class Event(models.Model):
 
     coords = property(get_coords, set_coords)
 
-    last_accessed = models.DateTimeField(auto_now=True)
+    accessed = models.DateTimeField(auto_now=True)
 
     pub_date = models.DateTimeField(auto_now=True)
 
@@ -44,8 +44,8 @@ class Event(models.Model):
         self.profession = data['profession']
         self.location = data['location']
         self.coords = data['coords']
-        #self.last_accessed = data['last_accessed']
-        #self.pub_date = data['pub_date']
+        self.accessed = data['accessed']
+        self.pub_date = data['pub_date']
         self.doi = data['doi']
         self.url = data['url']
         self.story = data['story']
@@ -57,8 +57,8 @@ class Event(models.Model):
                'profession': self.profession,
                'location': self.location,
                'coords': self.coords,
-               #'last_accessed': self.last_accessed,
-               #'pub_date': self.pub_date,
+               'accessed': self.accessed,
+               'pub_date': self.pub_date,
                'doi': self.doi,
                'url': self.url,
                'story': self.story,
