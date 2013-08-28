@@ -8,6 +8,9 @@ STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
 print "ROOTPATH is: %s" % ROOT_PATH
 print "STATIC_PUBLIC is: %s" % STATIC_PUBLIC
 
+APP_HOST_ADDRESS = os.environ.get('HOST', "localhost")
+APP_PORT_NUMBER = os.environ.get('PORT', "8000")
+APP_DOMAIN = "https://" + APP_HOST_ADDRESS if os.environ.get('HOST') else "http://" + APP_HOST_ADDRESS + ":" + APP_PORT_NUMBER
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
