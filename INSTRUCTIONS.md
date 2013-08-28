@@ -61,6 +61,12 @@ ensure that all contributors are using a consistent set of packages.
  * Check in settings.py that the line `from settings_local import *`
    is not commented out
 
+#### Virtual machine
+
+If you're familiar with [Vagrant](http://vagrantup.com/) and virtual
+machines, there's a Vagrantfile included which will set up and
+provision a development VM for you.
+
 ### Running the tests
 
 From the directory with the file manage.py in it :
