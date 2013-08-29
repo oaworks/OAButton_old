@@ -9,6 +9,7 @@ from json import JSONEncoder
 from bson.objectid import ObjectId
 import datetime
 
+
 class MyEncoder(JSONEncoder):
     def default(self, obj):
         if isinstance(obj, ObjectId):
@@ -16,6 +17,7 @@ class MyEncoder(JSONEncoder):
         if isinstance(obj, datetime.datetime):
             return obj.isoformat()
         return JSONEncoder.default(self, obj)
+
 
 def homepage(req):
     # TODO: this needs to get cleaned up to not eat all memory
@@ -27,9 +29,6 @@ def homepage(req):
         # TODO: Need to do this an async call and roll up stuff using
         # clustering
         json_data = dumps(all_events, cls=MyEncoder)
-        return render_to_response('web/index.html', {'events': json_data})
+        return render_to_response('web/index.html', {'events': json_data, 'settings': settings})
     except Exception, e:
-      return HttpResponseServerError(e)
-
-
-
+        return HttpResponseServerError(e)
