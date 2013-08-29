@@ -10,8 +10,10 @@
 
 ### Installing
 
+Clone the [git repository](https://github.com/OAButton/server) and set
+up:
 ```
-git clone https://github.com/OAButton/server.git /path/to/repo # clone [the project code](https://github.com/OAButton/server)
+git clone https://github.com/OAButton/server.git /path/to/repo # clone the project code
 cd /path/to/repo                     # Switch to the directory where
                                      # you've cloned the repo
 git checkout django                  # Switch to the django branch
