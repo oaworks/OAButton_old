@@ -24,6 +24,7 @@ def homepage(req):
     # TODO: this needs to get cleaned up to not eat all memory
 
     current_site = Site.objects.get_current()
+
     try:
         db = settings.MONGO_DB()
         all_events = [evt for evt in db.events.find()]
@@ -31,11 +32,13 @@ def homepage(req):
         # TODO: Need to do this an async call and roll up stuff using
         # clustering
         json_data = dumps(all_events, cls=MyEncoder)
-        return render_to_response('web/index.html',
-                {'events': json_data, 
-                 'hostname': current_site.domain})
     except Exception, e:
-      return HttpResponseServerError(e)
+        # Don't error out, just don't bother loading any data
+        json_data = []
+
+    return render_to_response('web/index.html',
+            {'events': json_data, 
+             'hostname': current_site.domain})
 
 
 
