@@ -5,20 +5,11 @@ from django.core import serializers
 from django.conf import settings
 
 from json import dumps
-from json import JSONEncoder
-from bson.objectid import ObjectId
-import datetime
 
 from django.contrib.sites.models import Site
 
+from oabutton.json_util import MyEncoder
 
-class MyEncoder(JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, ObjectId):
-            return str(obj)
-        if isinstance(obj, datetime.datetime):
-            return obj.isoformat()
-        return JSONEncoder.default(self, obj)
 
 def homepage(req):
     # TODO: this needs to get cleaned up to not eat all memory
