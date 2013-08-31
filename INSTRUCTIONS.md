@@ -50,5 +50,5 @@ python manage.py runserver
 
 From the directory with the file manage.py in it :
 ```
-python manage.py test bookmarklet
+python manage.py test bookmarklet web
 ```

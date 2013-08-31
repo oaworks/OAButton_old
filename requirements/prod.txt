@@ -1,4 +1,0 @@
-Django==1.5.2
-pyjade==2.0.2
-pymongo==2.5.2
-wsgiref==0.1.2
