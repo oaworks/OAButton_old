@@ -9,10 +9,10 @@ from django.test import TestCase
 from django.test.client import Client
 from django.contrib.sites.models import Site
 from django.test.utils import override_settings
-from mock import Mock
+from mock import MagicMock
 
 
-@override_settings(MONGO_DB=Mock())
+@override_settings(MONGO_DB=MagicMock())
 class SimpleTest(TestCase):
     def setUp(self):
         current_site = Site.objects.get_current()
@@ -21,6 +21,7 @@ class SimpleTest(TestCase):
         self.client = Client()
 
     def test_bookmarklet(self):
+
         response = self.client.get('/')
         assert response.context['hostname'] == 'oabutton.com'
         # Do a dumb scan to see that oabutton.com is in the JS url
