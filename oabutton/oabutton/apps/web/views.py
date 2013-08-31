@@ -5,20 +5,16 @@ from django.core import serializers
 from django.conf import settings
 
 from json import dumps
-from json import JSONEncoder
-from bson.objectid import ObjectId
-import datetime
 
-class MyEncoder(JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, ObjectId):
-            return str(obj)
-        if isinstance(obj, datetime.datetime):
-            return obj.isoformat()
-        return JSONEncoder.default(self, obj)
+from django.contrib.sites.models import Site
+
+from oabutton.json_util import MyEncoder
+
 
 def homepage(req):
     # TODO: this needs to get cleaned up to not eat all memory
+
+    current_site = Site.objects.get_current()
 
     try:
         db = settings.MONGO_DB()
@@ -27,9 +23,13 @@ def homepage(req):
         # TODO: Need to do this an async call and roll up stuff using
         # clustering
         json_data = dumps(all_events, cls=MyEncoder)
-        return render_to_response('web/index.html', {'events': json_data})
     except Exception, e:
-      return HttpResponseServerError(e)
+        # Don't error out, just don't bother loading any data
+        json_data = []
+
+    return render_to_response('web/index.html',
+            {'events': json_data, 
+             'hostname': current_site.domain})
 
 
 

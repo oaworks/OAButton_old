@@ -177,7 +177,10 @@ LOGGING = {
 from pymongo import MongoClient
 MONGO_URI = 'mongodb://localhost:27017/'
 MONGO_DB_NAME = 'oabutton-server-dev'
-MONGO_CLIENT = MongoClient(MONGO_URI)
+try:
+    MONGO_CLIENT = MongoClient(MONGO_URI)
+except:
+    MONGO_CLIENT = None
 
 def MONGO_DB():
     # Use this to get a connection to the database
