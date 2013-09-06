@@ -2,6 +2,8 @@
 
 import os
 from os.path import dirname, abspath, join
+from pymongo import MongoClient
+
 ROOT_PATH=dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
 
@@ -179,8 +181,9 @@ LOGGING = {
     }
 }
 
-from pymongo import MongoClient
-MONGO_URI = 'mongodb://localhost:27017/'
+MONGOLAB_URI = os.environ['MONGOLAB_URI']
+
+MONGO_URI = MONGOLAB_URI
 MONGO_DB_NAME = 'oabutton-server-dev'
 try:
     MONGO_CLIENT = MongoClient(MONGO_URI)
