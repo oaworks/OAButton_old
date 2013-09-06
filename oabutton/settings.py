@@ -188,7 +188,7 @@ LOGGING = {
 MONGOLAB_URI = os.environ['MONGOLAB_URI']
 
 MONGO_URI = MONGOLAB_URI
-MONGO_DB_NAME = 'oabutton-server-dev'
+MONGO_DBNAME = os.environ['MONGO_DBNAME']
 try:
     MONGO_CLIENT = MongoClient(MONGO_URI)
 except:
@@ -197,7 +197,7 @@ except:
 
 def MONGO_DB():
     # Use this to get a connection to the database
-    return getattr(MONGO_CLIENT, MONGO_DB_NAME)
+    return getattr(MONGO_CLIENT, MONGO_DBNAME)
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
