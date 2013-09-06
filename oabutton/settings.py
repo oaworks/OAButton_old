@@ -21,8 +21,8 @@ ADMINS = (
 MANAGERS = ADMINS
 
 # Switch this when you want local vs heroku setup
-#from settings_local import *
-from settings_heroku import *
+from settings_local import *
+#from settings_heroku import *
 
 DATABASES = {
     'default': DEFAULT_DB,
