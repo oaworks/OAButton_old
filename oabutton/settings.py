@@ -20,22 +20,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-PGSQL_HOST = os.environ['PGSQL_HOST']
-PGSQL_DB = os.environ['PGSQL_DB']
-PGSQL_USER = os.environ['PGSQL_USER']
-PGSQL_PASS = os.environ['PGSQL_PASS']
-MONGO_URI = os.environ['MONGOLAB_URI']
-MONGO_DBNAME = os.environ['MONGO_DBNAME']
+# Switch this when you want local vs heroku setup
+#from settings_local import *
+from settings_heroku import *
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': PGSQL_DB,
-        'USER': PGSQL_USER,
-        'PASSWORD': PGSQL_PASS,
-        'HOST': PGSQL_HOST,
-        'PORT': 5432,
-    }
+    'default': DEFAULT_DB,
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
