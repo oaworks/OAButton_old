@@ -20,14 +20,18 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+PGSQL_HOST = os.environ['PGSQL_HOST']
+PGSQL_DB = os.environ['PGSQL_DB']
+PGSQL_USER = os.environ['PGSQL_USER']
+PGSQL_PASS = os.environ['PGSQL_PASS']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'oabutton.sqlite3',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': PGSQL_DB,
+        'USER': PGSQL_USER,
+        'PASSWORD': PGSQL_PASS,
+        'HOST': PGSQL_HOST,
+        'PORT': 5432,
     }
 }
 
