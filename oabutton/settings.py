@@ -24,6 +24,9 @@ PGSQL_HOST = os.environ['PGSQL_HOST']
 PGSQL_DB = os.environ['PGSQL_DB']
 PGSQL_USER = os.environ['PGSQL_USER']
 PGSQL_PASS = os.environ['PGSQL_PASS']
+MONGO_URI = os.environ['MONGOLAB_URI']
+MONGO_DBNAME = os.environ['MONGO_DBNAME']
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -185,10 +188,8 @@ LOGGING = {
     }
 }
 
-MONGOLAB_URI = os.environ['MONGOLAB_URI']
 
-MONGO_URI = MONGOLAB_URI
-MONGO_DBNAME = os.environ['MONGO_DBNAME']
+
 try:
     MONGO_CLIENT = MongoClient(MONGO_URI)
 except:
@@ -198,10 +199,6 @@ except:
 def MONGO_DB():
     # Use this to get a connection to the database
     return getattr(MONGO_CLIENT, MONGO_DBNAME)
-
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES['default'] = dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
