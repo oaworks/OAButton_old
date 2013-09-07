@@ -103,7 +103,7 @@
   iframe.style.width = "350px";
   iframe.style.bottom = "0";
   iframe.style.right = "0";
-  iframe.style.overflow = "hidden";
+  iframe.style.overflow = "scroll";
 
   div.appendChild(iframe);
 })();
