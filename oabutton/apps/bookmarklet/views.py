@@ -90,8 +90,7 @@ def add_post(req):
     except Exception, e:
         return HttpResponseServerError(e)
 
-    scholar_url = ''
-    if req.POST['doi']:
-        scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST[
-            'doi']
-    return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url})
+    c = {'doi': req.POST['doi']}
+
+    return render_to_response('bookmarklet/success.html', c)
+
