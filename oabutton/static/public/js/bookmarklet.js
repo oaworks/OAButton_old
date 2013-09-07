@@ -131,10 +131,6 @@
 		div.style.overflowX = "hidden";
 		div.style.display = "block";
 
-		//closeButton = document.getElementById("closeButton");
-		//closeButton.style.position = "relative";
-		//closeButton.style.top = "0";
-		//closeButton.style.right = "330px";
 	}
 })();
 
