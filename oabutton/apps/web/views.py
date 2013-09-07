@@ -26,6 +26,3 @@ def homepage(req):
     return render_to_response('web/index.html',
             {'events': json_data, 
              'hostname': current_site.domain})
-
-
-

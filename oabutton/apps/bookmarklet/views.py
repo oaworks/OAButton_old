@@ -72,18 +72,23 @@ def add(req):
 
     return render_to_response('bookmarklet/index.html', c)
 
-def add_post(req):
-    data = req.POST
-    event = Event(
-            story=data['story'],
-            doi=data['doi'],
-            url=data['url'],
-            profession=data['profession'],
-            accessed=data['accessed'],
-            )
-
+def convert_post(data, event):
+    """
+    Serialize a HTTP POST dict and write it to an Event object
+    """
+    for k,v in data.items():
+        if k == 'coords':
+            # Skip coordinates
+            continue
+        setattr(event, k, v)
     lat, lng = data['coords'].split(',')
     event.coords = {'lat': lat, 'lng': lng}
+
+def add_post(req):
+    data = req.POST
+    event = Event()
+
+    convert_post(req.POST, event)
 
     try:
         event_dict = event.to_dict()
@@ -94,7 +99,6 @@ def add_post(req):
 
     scholar_url = ''
     if req.POST['doi']:
-
         scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST['doi']
     return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url})
 
