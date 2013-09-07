@@ -45,66 +45,96 @@
     return null;
   };
 
-  // get the base URL
-  var loader = document.body.lastChild;
-  var base = loader.getAttribute("src").match(/^https?:\/\/[^/]+/)[0];
-  loader.parentNode.removeChild(loader);
+  // ascertain if the bookmarklet has already been called
+  var exists = document.getElementById("OAButton");
 
-  // build the iframe URL
-  var url = base + "/api/add/?url=" + encodeURIComponent(window.location);
-  var doi = detectDOI();
-  if(doi !== null) {
-    url += "&doi=" + encodeURIComponent(doi);
-  }
+  if(exists == null)
+  {
 
-  // build the control div
-  var div = document.createElement("div");
-  div.setAttribute("allowTransparency", "true");
-  div.setAttribute("id", "OAButtonID");
+		// get the base URL
+		var loader = document.body.lastChild;
+		var base = loader.getAttribute("src").match(/^https?:\/\/[^/]+/)[0];
+		loader.parentNode.removeChild(loader);
 
-  div.style.position = "fixed";
-  div.style.zIndex = "2147483640";
-  div.style.boxSizing = "border-box";
-  div.style.MozBoxSizing = "border-box";
-  div.style.padding = "15px";
-  div.style.background = "white";
-  div.style.height = "100%";
-  div.style.width = "350px";
-  div.style.top = "0";
-  div.style.right = "0";
-  div.style.overflow = "hidden";
+		// build the iframe URL
+		var url = base + "/api/add/?url=" + encodeURIComponent(window.location);
+		var doi = detectDOI();
+		if(doi !== null) {
+		  url += "&doi=" + encodeURIComponent(doi);
+		}
 
-  document.body.appendChild(div);
+		// build the control div
+		var div = document.createElement("div");
+		div.setAttribute("allowTransparency", "true");
+		div.setAttribute("id", "OAButton");
 
-  // add the close button
-  var closeButton = document.createElement("a");
-  closeButton.setAttribute("href", "javascript:document.getElementById('OAButtonID').setAttribute('style', 'display:none')");
-  //closeButton.setAttribute("float", "left");
-  closeButton.appendChild(document.createTextNode("X"));
-  closeButton.style.zIndex = "2147483641";
-  closeButton.style.position = "fixed";
-  closeButton.style.position = "fixed";
+		div.style.position = "fixed";
+		div.style.zIndex = "2147483640";
+		div.style.boxSizing = "border-box";
+		div.style.MozBoxSizing = "border-box";
+		div.style.padding = "15px";
+		div.style.background = "white";
+		div.style.height = "100%";
+		div.style.width = "350px";
+		div.style.top = "0";
+		div.style.right = "0";
+		div.style.overflow = "scroll";
+		div.style.overflowX = "hidden";
 
-  div.appendChild(closeButton);
+		document.body.appendChild(div);
 
-  // add the iframe
-  var iframe = document.createElement("iframe");
-  iframe.setAttribute("allowTransparency", "true");
-  iframe.setAttribute("src", url);
+		// add the close button
+		var closeButton = document.createElement("a");
+		closeButton.setAttribute("href", "javascript:document.getElementById('OAButton').setAttribute('style', 'display:none')");
+		closeButton.setAttribute("id", "closeButton");
+		closeButton.appendChild(document.createTextNode("X"));
+		closeButton.style.zIndex = "2147483641";
+		closeButton.style.position = "relative";
+		closeButton.style.top = "0";
 
-  iframe.style.position = "fixed";
-  iframe.style.zIndex = "2147483640";
-  iframe.style.boxSizing = "border-box";
-  iframe.style.MozBoxSizing = "border-box";
-  iframe.style.padding = "15px";
-  iframe.style.borderLeft = "2px #555 dashed";
-  iframe.style.background = "white";
-  iframe.style.height = "100%";
-  iframe.style.width = "350px";
-  iframe.style.bottom = "0";
-  iframe.style.right = "0";
-  iframe.style.overflow = "hidden";
+		div.appendChild(closeButton);
 
-  div.appendChild(iframe);
+		// add the iframe
+		var iframe = document.createElement("iframe");
+		iframe.setAttribute("allowTransparency", "true");
+		iframe.setAttribute("src", url);
+
+		iframe.style.position = "fixed";
+		iframe.style.zIndex = "2147483640";
+		iframe.style.boxSizing = "border-box";
+		iframe.style.MozBoxSizing = "border-box";
+		iframe.style.padding = "15px";
+		iframe.style.borderLeft = "2px #555 dashed";
+		iframe.style.background = "white";
+		iframe.style.height = "100%";
+		iframe.style.width = "350px";
+		iframe.style.bottom = "0";
+		iframe.style.right = "0";
+
+		div.appendChild(iframe);
+	} else {
+		var div = exists;
+		div.setAttribute("allowTransparency", "true");
+		div.setAttribute("id", "OAButton");
+
+		div.style.position = "fixed";
+		div.style.zIndex = "2147483640";
+		div.style.boxSizing = "border-box";
+		div.style.MozBoxSizing = "border-box";
+		div.style.padding = "15px";
+		div.style.background = "white";
+		div.style.height = "100%";
+		div.style.width = "350px";
+		div.style.top = "0";
+		div.style.right = "0";
+		div.style.overflow = "scroll";
+		div.style.overflowX = "hidden";
+		div.style.display = "block";
+
+		//closeButton = document.getElementById("closeButton");
+		//closeButton.style.position = "relative";
+		//closeButton.style.top = "0";
+		//closeButton.style.right = "330px";
+	}
 })();
 
