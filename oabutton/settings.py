@@ -4,7 +4,7 @@ import os
 from os.path import dirname, abspath, join
 from pymongo import MongoClient
 
-ROOT_PATH=dirname(dirname(abspath(__file__)))
+ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
 
 print "ROOTPATH is: %s" % ROOT_PATH
@@ -20,7 +20,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-try: # Assume we're on heroku
+try:  # Assume we're on heroku
 
     PGSQL_HOST = os.environ['PGSQL_HOST']
     PGSQL_DB = os.environ['PGSQL_DB']
@@ -39,15 +39,17 @@ try: # Assume we're on heroku
     MONGO_URI = os.environ['MONGOLAB_URI']
     MONGO_DBNAME = os.environ['MONGO_DBNAME']
 
-except KeyError: # Fallback to localhost
+except KeyError:  # Fallback to localhost
 
     DEFAULT_DB = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'oabutton.sqlite3',      # Path to database file.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '',
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
     }
 
     MONGO_URI = 'mongodb://localhost:27017/'
@@ -113,7 +115,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -206,7 +208,6 @@ LOGGING = {
         },
     }
 }
-
 
 
 try:

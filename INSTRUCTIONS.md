@@ -23,6 +23,8 @@ virtualenv oab-env                   # Set up a new virtualenv (optional)
 
 pip install -r requirements.txt      # Install dependencies
 
+flake8 --install-hook                # Install the flake8 pre-commit hook
+                                     # Checks your code for PEP8 compliance
 ```
 
 ### Start mongodb
