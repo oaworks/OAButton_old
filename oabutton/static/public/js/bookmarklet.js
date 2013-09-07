@@ -57,6 +57,36 @@
     url += "&doi=" + encodeURIComponent(doi);
   }
 
+  // build the control div
+  var div = document.createElement("div");
+  div.setAttribute("allowTransparency", "true");
+  div.setAttribute("id", "OAButtonID");
+
+  div.style.position = "fixed";
+  div.style.zIndex = "2147483640";
+  div.style.boxSizing = "border-box";
+  div.style.MozBoxSizing = "border-box";
+  div.style.padding = "15px";
+  div.style.background = "white";
+  div.style.height = "100%";
+  div.style.width = "350px";
+  div.style.top = "0";
+  div.style.right = "0";
+  div.style.overflow = "hidden";
+
+  document.body.appendChild(div);
+
+  // add the close button
+  var closeButton = document.createElement("a");
+  closeButton.setAttribute("href", "javascript:document.getElementById('OAButtonID').setAttribute('style', 'display:none')");
+  //closeButton.setAttribute("float", "left");
+  closeButton.appendChild(document.createTextNode("X"));
+  closeButton.style.zIndex = "2147483641";
+  closeButton.style.position = "fixed";
+  closeButton.style.position = "fixed";
+
+  div.appendChild(closeButton);
+
   // add the iframe
   var iframe = document.createElement("iframe");
   iframe.setAttribute("allowTransparency", "true");
@@ -71,10 +101,10 @@
   iframe.style.background = "white";
   iframe.style.height = "100%";
   iframe.style.width = "350px";
-  iframe.style.top = "0";
+  iframe.style.bottom = "0";
   iframe.style.right = "0";
   iframe.style.overflow = "hidden";
 
-  document.body.appendChild(iframe);
+  div.appendChild(iframe);
 })();
 
