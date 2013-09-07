@@ -1,3 +1,6 @@
+[![Build
+Status](https://travis-ci.org/OAButton/server.png?branch=features/issue_71)](https://travis-ci.org/OAButton/server)
+
 ## Open Access Button Prototype
 
 A prototype version of the Open Access Button idea explained in [this blog](http://oabutton.wordpress.com/2013/07/06/our-project-short-version/).

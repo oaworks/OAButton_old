@@ -1,2 +1,1 @@
-dev: supervisor app.coffee
-web: node web.js
+web: gunicorn oabutton.wsgi

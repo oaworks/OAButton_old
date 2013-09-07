@@ -51,7 +51,7 @@
   loader.parentNode.removeChild(loader);
 
   // build the iframe URL
-  var url = base + "/add?url=" + encodeURIComponent(window.location);
+  var url = base + "/api/add/?url=" + encodeURIComponent(window.location);
   var doi = detectDOI();
   if(doi !== null) {
     url += "&doi=" + encodeURIComponent(doi);
