@@ -72,7 +72,8 @@
   div.style.width = "350px";
   div.style.top = "0";
   div.style.right = "0";
-  div.style.overflow = "hidden";
+  div.style.overflow = "scroll";
+  div.style.overflowX = "hidden";
 
   document.body.appendChild(div);
 
@@ -103,7 +104,8 @@
   iframe.style.width = "350px";
   iframe.style.bottom = "0";
   iframe.style.right = "0";
-  iframe.style.overflow = "hidden";
+  iframe.style.overflow = "scroll";
+  iframe.style.overflowX = "hidden";
 
   div.appendChild(iframe);
 })();
