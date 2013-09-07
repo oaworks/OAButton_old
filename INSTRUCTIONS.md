@@ -13,28 +13,29 @@
 Clone the [git repository](https://github.com/OAButton/server) and set
 up:
 ```
-git clone https://github.com/OAButton/server.git /path/to/repo # clone the project code
+git clone https://github.com/OAButton/server.git /path/to/repo
 cd /path/to/repo                     # Switch to the directory where
                                      # you've cloned the repo
 git checkout django                  # Switch to the django branch
 
 virtualenv oab-env                   # Set up a new virtualenv (optional)
-source oab-env/bin/activate          # Activate the virtualenv (optional)
+. oab-env/bin/activate               # Activate the virtualenv (optional)
 
-pip install -r requirements.txt # Install dependencies
+pip install -r requirements.txt      # Install dependencies
 
-cd oabutton                          # Switch to the django home directory
 ```
-
 
 ### Start mongodb
 
-If the mongodb daemon is not running yet, you can start it locally
-with:
+If the mongodb daemon is not running yet, you can start it locally with
 ```
 mongod --smallfiles -v
 ```
 
+If you have installed MongoDB via your Debian/Ubuntu package mangager, do
+```
+sudo service mongodb start
+```
 
 ### Synchronise the database
 
@@ -42,6 +43,8 @@ This will set up the database ready to use. You only have to do this once:
 ```
 python manage.py syncdb
 ```
+You will be prompted to create a superuser. Reply yes and follow the
+instructions.
 
 
 ### Start the webserver
@@ -70,7 +73,7 @@ provision a development VM for you.
 
 ### Running the tests
 
-From the directory with the file manage.py in it :
+From the directory with the file manage.py in it
 ```
 python manage.py test bookmarklet web
 ```

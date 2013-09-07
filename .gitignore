@@ -1,4 +1,4 @@
-env
+oab-env
 build
 *.pyc
 *.sqlite3
