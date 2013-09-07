@@ -7,6 +7,7 @@ except:
 
 # Create your models here.
 
+
 class Event(models.Model):
     name = models.CharField(max_length=255)
     profession = models.CharField(max_length=255)
@@ -19,7 +20,8 @@ class Event(models.Model):
 
     def set_coords(self, coords):
         """Expect a comma separated string of float """
-        self.coords_lat, self.coords_lng = str(coords['lat']), str(coords['lng'])
+        self.coords_lat, self.coords_lng = str(
+            coords['lat']), str(coords['lng'])
 
     def get_coords(self):
         """Return a comma separated string of floats"""
