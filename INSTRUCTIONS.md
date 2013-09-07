@@ -44,6 +44,13 @@ python manage.py runserver
 
  * You must be in your virtualenv before you start hacking on oabutton.  
  * You can start your virtualenv using (`source env/bin/activate`).
+ * settings.py must be import from settings_local.py
+
+### Heroku deployment
+
+ * Ensure that settings.py imports from settings_heroku.py
+ * Initial Postgresql Syncing of the database is done with: `heroku run python manage.py syncdb`
+   * See: https://devcenter.heroku.com/articles/getting-started-with-django
 
 
 ### Running the tests
