@@ -24,5 +24,6 @@ def homepage(req):
     json_data = dumps(all_events, cls=MyEncoder)
 
     return render_to_response('web/index.html',
-            {'events': json_data, 
+            {'count': len(all_events),
+             'events': json_data, 
              'hostname': current_site.domain})
