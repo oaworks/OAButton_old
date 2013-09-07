@@ -21,8 +21,7 @@ git checkout django                  # Switch to the django branch
 virtualenv oab-env                   # Set up a new virtualenv (optional)
 source oab-env/bin/activate          # Activate the virtualenv (optional)
 
-pip install -r requirements/prod.txt # Install dependencies
-pip install -r requirements/dev.txt  # Install dev dependencies (optional)
+pip install -r requirements.txt # Install dependencies
 
 cd oabutton                          # Switch to the django home directory
 ```

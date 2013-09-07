@@ -7,15 +7,14 @@ VAGRANTFILE_API_VERSION = "2"
 $PROVISION_SCRIPT = <<SCRIPT
 
 apt-get update
-apt-get install -y mongodb python python-dev python-pip python-virtualenv
+apt-get install -y mongodb postgresql libpq-dev python python-dev python-pip python-virtualenv
 
 cd /vagrant
 
 virtualenv env
 source env/bin/activate
 
-pip install -r requirements/prod.txt
-pip install -r requirements/dev.txt
+pip install -r requirements.txt
 
 SCRIPT
 
