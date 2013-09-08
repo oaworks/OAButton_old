@@ -4,7 +4,7 @@
     var nodes, node, childNode, matches, i, j;
 
     // match DOI: test on http://t.co/eIJciunBRJ
-    var doi_re = /10\.\d{4,}(?:\.\d+)*\/\S+/;
+    var doi_re = /\b10\.\d{4,}(?:\.\d+)*\/\S+\b/;
 
     // look for meta[name=citation_doi][content]
     nodes = document.getElementsByTagName("meta");
