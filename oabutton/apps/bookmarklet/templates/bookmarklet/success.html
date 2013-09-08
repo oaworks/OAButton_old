@@ -4,6 +4,6 @@
 <ul id="oa_links">
 </ul>
 {% endblock %}
-{%- block scripts %}
+{% block scripts %}
 <script src="/static/js/success.js"></script>{% endblock %}
-{%- block body_attrs %}data-doi="{{doi|urlencode}}"{% endblock %}
+{% block body_attrs %}data-doi="{{doi|urlencode}}"{% endblock %}

@@ -93,4 +93,3 @@ def add_post(req):
     c = {'doi': req.POST['doi']}
 
     return render_to_response('bookmarklet/success.html', c)
-
