@@ -36,4 +36,4 @@ class SimpleTest(TestCase):
 
         response = self.client.get('/')
         assert response.context['count'] == 2
-        assert response.content.find("<h1>2<small>Scholarly pursuits") != -1
+        assert response.content.find("<h1>2<small> Scholarly pursuits") != -1
