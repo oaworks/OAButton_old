@@ -20,38 +20,35 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-PGSQL_HOST = os.environ['PGSQL_HOST']
-PGSQL_DB = os.environ['PGSQL_DB']
-PGSQL_USER = os.environ['PGSQL_USER']
-PGSQL_PASS = os.environ['PGSQL_PASS']
+try:
+    PGSQL_HOST = os.environ['PGSQL_HOST']
+    PGSQL_DB = os.environ['PGSQL_DB']
+    PGSQL_USER = os.environ['PGSQL_USER']
+    PGSQL_PASS = os.environ['PGSQL_PASS']
+    DEFAULT_DB = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': PGSQL_DB,
+        'USER': PGSQL_USER,
+        'PASSWORD': PGSQL_PASS,
+        'HOST': PGSQL_HOST,
+        'PORT': 5432,
+    }
+    MONGO_URI = os.environ['MONGOLAB_URI']
+    MONGO_DBNAME = os.environ['MONGO_DBNAME']
+except KeyError:  # Fallback to localhost
+    DEFAULT_DB = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'oabutton.sqlite3',      # Path to database file.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '',
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
+    }
 
-DEFAULT_DB = {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': PGSQL_DB,
-    'USER': PGSQL_USER,
-    'PASSWORD': PGSQL_PASS,
-    'HOST': PGSQL_HOST,
-    'PORT': 5432,
-}
-
-MONGO_URI = os.environ['MONGOLAB_URI']
-MONGO_DBNAME = os.environ['MONGO_DBNAME']
-
-#except KeyError:  # Fallback to localhost
-#
-#    DEFAULT_DB = {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': 'oabutton.sqlite3',      # Path to database file.
-#        'USER': '',                      # Not used with sqlite3.
-#        'PASSWORD': '',                  # Not used with sqlite3.
-#        # Set to empty string for localhost. Not used with sqlite3.
-#        'HOST': '',
-#        # Set to empty string for default. Not used with sqlite3.
-#        'PORT': '',
-#    }
-#
-#    MONGO_URI = 'mongodb://localhost:27017/'
-#    MONGO_DBNAME = 'oabutton-server-dev'
+    MONGO_URI = 'mongodb://localhost:27017/'
+    MONGO_DBNAME = 'oabutton-server-dev'
 
 DATABASES = {
     'default': DEFAULT_DB,
