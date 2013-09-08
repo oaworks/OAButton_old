@@ -194,8 +194,8 @@ if os.environ.has_key('HEROKU'):
             password=data['password'])
     HOSTNAME=os.environ['HOST']
 else:
-    HOSTNAME='localhost:8000'
     connect('oabutton-server-dev', port=27017)
+    HOSTNAME='localhost:8000'
 
 
 # MongoEngine support requires overloading the session storage and the

@@ -6,8 +6,6 @@ from models import Event
 from django.conf import settings
 from datetime import datetime
 
-from .models import User
-
 def show_map(req):
     # TODO: we need to make this smarter.  Coallescing the lat/long
     # data on a nightly basis and folding that down into clustered
@@ -45,20 +43,6 @@ def add(req):
 
     return render_to_response('bookmarklet/index.html', c)
 
-
-def convert_post(data, event):
-    """
-    Serialize a HTTP POST dict and write it to an Event object
-    """
-    for k, v in data.items():
-        if k == 'coords':
-            # Skip coordinates
-            continue
-        setattr(event, k, v)
-    lat, lng = data['coords'].split(',')
-    event.coords = {'lat': lat, 'lng': lng}
-
-
 def add_post(req):
     evt_dict = {}
     for k in Event._fields.keys():
@@ -86,4 +70,3 @@ def add_post(req):
 def generate_bookmarklet(req, user_id): 
     return render_to_response('bookmarklet/bookmarklet.html',
             {'user_id': user_id}, content_type="application/javascript")
-

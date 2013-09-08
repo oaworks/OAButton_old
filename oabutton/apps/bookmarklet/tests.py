@@ -12,7 +12,6 @@ import datetime
 
 from test_mongoauth import MongoAuthTest
 
-
 class APITest(TestCase):
     def test_add_post(self):
         '''
@@ -49,4 +48,3 @@ class APITest(TestCase):
         'email': None}
         for k, v in expected.items():
             assert getattr(evt, k) == v
-
