@@ -2,14 +2,11 @@
 
 import os
 from os.path import dirname, abspath, join
-from pymongo import MongoClient
+from mongoengine import connect
+import re
 
 ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
-
-print "ROOTPATH is: %s" % ROOT_PATH
-print "STATIC_PUBLIC is: %s" % STATIC_PUBLIC
-
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -20,44 +17,11 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-try:  # Assume we're on heroku
-
-    PGSQL_HOST = os.environ['PGSQL_HOST']
-    PGSQL_DB = os.environ['PGSQL_DB']
-    PGSQL_USER = os.environ['PGSQL_USER']
-    PGSQL_PASS = os.environ['PGSQL_PASS']
-
-    DEFAULT_DB = {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': PGSQL_DB,
-        'USER': PGSQL_USER,
-        'PASSWORD': PGSQL_PASS,
-        'HOST': PGSQL_HOST,
-        'PORT': 5432,
-    }
-
-    MONGO_URI = os.environ['MONGOLAB_URI']
-    MONGO_DBNAME = os.environ['MONGO_DBNAME']
-
-except KeyError:  # Fallback to localhost
-
-    DEFAULT_DB = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'oabutton.sqlite3',      # Path to database file.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        # Set to empty string for localhost. Not used with sqlite3.
-        'HOST': '',
-        # Set to empty string for default. Not used with sqlite3.
-        'PORT': '',
-    }
-
-    MONGO_URI = 'mongodb://localhost:27017/'
-    MONGO_DBNAME = 'oabutton-server-dev'
-
 DATABASES = {
-    'default': DEFAULT_DB,
-}
+            'default': {
+                        'ENGINE': 'django.db.backends.dummy'
+                            }
+            }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -161,9 +125,11 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'django.contrib.auth',
+    'mongoengine.django.mongo_auth',
+
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
+
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -179,6 +145,8 @@ INSTALLED_APPS = (
     # The web app is the main website
     'oabutton.apps.web',
 )
+AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+SESSION_ENGINE = 'mongoengine.django.sessions'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -209,16 +177,22 @@ LOGGING = {
     }
 }
 
-
-try:
-    MONGO_CLIENT = MongoClient(MONGO_URI)
-except:
-    MONGO_CLIENT = None
-
-
-def MONGO_DB():
-    # Use this to get a connection to the database
-    return getattr(MONGO_CLIENT, MONGO_DBNAME)
-
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Bind MongoEngine
+
+regex = re.compile(r'^mongodb\:\/\/(?P<username>[_\w]+):(?P<password>[\w]+)@(?P<host>[\.\w]+):(?P<port>\d+)/(?P<database>[_\w]+)$')
+
+# now connect
+try:
+    # grab the MONGOLAB_URI
+    mongolab_url = os.environ['MONGOLAB_URI']
+    match = regex.search(mongolab_url)
+    data = match.groupdict()
+    connect(data['database'], host=data['host'],
+            port=int(data['port']), username=data['username'],
+            password=data['password'])
+
+except:
+    connect('oabutton-server-dev', port=27017)
