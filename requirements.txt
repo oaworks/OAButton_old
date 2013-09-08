@@ -10,6 +10,7 @@ django-social-auth==0.7.25
 djangorestframework==2.3.7
 docutils==0.11
 flake8
+gunicorn==18.0
 httplib2==0.8
 mock==1.0.1
 oauth2==1.5.211
