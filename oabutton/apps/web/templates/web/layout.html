@@ -25,12 +25,25 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
   <script src="/static/js/leaflet.markercluster-src.js"></script>
   <script>
-    var map = L.map('map').setView([0, 0], 2);
+    var map = L.map('map', {
+      center: [20, 0],
+      maxZoom: 18,
+      minZoom: 2,
+      scrollWheelZoom: false,
+      touchZoom: false,
+      zoom: 2
+    });
     L.tileLayer('http://{s}.tile.cloudmade.com/cee9bfb83d854a2f89a4a2445aa9f595/997/256/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-    maxZoom: 18
-    }).addTo(map);
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+      }).addTo(map);
     var events = {{ events|safe }};
+
+    var oaIcon = L.icon({
+        iconUrl: 'static/img/noalogo.png',
+        iconSize: [12, 19],
+        iconAnchor: [6, 9],
+        popupAnchor: [0, -12]
+    });
 
     var markers = new L.MarkerClusterGroup();
     for (var i = 0; i < events.length; i++) {
@@ -47,7 +60,7 @@
         bubble_content += ' | ';
         bubble_content += events[i].calendar_date || '';
 
-        var marker = new L.marker([events[i].coords.lat, events[i].coords.lng], { title: bubble_content });
+        var marker = new L.marker([events[i].coords.lat, events[i].coords.lng], { title: bubble_content, icon: oaIcon });
         marker.bindPopup(bubble_content);
 
         markers.addLayer(marker);
