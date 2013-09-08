@@ -7,63 +7,43 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from django.test.client import Client
-from django.test.utils import override_settings
-from mock import MagicMock
 from oabutton.apps.bookmarklet.models import Event
-from oabutton.apps.bookmarklet.views import convert_post
-from oabutton.json_util import MyEncoder
-import json
+import datetime
 
 
-@override_settings(MONGO_DB=MagicMock())
-class SimpleTest(TestCase):
-
-    def test_events_to_dict(self):
-        event = Event()
-        event.coords = {'lat': 44, 'lng': -22.45}
-        event.save()
-        jdata = json.dumps(event.to_dict(), cls=MyEncoder)
-        new_event = Event()
-        new_event.from_json(jdata)
-        assert event.id == new_event.id
-        assert event.coords == new_event.coords
-
-    def test_stories(self):
-        # TODO: add a test to make sure we're grabbing only the last
-        # 50 stories in reverse chronological order
-        pass
-
+class APITest(TestCase):
     def test_add_post(self):
         '''
         We need to make sure all fields of the Event object are
         serialized back to MongoDB
         '''
-        POST_DATA = {'name': 'mock name',
-                     'profession': 'mock profession',
-                     'location': 'mock location',
-                     'coords': '33.2,21.9',
-                     'accessed': '2013-09-07T04:21:02.407511',
-                     'pub_date': '2013-10-07T04:21:02.407511',
-                     'doi': 'some.doi',
-                     'url': 'http://some.url/some_path',
-                     'story': 'some_story',
-                     'email': 'foo@blah.com'}
+        POST_DATA = {u'story': [u'some access requirement'],
+        u'doi': [u'10.1016/j.urology.2010.05.009.'],
+        u'name': [u'Victor Ng'],
+        u'url': [u'http://www.ncbi.nlm.nih.gov/pubmed/20709373'],
+        u'remember': [u'on'],
+        u'profession': [u'engineer'],
+        u'coords': [u'44,-79.5'],
+        u'location': [u''],
+        u'accessed': [u'Mon, 09 Sep 2013 14:54:42 GMT'],
+        u'description': [u'some description']}
 
         c = Client()
         response = c.post('/api/post/', POST_DATA)
 
         assert response.status_code == 200
 
-        from django.conf import settings
-        db = settings.MONGO_DB()
+        evt = Event.objects.get(id=response.context['oid'])
 
-        event = Event()
-        convert_post(POST_DATA, event)
-
-        MONGO_DATA = event.to_dict()
-        db.events.insert.assert_called_with(MONGO_DATA)
-
-        # Verify that all keys are at least in the MONGO_DATA
-        for k in POST_DATA:
-            assert k in MONGO_DATA
-        assert MONGO_DATA['coords'] == {'lat': '33.2', 'lng': '21.9'}
+        expected = {
+        'doi': u'10.1016/j.urology.2010.05.009.', 
+        'name': u'Victor Ng', 
+        'url': u'http://www.ncbi.nlm.nih.gov/pubmed/20709373',
+        'profession': u'engineer', 
+        'coords': {u'lat': 44.0, u'lng': -79.5}, 
+        'location': None,
+        'accessed': datetime.datetime(2013, 9, 9, 14, 54, 42),
+        'pub_date': None, 
+        'email': None}
+        for k, v in expected.items():
+            assert getattr(evt, k) == v

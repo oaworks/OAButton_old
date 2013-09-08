@@ -2,14 +2,11 @@
 
 import os
 from os.path import dirname, abspath, join
-from pymongo import MongoClient
+from mongoengine import connect
+import re
 
 ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
-
-print "ROOTPATH is: %s" % ROOT_PATH
-print "STATIC_PUBLIC is: %s" % STATIC_PUBLIC
-
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -20,39 +17,17 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-try:
-    PGSQL_HOST = os.environ['PGSQL_HOST']
-    PGSQL_DB = os.environ['PGSQL_DB']
-    PGSQL_USER = os.environ['PGSQL_USER']
-    PGSQL_PASS = os.environ['PGSQL_PASS']
-    DEFAULT_DB = {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': PGSQL_DB,
-        'USER': PGSQL_USER,
-        'PASSWORD': PGSQL_PASS,
-        'HOST': PGSQL_HOST,
-        'PORT': 5432,
-    }
-    MONGO_URI = os.environ['MONGOLAB_URI']
-    MONGO_DBNAME = os.environ['MONGO_DBNAME']
-except KeyError:  # Fallback to localhost
-    DEFAULT_DB = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'oabutton.sqlite3',      # Path to database file.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        # Set to empty string for localhost. Not used with sqlite3.
-        'HOST': '',
-        # Set to empty string for default. Not used with sqlite3.
-        'PORT': '',
-    }
-
-    MONGO_URI = 'mongodb://localhost:27017/'
-    MONGO_DBNAME = 'oabutton-server-dev'
-
-DATABASES = {
-    'default': DEFAULT_DB,
-}
+# This is only used to satisfy the test infrastructure
+DATABASES = {'default': {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': 'oabutton.sqlite3',      # Path to database file.
+    'USER': '',                      # Not used with sqlite3.
+    'PASSWORD': '',                  # Not used with sqlite3.
+    # Set to empty string for localhost. Not used with sqlite3.
+    'HOST': '',
+    # Set to empty string for default. Not used with sqlite3.
+    'PORT': '',
+    }}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -156,17 +131,18 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'django.contrib.auth',
+    'mongoengine.django.mongo_auth',
+
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
+
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Enable the Django admin
+    # The Django admin assumes you're running on a RDBMS and isn't
+    # suitable for a pure MongoDB 
+    # Do *not* enable it.
     'django.contrib.admin',
-
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 
     # The bookmarklet app is really just the REST API
     'oabutton.apps.bookmarklet',
@@ -204,16 +180,33 @@ LOGGING = {
     }
 }
 
-
-try:
-    MONGO_CLIENT = MongoClient(MONGO_URI)
-except:
-    MONGO_CLIENT = None
-
-
-def MONGO_DB():
-    # Use this to get a connection to the database
-    return getattr(MONGO_CLIENT, MONGO_DBNAME)
-
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
+
+
+# Bind MongoEngine
+if os.environ.has_key('HEROKU'):
+    MONGOLAB_REGEX = re.compile(r'^mongodb\:\/\/(?P<username>[_\w]+):(?P<password>[\w]+)@(?P<host>[\.\w]+):(?P<port>\d+)/(?P<database>[_\w]+)$')
+    # grab the MONGOLAB_URI
+    mongolab_url = os.environ['MONGOLAB_URI']
+    match = MONGOLAB_REGEX.search(mongolab_url)
+    data = match.groupdict()
+    connect(data['database'], host=data['host'],
+            port=int(data['port']), username=data['username'],
+            password=data['password'])
+    HOSTNAME=os.environ['HOST']
+else:
+    HOSTNAME='localhost'
+    connect('oabutton-server-dev', port=27017)
+
+
+# MongoEngine support requires overloading the session storage and the
+# authentication backends
+SESSION_ENGINE = 'mongoengine.django.sessions'
+AUTHENTICATION_BACKENDS = (
+        'mongoengine.django.auth.MongoEngineBackend',
+        )
+AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'

@@ -4,16 +4,7 @@ from django.shortcuts import render_to_response
 from django.core import serializers
 from models import Event
 from django.conf import settings
-
-
-def show_stories(req):
-    # we only grab the 50 latest stories
-    # the original node code grabbed all stories which will kill your
-    # database
-    latest_stories = Event.objects.all().order_by('-pub_date')[:50]
-    count = Event.objects.count()
-    context = {'title': 'Stories', 'events': latest_stories, 'count': count}
-    return render_to_response('bookmarklet/site/stories.html', context)
+from datetime import datetime
 
 
 def show_map(req):
@@ -80,18 +71,26 @@ def convert_post(data, event):
 
 
 def add_post(req):
-    event = Event()
-    convert_post(req.POST, event)
 
-    try:
-        event_dict = event.to_dict()
-        db = settings.MONGO_DB()
-        db.events.insert(event_dict)
-    except Exception, e:
-        return HttpResponseServerError(e)
+    evt_dict = {}
+    for k in Event._fields.keys():
+        if k == 'id':
+            continue
+        evt_dict[k] = req.POST.get(k, '')
+
+        if evt_dict[k] == '':
+            evt_dict[k] = None
+
+    lat, lng = evt_dict['coords'].split(',')
+    evt_dict['coords'] = {'lat': float(lat), 'lng': float(lng)}
+    if evt_dict['accessed'] != '':
+        evt_dict['accessed'] = datetime.strptime(evt_dict['accessed'], "%a, %d %b %Y %H:%M:%S %Z")
+
+    event = Event(**evt_dict)
+    event.save()
 
     scholar_url = ''
     if req.POST['doi']:
         scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST[
             'doi']
-    return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url})
+    return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url, 'oid': str(event.id)})
