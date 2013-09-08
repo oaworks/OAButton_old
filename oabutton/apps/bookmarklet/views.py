@@ -82,13 +82,7 @@ def convert_post(data, event):
 def add_post(req):
     event = Event()
     convert_post(req.POST, event)
-
-    try:
-        event_dict = event.to_dict()
-        db = settings.MONGO_DB()
-        db.events.insert(event_dict)
-    except Exception, e:
-        return HttpResponseServerError(e)
+    event.save()
 
     scholar_url = ''
     if req.POST['doi']:
