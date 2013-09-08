@@ -1,16 +1,10 @@
 from django.http import HttpResponse, HttpResponseServerError
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
-from django.template import RequestContext
 from django.core import serializers
 from models import Event
 from django.conf import settings
 
-
-try:
-    from simplejson import dumps
-except:
-    from json import dumps
 
 def show_stories(req):
     # we only grab the 50 latest stories
@@ -19,7 +13,7 @@ def show_stories(req):
     latest_stories = Event.objects.all().order_by('-pub_date')[:50]
     count = Event.objects.count()
     context = {'title': 'Stories', 'events': latest_stories, 'count': count}
-    return render(req, 'bookmarklet/site/stories.html', context)
+    return render_to_response('bookmarklet/site/stories.html', context)
 
 
 def show_map(req):
@@ -37,11 +31,10 @@ def show_map(req):
         # clustering
         json_data = serializers.serialize("json", all_events)
 
-        context = {'title': 'Map', 'events': json_data, 'count': count }
+        context = {'title': 'Map', 'events': json_data, 'count': count}
         return render_to_response(req, 'bookmarklet/site/map.html', context)
     except Exception, e:
-      return HttpResponseServerError(e)
-
+        return HttpResponseServerError(e)
 
 
 def get_json(req):
@@ -49,6 +42,7 @@ def get_json(req):
     # dataset gets large.
     json_data = serializers.serialize("json", Event.objects.all())
     return HttpResponse(json_data, content_type="application/json")
+
 
 def add(req):
     c = {}
@@ -62,21 +56,21 @@ def add(req):
     doi = ''
     url = ''
     if 'url' in req.GET:
-        url =  req.GET['url']
+        url = req.GET['url']
 
     if 'doi' in req.GET:
         doi = req.GET['doi']
 
     c.update({'url': url, 'doi': doi})
 
-
     return render_to_response('bookmarklet/index.html', c)
+
 
 def convert_post(data, event):
     """
     Serialize a HTTP POST dict and write it to an Event object
     """
-    for k,v in data.items():
+    for k, v in data.items():
         if k == 'coords':
             # Skip coordinates
             continue
@@ -84,21 +78,20 @@ def convert_post(data, event):
     lat, lng = data['coords'].split(',')
     event.coords = {'lat': lat, 'lng': lng}
 
-def add_post(req):
-    data = req.POST
-    event = Event()
 
+def add_post(req):
+    event = Event()
     convert_post(req.POST, event)
 
     try:
         event_dict = event.to_dict()
         db = settings.MONGO_DB()
-        doc_id = db.events.insert(event_dict)
+        db.events.insert(event_dict)
     except Exception, e:
-      return HttpResponseServerError(e)
+        return HttpResponseServerError(e)
 
     scholar_url = ''
     if req.POST['doi']:
-        scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST['doi']
+        scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST[
+            'doi']
     return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url})
-

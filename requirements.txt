@@ -9,8 +9,8 @@ django-filter==0.7
 django-social-auth==0.7.25
 djangorestframework==2.3.7
 docutils==0.11
+flake8
 httplib2==0.8
-ipython==1.0.0
 mock==1.0.1
 oauth2==1.5.211
 psycopg2==2.5.1

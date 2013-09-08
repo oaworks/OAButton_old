@@ -1,7 +1,4 @@
-from django.http import HttpResponse, HttpResponseServerError
-from django.core import serializers
 from django.shortcuts import render_to_response
-from django.core import serializers
 from django.conf import settings
 
 from json import dumps
@@ -24,6 +21,6 @@ def homepage(req):
     json_data = dumps(all_events, cls=MyEncoder)
 
     return render_to_response('web/index.html',
-            {'count': len(all_events),
-             'events': json_data, 
-             'hostname': current_site.domain})
+                              {'count': len(all_events),
+                               'events': json_data,
+                               'hostname': current_site.domain})

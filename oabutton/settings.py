@@ -4,7 +4,7 @@ import os
 from os.path import dirname, abspath, join
 from pymongo import MongoClient
 
-ROOT_PATH=dirname(dirname(abspath(__file__)))
+ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
 
 print "ROOTPATH is: %s" % ROOT_PATH
@@ -20,9 +20,40 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# Switch this when you want local vs heroku setup
-from settings_local import *
-#from settings_heroku import *
+try:  # Assume we're on heroku
+
+    PGSQL_HOST = os.environ['PGSQL_HOST']
+    PGSQL_DB = os.environ['PGSQL_DB']
+    PGSQL_USER = os.environ['PGSQL_USER']
+    PGSQL_PASS = os.environ['PGSQL_PASS']
+
+    DEFAULT_DB = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': PGSQL_DB,
+        'USER': PGSQL_USER,
+        'PASSWORD': PGSQL_PASS,
+        'HOST': PGSQL_HOST,
+        'PORT': 5432,
+    }
+
+    MONGO_URI = os.environ['MONGOLAB_URI']
+    MONGO_DBNAME = os.environ['MONGO_DBNAME']
+
+except KeyError:  # Fallback to localhost
+
+    DEFAULT_DB = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'oabutton.sqlite3',      # Path to database file.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '',
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
+    }
+
+    MONGO_URI = 'mongodb://localhost:27017/'
+    MONGO_DBNAME = 'oabutton-server-dev'
 
 DATABASES = {
     'default': DEFAULT_DB,
@@ -84,7 +115,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -177,7 +208,6 @@ LOGGING = {
         },
     }
 }
-
 
 
 try:

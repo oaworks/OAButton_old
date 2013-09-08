@@ -12,7 +12,6 @@ from mock import MagicMock
 from oabutton.apps.bookmarklet.models import Event
 from oabutton.apps.bookmarklet.views import convert_post
 from oabutton.json_util import MyEncoder
-import datetime
 import json
 
 
@@ -40,15 +39,15 @@ class SimpleTest(TestCase):
         serialized back to MongoDB
         '''
         POST_DATA = {'name': 'mock name',
-               'profession': 'mock profession',
-               'location': 'mock location',
-               'coords': '33.2,21.9',
-               'accessed': '2013-09-07T04:21:02.407511',
-               'pub_date': '2013-10-07T04:21:02.407511',
-               'doi': 'some.doi',
-               'url': 'http://some.url/some_path',
-               'story': 'some_story',
-               'email': 'foo@blah.com'}
+                     'profession': 'mock profession',
+                     'location': 'mock location',
+                     'coords': '33.2,21.9',
+                     'accessed': '2013-09-07T04:21:02.407511',
+                     'pub_date': '2013-10-07T04:21:02.407511',
+                     'doi': 'some.doi',
+                     'url': 'http://some.url/some_path',
+                     'story': 'some_story',
+                     'email': 'foo@blah.com'}
 
         c = Client()
         response = c.post('/api/post/', POST_DATA)
@@ -68,4 +67,3 @@ class SimpleTest(TestCase):
         for k in POST_DATA:
             assert k in MONGO_DATA
         assert MONGO_DATA['coords'] == {'lat': '33.2', 'lng': '21.9'}
-
