@@ -34,7 +34,7 @@
 
     var markers = new L.MarkerClusterGroup();
     for (var i = 0; i < events.length; i++) {
-      if(events[i].coords.length !== 0) {
+      if(events[i].coords.lat && events[i].coords.lng) {
         bubble_content = '<h4>' + events[i].name;
         if (events[i].profession != '') {
           bubble_content += ' <em>(' + events[i].profession + ')</em>';
