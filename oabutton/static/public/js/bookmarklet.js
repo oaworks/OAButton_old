@@ -3,9 +3,6 @@
   var detectDOI = function() {
     var nodes, node, childNode, matches, i, j;
 
-    // match DOI: test on http://t.co/eIJciunBRJ
-    var doi_re = /\b10\.\d{4,}(?:\.\d+)*\/\S+\b/;
-
     // look for meta[name=citation_doi][content]
     nodes = document.getElementsByTagName("meta");
     for (i = 0; i < nodes.length; i++) {
@@ -15,6 +12,9 @@
         return node.getAttribute("content").replace(/^doi:/, "");
       }
     }
+
+    // match DOI: test on http://t.co/eIJciunBRJ
+    var doi_re = /10\.\d{4,}(?:\.\d+)*\/\S+/;
 
     // look in all text nodes for a DOI
     nodes = document.getElementsByTagName("*");
@@ -38,7 +38,8 @@
         }
 
         if (matches = doi_re.exec(childNode.nodeValue)) {
-          return matches[0];
+          // if present, remove trailing full stop
+          return matches[0].replace(/\.$/, '');
         }
       }
     }
