@@ -198,7 +198,7 @@ if os.environ.has_key('HEROKU'):
             password=data['password'])
     HOSTNAME=os.environ['HOST']
 else:
-    HOSTNAME='localhost'
+    HOSTNAME='localhost:8000'
     connect('oabutton-server-dev', port=27017)
 
 

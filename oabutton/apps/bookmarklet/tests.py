@@ -47,3 +47,8 @@ class APITest(TestCase):
         'email': None}
         for k, v in expected.items():
             assert getattr(evt, k) == v
+
+    def test_show_map(self):
+        """
+        TODO: Need to verify that the output JSON data format is stable
+        """

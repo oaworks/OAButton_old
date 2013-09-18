@@ -11,22 +11,10 @@ def show_map(req):
     # TODO: we need to make this smarter.  Coallescing the lat/long
     # data on a nightly basis and folding that down into clustered
     # points would mean we throw less data down to the browser
-    try:
-        db = settings.MONGO_DB()
-        all_events = [evt for evt in db.events.find()]
-
-        # TODO: use a mongo count function here
-        count = len(all_events)
-
-        # TODO: Need to do this an async call and roll up stuff using
-        # clustering
-        json_data = serializers.serialize("json", all_events)
-
-        context = {'title': 'Map', 'events': json_data, 'count': count}
-        return render_to_response(req, 'bookmarklet/site/map.html', context)
-    except Exception, e:
-        return HttpResponseServerError(e)
-
+    json_data = Event.objects.all().to_json()
+    count = Event.objects.count()
+    context = {'title': 'Map', 'events': json_data, 'count': count}
+    return render_to_response(req, 'bookmarklet/site/map.html', context)
 
 def get_json(req):
     # Dump all data as JSON.  This seems like a terrible idea when the
