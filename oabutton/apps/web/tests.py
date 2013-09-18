@@ -26,7 +26,6 @@ class SimpleTest(TestCase):
 
     def test_bookmarklet(self):
         response = self.client.get('/')
-
         eq_(response.context['hostname'], 'localhost:8000')
         # Do a dumb scan to see that oabutton.com is in the JS url
         bookmarklet_url = response.content.find(
