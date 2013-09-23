@@ -1,4 +1,4 @@
-$(function() {
+var oabSuccess = (function($) {
 
   function parseCrossRef(entry, doi) {
     var metadata = {'doi': doi},
@@ -47,8 +47,6 @@ $(function() {
       });
     }
   }
-
-  lookupCrossRef();
 
   function addPubMedCentralLink(metadata) {
     var doi = metadata["doi"];
@@ -121,4 +119,16 @@ $(function() {
   }
 
 
+  return {
+    parseCrossRef: parseCrossRef,
+    lookupCrossRef: lookupCrossRef,
+    addScholarDOILink: addScholarDOILink,
+    addScholarTitleLink: addScholarTitleLink,
+  };
+
+})(jQuery);
+
+
+$(document).ready(function() {
+  oabSuccess.lookupCrossRef();
 });
