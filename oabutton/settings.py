@@ -149,8 +149,6 @@ INSTALLED_APPS = (
     # The web app is the main website
     'oabutton.apps.web',
 )
-AUTH_USER_MODEL = 'mongo_auth.MongoUser'
-SESSION_ENGINE = 'mongoengine.django.sessions'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
