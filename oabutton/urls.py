@@ -13,6 +13,4 @@ urlpatterns = patterns('',
                        # mappings.
                        url(r'^api/', include('oabutton.apps.bookmarklet.urls')),
 
-                       # Enable the Mongonaut admin interface
-                       (r'^mongonaut/', include('mongonaut.urls')),
                        )
