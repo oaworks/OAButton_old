@@ -10,6 +10,8 @@ from django.test.client import Client
 from oabutton.apps.bookmarklet.models import Event
 import datetime
 
+from test_mongoauth import MongoAuthTest
+
 
 class APITest(TestCase):
     def test_add_post(self):
@@ -48,7 +50,3 @@ class APITest(TestCase):
         for k, v in expected.items():
             assert getattr(evt, k) == v
 
-    def test_show_map(self):
-        """
-        TODO: Need to verify that the output JSON data format is stable
-        """

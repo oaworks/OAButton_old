@@ -207,4 +207,4 @@ AUTHENTICATION_BACKENDS = (
         'mongoengine.django.auth.MongoEngineBackend',
         )
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
-MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
+MONGOENGINE_USER_DOCUMENT = 'oabutton.apps.bookmarklet.models.User'
