@@ -17,11 +17,16 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-            'default': {
-                        'ENGINE': 'django.db.backends.dummy'
-                            }
-            }
+DATABASES = {'default': {
+     'ENGINE': 'django.db.backends.sqlite3',
+     'NAME': 'oabutton.sqlite3',      # Path to database file.
+     'USER': '',                      # Not used with sqlite3.
+     'PASSWORD': '',                  # Not used with sqlite3.
+     # Set to empty string for localhost. Not used with sqlite3.
+     'HOST': '',
+     # Set to empty string for default. Not used with sqlite3.
+     'PORT': '',
+     }}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -133,11 +138,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Enable the Django admin
+    # The Django admin assumes you're running on a RDBMS and isn't
+    # suitable for a pure MongoDB 
+    # Do *not* enable it.
     'django.contrib.admin',
-
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 
     # The bookmarklet app is really just the REST API
     'oabutton.apps.bookmarklet',
@@ -181,18 +185,26 @@ LOGGING = {
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Bind MongoEngine
-
-regex = re.compile(r'^mongodb\:\/\/(?P<username>[_\w]+):(?P<password>[\w]+)@(?P<host>[\.\w]+):(?P<port>\d+)/(?P<database>[_\w]+)$')
-
-# now connect
-try:
+if os.environ.has_key('HEROKU'):
+    MONGOLAB_REGEX = re.compile(r'^mongodb\:\/\/(?P<username>[_\w]+):(?P<password>[\w]+)@(?P<host>[\.\w]+):(?P<port>\d+)/(?P<database>[_\w]+)$')
     # grab the MONGOLAB_URI
     mongolab_url = os.environ['MONGOLAB_URI']
-    match = regex.search(mongolab_url)
+    match = MONGOLAB_REGEX.search(mongolab_url)
     data = match.groupdict()
     connect(data['database'], host=data['host'],
             port=int(data['port']), username=data['username'],
             password=data['password'])
-
-except:
+    HOSTNAME=os.environ['HOST']
+else:
+    HOSTNAME='localhost:8000'
     connect('oabutton-server-dev', port=27017)
+
+
+# MongoEngine support requires overloading the session storage and the
+# authentication backends
+SESSION_ENGINE = 'mongoengine.django.sessions'
+AUTHENTICATION_BACKENDS = (
+        'mongoengine.django.auth.MongoEngineBackend',
+        )
+AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'

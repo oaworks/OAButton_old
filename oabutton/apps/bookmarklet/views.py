@@ -4,38 +4,17 @@ from django.shortcuts import render_to_response
 from django.core import serializers
 from models import Event
 from django.conf import settings
-
-
-def show_stories(req):
-    # we only grab the 50 latest stories
-    # the original node code grabbed all stories which will kill your
-    # database
-    latest_stories = Event.objects.all().order_by('-pub_date')[:50]
-    count = Event.objects.count()
-    context = {'title': 'Stories', 'events': latest_stories, 'count': count}
-    return render_to_response('bookmarklet/site/stories.html', context)
+from datetime import datetime
 
 
 def show_map(req):
     # TODO: we need to make this smarter.  Coallescing the lat/long
     # data on a nightly basis and folding that down into clustered
     # points would mean we throw less data down to the browser
-    try:
-        db = settings.MONGO_DB()
-        all_events = [evt for evt in db.events.find()]
-
-        # TODO: use a mongo count function here
-        count = len(all_events)
-
-        # TODO: Need to do this an async call and roll up stuff using
-        # clustering
-        json_data = serializers.serialize("json", all_events)
-
-        context = {'title': 'Map', 'events': json_data, 'count': count}
-        return render_to_response(req, 'bookmarklet/site/map.html', context)
-    except Exception, e:
-        return HttpResponseServerError(e)
-
+    json_data = Event.objects.all().to_json()
+    count = Event.objects.count()
+    context = {'title': 'Map', 'events': json_data, 'count': count}
+    return render_to_response(req, 'bookmarklet/site/map.html', context)
 
 def get_json(req):
     # Dump all data as JSON.  This seems like a terrible idea when the
@@ -80,12 +59,25 @@ def convert_post(data, event):
 
 
 def add_post(req):
-    event = Event()
-    convert_post(req.POST, event)
+    evt_dict = {}
+    for k in Event._fields.keys():
+        if k == 'id':
+            continue
+        evt_dict[k] = req.POST.get(k, '')
+
+        if evt_dict[k] == '':
+            evt_dict[k] = None
+
+    lat, lng = evt_dict['coords'].split(',')
+    evt_dict['coords'] = {'lat': float(lat), 'lng': float(lng)}
+    if evt_dict['accessed'] != '':
+        evt_dict['accessed'] = datetime.strptime(evt_dict['accessed'], "%a, %d %b %Y %H:%M:%S %Z")
+
+    event = Event(**evt_dict)
     event.save()
 
     scholar_url = ''
     if req.POST['doi']:
         scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST[
             'doi']
-    return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url})
+    return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url, 'oid': str(event.id)})
