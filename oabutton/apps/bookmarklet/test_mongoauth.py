@@ -63,18 +63,13 @@ class MongoAuthTest(TestCase):
         self.assertRaises(NotUniqueError, manager.create_user, **self.user_data)
 
     def test_user_bookmarklets(self):
-        # Check that we can fetch custom bookmarklets per user_id
         manager = get_user_model()._default_manager
         user = manager.create_user(**self.user_data)
         self.assertTrue(isinstance(user, User))
         db_user = User.objects.get(username='user')
         self.assertEqual(user.id, db_user.id)
 
-        import urlparse
-        url = urlparse.urlsplit(user.get_bookmarklet_url())
+        from django.conf import settings
+        expected_url = "http://%s/api/bookmarklet/%s.js" % (settings.HOSTNAME, user.id)
 
-        c = Client()
-        response = c.get(url.path)
-        assert response.status_code == 200
-        assert "/api/add/?userid=%s&url=" % user.id in response.content
-
+        self.assertEqual(user.get_bookmarklet_url(), expected_url)
