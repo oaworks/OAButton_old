@@ -1,30 +1,25 @@
+from django.contrib.auth import authenticate, get_user_model
 from django.test import TestCase
-from nose.plugins.skip import SkipTest
-
+from django.test.client import Client
 from mongoengine import connect
 from mongoengine.errors import NotUniqueError
+from nose.plugins.skip import SkipTest
 from oabutton.apps.bookmarklet.models import User
-try:
-    from django.contrib.auth import authenticate, get_user_model
-    from mongoengine.django.mongo_auth.models import (
-        MongoUser,
-        MongoUserManager,
-        get_user_document,
-    )
-    DJ15 = True
-except Exception:
-    DJ15 = False
+from mongoengine.django.mongo_auth.models import (
+    MongoUser,
+    MongoUserManager,
+    get_user_document,
+)
 
 
 class MongoAuthTest(TestCase):
     user_data = {
         'username': 'user',
         'email': 'user@example.com',
+        'password': 'some_password',
     }
 
     def setUp(self):
-        if not DJ15:
-            raise SkipTest('mongo_auth requires Django 1.5')
         connect(db='mongoenginetest')
         User.drop_collection()
         super(MongoAuthTest, self).setUp()
@@ -52,7 +47,12 @@ class MongoAuthTest(TestCase):
         self.assertEqual(user.id, db_user.id)
 
     def test_authenticate(self):
-        raise SkipTest("No Authentication as we don't do passwords")
+        get_user_model()._default_manager.create_user(**self.user_data)
+        user = authenticate(username='user', password='fail')
+        self.assertEqual(None, user)
+        user = authenticate(username='user', password=self.user_data['password'])
+        db_user = User.objects.get(username='user')
+        self.assertEqual(user.id, db_user.id)
 
     def test_unique_users(self):
         manager = get_user_model()._default_manager
@@ -63,14 +63,18 @@ class MongoAuthTest(TestCase):
         self.assertRaises(NotUniqueError, manager.create_user, **self.user_data)
 
     def test_user_bookmarklets(self):
+        # Check that we can fetch custom bookmarklets per user_id
         manager = get_user_model()._default_manager
         user = manager.create_user(**self.user_data)
         self.assertTrue(isinstance(user, User))
         db_user = User.objects.get(username='user')
         self.assertEqual(user.id, db_user.id)
 
-        from django.conf import settings
-        expected_url = "http://%s/api/bookmarklet/%s.js" % (settings.HOSTNAME, user.id)
+        import urlparse
+        url = urlparse.urlsplit(user.get_bookmarklet_url())
 
-        self.assertEqual(user.get_bookmarklet_url(), expected_url)
+        c = Client()
+        response = c.get(url.path)
+        assert response.status_code == 200
+        assert "/api/add/?userid=%s&url=" % user.id in response.content
 
