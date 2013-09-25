@@ -6,6 +6,7 @@ from models import Event
 from django.conf import settings
 from datetime import datetime
 
+from .models import User
 
 def show_map(req):
     # TODO: we need to make this smarter.  Coallescing the lat/long
@@ -81,3 +82,8 @@ def add_post(req):
         scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST[
             'doi']
     return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url, 'oid': str(event.id)})
+
+def generate_bookmarklet(req, user_id): 
+    return render_to_response('bookmarklet/bookmarklet.html',
+            {'user_id': user_id}, content_type="application/javascript")
+
