@@ -173,6 +173,8 @@ INSTALLED_APPS = (
 
     # The web app is the main website
     'oabutton.apps.web',
+
+    'oabutton.apps.metadata',
 )
 
 # A sample logging configuration. The only tangible logging
