@@ -5,4 +5,4 @@ python:
 install: pip install -r requirements.txt --use-mirrors
 script:
   - "flake8"
-  - "python manage.py test web bookmarklet"
+  - "python manage.py test web bookmarklet metadata"

@@ -42,6 +42,7 @@ var oabSuccess = (function($) {
               addPubMedCentralLink(metadata);
               addScholarDOILink(metadata);
               addScholarTitleLink(metadata);
+              discoverCORELinks(metadata);
             }
           }
       });
@@ -118,12 +119,41 @@ var oabSuccess = (function($) {
     }
   }
 
+  function discoverCORELinks(metadata) {
+    var title = metadata["title"];
+
+    if (title) {
+      $.ajax({
+        url: "/metadata/coresearch.json/title:(" + encodeURIComponent(title) + ")",
+        dataType: 'json',
+        success: function(response) {
+	  var records = response.ListRecords;
+	  var $list = $('<ul></ul>');
+	  for (var i = 1; i < records.length; i++) {
+	    metadata = records[i]['record']['metadata']['oai_dc:dc'];
+	    $list.append('<li><a href="'
+			 + metadata['dc:identifier']
+			 + '">'
+			 + metadata['dc:creator']
+			 + ' (' + metadata['dc:date'] + '); '
+			 + metadata['dc:title']
+			 + '</a></li>');
+	  }
+
+	  $li = $('<li>Matches from CORE repository:</li>');
+	  $li.append($list);
+	  $("#oa_links").append($li);
+        }
+      });
+    }
+  }
 
   return {
     parseCrossRef: parseCrossRef,
     lookupCrossRef: lookupCrossRef,
     addScholarDOILink: addScholarDOILink,
     addScholarTitleLink: addScholarTitleLink,
+    discoverCORELinks: discoverCORELinks,
   };
 
 })(jQuery);
