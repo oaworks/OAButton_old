@@ -4,9 +4,13 @@ from django.shortcuts import render_to_response
 from django.core import serializers
 from models import Event
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.views.decorators.csrf import requires_csrf_token
 from datetime import datetime
 from oabutton.common import SigninForm
+
+from django.contrib.auth import get_user_model
+from oabutton.apps.bookmarklet.models import User
 
 import json
 
@@ -26,7 +30,7 @@ def get_json(req):
     return HttpResponse(json_data, content_type="application/json")
 
 
-@csrf_exempt
+@csrf_protect
 def signin(request):
     """
     One time signin to create a bookmarklet using HTTP POST.
@@ -35,14 +39,22 @@ def signin(request):
     
     Create a new user and return the URL to the user bookmarklet
     """
-
     if request.method == 'POST': # If the form has been submitted...
-        import pdb
-        pdb.set_trace()
         form = SigninForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             # TODO: do stuff here
-            return HttpResponse(json.dumps({'url': 'some_url'}), content_type="application/json")
+            manager = get_user_model()._default_manager
+            import pdb
+            pdb.set_trace()
+            data = dict(form.cleaned_data)
+            data['username'] = data['email']
+
+            user = User.objects.get(username=data['email'])
+            if user is None:
+                # Default the username to be email address
+                user = manager.create_user(**data)
+
+            return HttpResponse(json.dumps({'url': user.get_bookmarklet_url()}), content_type="application/json")
     return HttpResponseServerError
 
 
