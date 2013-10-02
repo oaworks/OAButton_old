@@ -65,17 +65,27 @@ change.
           <h1>Ok Ace! Give me the bookmarklet!</h1>
         </div>
         <div class="hero-unit">
-            <form class="form-bookmarklet" action="/api/signup/" method="post"> 
-                <input type="text" name="email" placeholder="Email address" /> 
-                <input type="text" name="name" placeholder="Full Name"/>
-                <input type="text" name="profession" placeholder="Profession" />
-                <input type="text" name="university" placeholder="Institution" />
+            <form class="form-bookmarklet" action="/api/signin/" method="post">{% csrf_token %}
+                <div>
+                    {{ signin_form.email }}
+                </div>
+                <div>
+                    {{ signin_form.name }}
+                </div>
+                <div>
+                    {{ signin_form.profession }}
+                </div>
+                <div>
+                    {{ signin_form.university }}
+                </div>
+                <div>
                 I've read the <a href="/privacy_statement/" target="privacy_popup">privacy statement</a>
-                and want my data to be:<select name="privacy">
-                    <option value="public">Public</option>
-                    <option value="private">Private</option>
-                </select> 
-                <button class="btn btn-large btn-primary clear" type="submit">Generate Custom Bookmarklet</button>
+                and want my data to be:
+                    {{ signin_form.privacy}}
+                </div>
+                <div>
+                    <button class="btn btn-large btn-primary clear" type="submit">Generate Custom Bookmarklet</button>
+                </div>
             </form>
             <p>Drag this to your bookmark bar: <a
                 href="

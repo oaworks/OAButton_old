@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.conf import settings
 from oabutton.json_util import MyEncoder
+from oabutton.common import SigninForm
 
 def homepage(req):
     # Need to lazy import the Event model so that tests work with
@@ -12,4 +13,6 @@ def homepage(req):
     return render_to_response('web/index.html',
                               {'count': evt_count,
                                'events': json_data,
-                               'hostname': settings.HOSTNAME})
+                               'hostname': settings.HOSTNAME,
+                               'signin_form': SigninForm(),
+                               })

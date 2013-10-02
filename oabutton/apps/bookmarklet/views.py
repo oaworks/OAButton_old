@@ -4,7 +4,11 @@ from django.shortcuts import render_to_response
 from django.core import serializers
 from models import Event
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+from oabutton.common import SigninForm
+
+import json
 
 def show_map(req):
     # TODO: we need to make this smarter.  Coallescing the lat/long
@@ -20,6 +24,26 @@ def get_json(req):
     # dataset gets large.
     json_data = serializers.serialize("json", Event.objects.all())
     return HttpResponse(json_data, content_type="application/json")
+
+
+@csrf_exempt
+def signin(request):
+    """
+    One time signin to create a bookmarklet using HTTP POST.
+
+    The only required field is the email address
+    
+    Create a new user and return the URL to the user bookmarklet
+    """
+
+    if request.method == 'POST': # If the form has been submitted...
+        import pdb
+        pdb.set_trace()
+        form = SigninForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            # TODO: do stuff here
+            return HttpResponse(json.dumps({'url': 'some_url'}), content_type="application/json")
+    return HttpResponseServerError
 
 
 def add(req):
