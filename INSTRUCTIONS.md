@@ -27,6 +27,17 @@ flake8 --install-hook                # Install the flake8 pre-commit hook
                                      # Checks your code for PEP8 compliance
 ```
 
+### Set your CORE API key
+
+```
+export CORE_API_KEY=blahblahblah
+```
+
+If you don't have a key, the app will still run, but you'll get
+warnings and communications with [CORE](http://core.kmi.open.ac.uk/)
+will fail.  An API key isn't required to run the tests, as the API
+accesses are mocked out.
+
 ### Start mongodb
 
 If the mongodb daemon is not running yet, you can start it locally with
