@@ -4,12 +4,15 @@ import requests
 import logging
 import json
 
+logger = logging.getLogger(__name__)
+
 CORE_API_BASE = 'http://core.kmi.open.ac.uk/api'
 CORE_API_SEARCH = CORE_API_BASE + '/search/'
-CORE_API_KEY = environ['CORE_API_KEY']
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+if 'CORE_API_KEY' in environ:
+    CORE_API_KEY = environ['CORE_API_KEY']
+else:
+    logger.warn("CORE_API_KEY not set in environment: using default value")
+    CORE_API_KEY = '01234567890abcdefghijklmnopqrstu'
 
 
 def core_search(req, query):
