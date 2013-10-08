@@ -183,7 +183,7 @@ LOGGING = {
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Bind MongoEngine
-if os.environ.has_key('HEROKU'):
+if os.environ.has_key('HOST'):
     MONGOLAB_REGEX = re.compile(r'^mongodb\:\/\/(?P<username>[_\w]+):(?P<password>[\w]+)@(?P<host>[\.\w]+):(?P<port>\d+)/(?P<database>[_\w]+)$')
     # grab the MONGOLAB_URI
     mongolab_url = os.environ['MONGOLAB_URI']
