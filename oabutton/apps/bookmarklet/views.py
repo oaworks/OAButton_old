@@ -1,11 +1,8 @@
 from django.http import HttpResponse, HttpResponseServerError
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
-from django.core import serializers
 from models import Event
-from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from django.views.decorators.csrf import requires_csrf_token
+from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
 from oabutton.common import SigninForm
 
