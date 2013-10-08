@@ -26,7 +26,7 @@ def show_map(req):
 def get_json(req):
     # Dump all data as JSON.  This seems like a terrible idea when the
     # dataset gets large.
-    json_data = serializers.serialize("json", Event.objects.all())
+    json_data = Event.objects.all().to_json()
     return HttpResponse(json_data, content_type="application/json")
 
 
