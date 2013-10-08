@@ -25,6 +25,9 @@
   <script src="/static/js/bootstrap.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
   <script src="/static/js/leaflet.markercluster.js"></script>
+
+  <!-- jQuery form plugin -->
+  <script src="http://malsup.github.com/jquery.form.js"></script> 
   <script>
     var map = L.map('map', {
       center: [20, 0],
@@ -69,4 +72,22 @@
     }
     map.addLayer(markers);
   </script>
+<script>
+    // wait for the DOM to be loaded 
+    $(document).ready(function() { 
+        // first hide the bookmarklet
+        $('#bookmarklet').hide();
+
+        // bind 'myForm' and provide a simple callback function 
+        var options = { 
+            target:     '#divToUpdate',
+            dataType:   'json',
+            url:        '/api/signin/',
+            success:    function(responseText, statusText, xhr, formElem) { 
+                $('#bookmarklet').show();
+            } 
+        }; 
+        $('#form-bookmarklet').ajaxForm(options);
+    }); 
+</script>
 </html>

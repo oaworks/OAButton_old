@@ -44,8 +44,6 @@ def signin(request):
         if form.is_valid(): # All validation rules pass
             # TODO: do stuff here
             manager = get_user_model()._default_manager
-            import pdb
-            pdb.set_trace()
             data = dict(form.cleaned_data)
             data['username'] = data['email']
 
@@ -53,6 +51,11 @@ def signin(request):
             if user is None:
                 # Default the username to be email address
                 user = manager.create_user(**data)
+            else:
+                # TODO: update the user information here?
+                # We should probably archive the old one and save a
+                # new one.
+                pass
 
             return HttpResponse(json.dumps({'url': user.get_bookmarklet_url()}), content_type="application/json")
     return HttpResponseServerError
