@@ -28,6 +28,10 @@
 
   <!-- jQuery form plugin -->
   <script src="http://malsup.github.com/jquery.form.js"></script> 
+
+  <!--  Bootstrap Dialog -->
+  <script src="/static/js/bootstrap-dialog.js"></script>
+
   <script>
     var map = L.map('map', {
       center: [20, 0],
@@ -87,7 +91,22 @@
                 $('#bookmarklet-js').attr('href',
                 "javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','"+responseJSON['url']+"');");
 
+                // Show the new bookmarklet
                 $('#bookmarklet').show();
+
+                var dialog = new BootstrapDialog({
+                    title : $('<h2>Drag this to your bookmark bar</h2>'),
+                    content: $("<a href=\"javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','"+responseJSON['url']+"');\" class=\"btn btn-large\"><i class=\"icon-bookmark\"></i> Open Access Button </a>"),
+                    buttons :   [{
+                        label : 'OK',
+                        onclick :
+                        function(dialog){
+                            dialog.close();
+                        }
+                    }]
+                });
+                dialog.open();
+
             } 
         }; 
         $('#form-bookmarklet').ajaxForm(options);
