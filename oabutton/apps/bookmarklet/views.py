@@ -47,15 +47,14 @@ def signin(request):
             data = dict(form.cleaned_data)
             data['username'] = data['email']
 
-            user = User.objects.get(username=data['email'])
-            if user is None:
-                # Default the username to be email address
-                user = manager.create_user(**data)
-            else:
+            try:
+                user = User.objects.get(username=data['email'])
                 # TODO: update the user information here?
                 # We should probably archive the old one and save a
                 # new one.
-                pass
+            except User.DoesNotExist:
+                # Default the username to be email address
+                user = manager.create_user(**data)
 
             return HttpResponse(json.dumps({'url': user.get_bookmarklet_url()}), content_type="application/json")
     return HttpResponseServerError
