@@ -83,7 +83,10 @@
             target:     '#divToUpdate',
             dataType:   'json',
             url:        '/api/signin/',
-            success:    function(responseText, statusText, xhr, formElem) { 
+            success:    function(responseJSON, statusText, xhr, formElem) { 
+                $('#bookmarklet-js').attr('href',
+                "javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','"+responseJSON['url']+"');");
+
                 $('#bookmarklet').show();
             } 
         }; 
