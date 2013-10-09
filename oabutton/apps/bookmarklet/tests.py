@@ -8,7 +8,7 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 from django.test.client import Client
 from nose.tools import eq_, ok_
-from oabutton.apps.bookmarklet.models import Event
+from oabutton.apps.bookmarklet.models import Event, User
 from test_mongoauth import MongoAuthTest
 import datetime
 import json
@@ -51,6 +51,10 @@ class APITest(TestCase):
             assert getattr(evt, k) == v
 
     def test_event_json(self):
+        """
+        verify that the JSON emitted is compatible with the javascript
+        map stuff
+        """
 
         POST_DATA = {u'story': [u'some access requirement'],
         u'doi': [u'10.1016/j.urology.2010.05.009.'],
@@ -75,3 +79,21 @@ class APITest(TestCase):
         eq_(jdata[0]['doi'], '10.1016/j.urology.2010.05.009.')
         eq_(jdata[0]['url'], 'http://www.ncbi.nlm.nih.gov/pubmed/20709373')
 
+    def test_new_signon(self):
+        """
+        verify that the JSON emitted is compatible with the javascript
+        map stuff
+        """
+
+        EMAIL = 'new_email@foo.com'
+        POST_DATA = {u'email': [EMAIL],
+                'privacy': 'PUBLIC'}
+
+        for user in User.objects.filter(username=EMAIL):
+            user.delete()
+
+        c = Client()
+        response = c.post('/api/signin/', POST_DATA)
+
+        eq_(response.status_code, 200)
+        ok_('url' in json.loads(response.content))
