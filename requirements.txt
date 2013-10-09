@@ -20,3 +20,5 @@ pymongo==2.5.2
 python-openid==2.2.5
 static==0.4
 wsgiref==0.1.2
+httpretty==0.7.0
+requests==2.0.0
