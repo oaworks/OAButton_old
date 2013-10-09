@@ -7,7 +7,7 @@ class SigninForm(forms.Form):
         )
 
     email = forms.EmailField(required=True,
-            widget=forms.TextInput(attrs={'placeholder': 'Email addresss (required)'})
+            widget=forms.TextInput(attrs={'placeholder': 'Email address (required)'})
             )
     name = forms.CharField(required=False,
             widget=forms.TextInput(attrs={'placeholder': 'Full Name'})
