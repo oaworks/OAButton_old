@@ -79,6 +79,8 @@ python manage.py test bookmarklet web
  * Initial Postgresql Syncing of the database is done with: `heroku run python manage.py syncdb`
    * See: https://devcenter.heroku.com/articles/getting-started-with-django
 
+Required enviroment variables
+
 ## Getting started with a virtual machine
 
 If you're familiar with [Vagrant](http://vagrantup.com/) and virtual

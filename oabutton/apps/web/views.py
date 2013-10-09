@@ -1,26 +1,24 @@
 from django.shortcuts import render_to_response
 from django.conf import settings
-
-from json import dumps
-
-from django.contrib.sites.models import Site
-
+from django.core.context_processors import csrf
 from oabutton.json_util import MyEncoder
-
+from oabutton.common import SigninForm
 
 def homepage(req):
-    # TODO: this needs to get cleaned up to not eat all memory
+    # Need to lazy import the Event model so that tests work with
+    # mocks
+    c = {}
+    c.update(csrf(req))
 
-    current_site = Site.objects.get_current()
+    from oabutton.apps.bookmarklet.models import Event
 
-    db = settings.MONGO_DB()
-    all_events = [evt for evt in db.events.find()]
+    evt_count = Event.objects.count()
+    json_data = Event.objects.all().to_json()
 
-    # TODO: Need to do this an async call and roll up stuff using
-    # clustering
-    json_data = dumps(all_events, cls=MyEncoder)
+    c.update({'count': evt_count,
+        'events': json_data,
+        'hostname': settings.HOSTNAME,
+        'signin_form': SigninForm(),
+        })
 
-    return render_to_response('web/index.html',
-                              {'count': len(all_events),
-                               'events': json_data,
-                               'hostname': current_site.domain})
+    return render_to_response('web/index.html', c)
