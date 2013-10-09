@@ -7,4 +7,4 @@ build:
 
 
 test:
-	python manage.py test web bookmarklet
+	python manage.py test web bookmarklet metadata
