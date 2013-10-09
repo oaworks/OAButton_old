@@ -97,3 +97,26 @@ class APITest(TestCase):
 
         eq_(response.status_code, 200)
         ok_('url' in json.loads(response.content))
+
+    def test_update_signon(self):
+        """
+        verify that the JSON emitted is compatible with the javascript
+        map stuff
+        """
+
+        EMAIL = 'new_email@foo.com'
+        POST_DATA = {u'email': [EMAIL],
+                'privacy': 'PUBLIC'}
+
+        for user in User.objects.filter(username=EMAIL):
+            user.delete()
+        from django.contrib.auth import get_user_model
+        manager = get_user_model()._default_manager
+
+        user = manager.create_user(email=EMAIL, username=EMAIL, privacy='PUBLIC')
+
+        c = Client()
+        response = c.post('/api/signin/', POST_DATA)
+
+        eq_(response.status_code, 200)
+        eq_({'url': user.get_bookmarklet_url()}, json.loads(response.content))
