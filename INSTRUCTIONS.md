@@ -12,7 +12,7 @@
 
 Clone the [git repository][repo] and set up:
 ```
-git clone https://github.com/OAButton/server.git /path/to/repo
+git clone https://github.com/OAButton/OAButton.git /path/to/repo
 cd /path/to/repo                     # Switch to the directory where
                                      # you've cloned the repo
 git checkout django                  # Switch to the django branch
@@ -123,4 +123,4 @@ and configured and just needs to boot.
 If you ever need to completely reset the VM, just delete it with
 `vagrant destroy` and start again.
 
-[repo]: http://github.com/OAButton/server
+[repo]: http://github.com/OAButton/OAButton
