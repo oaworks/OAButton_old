@@ -195,7 +195,7 @@ if os.environ.has_key('HOST'):
     HOSTNAME=os.environ['HOST']
 else:
     connect('oabutton-server-dev', port=27017)
-    HOSTNAME='localhost:8000'
+    HOSTNAME='http://localhost:8000'
 
 
 # MongoEngine support requires overloading the session storage and the

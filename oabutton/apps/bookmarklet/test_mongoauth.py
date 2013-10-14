@@ -70,6 +70,6 @@ class MongoAuthTest(TestCase):
         self.assertEqual(user.id, db_user.id)
 
         from django.conf import settings
-        expected_url = "http://%s/api/bookmarklet/%s.js" % (settings.HOSTNAME, user.id)
+        expected_url = "%s/api/bookmarklet/%s.js" % (settings.HOSTNAME, user.id)
 
         self.assertEqual(user.get_bookmarklet_url(), expected_url)

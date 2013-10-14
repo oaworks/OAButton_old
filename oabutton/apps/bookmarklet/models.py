@@ -31,4 +31,4 @@ class User(mongoengine.django.auth.User):
     def get_bookmarklet_url(self):
         # generate a boilerplate URL for each user
         from django.conf import settings
-        return "http://%s/api/bookmarklet/%s.js" % (settings.HOSTNAME, self.id)
+        return "%s/api/bookmarklet/%s.js" % (settings.HOSTNAME, self.id)
