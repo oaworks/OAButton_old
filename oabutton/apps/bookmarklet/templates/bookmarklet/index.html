@@ -1,57 +1,53 @@
-{% extends "bookmarklet/layout.html" %}{% block content %}<img src="/static/img/oalogo.png" style="position: absolute; top: 0; right: 0;"/><a id="id_pmc" title="Available at PMC" target="_new" style="position: absolute; top: 0; right: 32px; display: none;"><img src="/static/img/pmc.png"/></a>
+{% extends "bookmarklet/layout.html" %}
+{% load oafilters %}
+{% block content %}
+<img src="/static/img/oalogo.png" style="position: absolute; top: 0; right: 0;"/><a id="id_pmc" title="Available at PMC" target="_new" style="position: absolute; top: 0; right: 32px; display: none;"><img src="/static/img/pmc.png"/></a>
 <form id="event" action="/api/post/" method="post" class="form-horizontal">{% csrf_token %}
-  <input id="id_accessed" type="hidden" name="accessed"/>
+  {{ bookmarklet.accessed }}
+
   <div class="control-group">
-    <label for="id_name" class="control-label">Your name</label>
+    {{ bookmarklet.name|label_with_classes:"control-label"}}
     <div class="controls">
-      <input id="id_name" type="text" name="name" placeholder="e.g. Dr John Doe" data-remember="data-remember" class="input-block-level"/>
+        {{ bookmarklet.name }}
     </div>
   </div>
   <div class="control-group">
-    <label for="id_profession" class="control-label">Profession</label>
+    {{ bookmarklet.profession|label_with_classes:"control-label"}}
     <div class="controls">
-      <input id="id_profession" type="text" name="profession" placeholder="e.g. Doctor" data-remember="data-remember" class="input-block-level"/>
+        {{ bookmarklet.profession }}
     </div>
   </div>
-  <label for="id_remember" style="display:none" class="checkbox">Remember me
-    <input id="id_remember" type="checkbox" name="remember" class="input-block-level"/>
-  </label>
+  {{ bookmarklet.remember|label_with_classes:"checkbox" }}
+  {{ bookmarklet.remember }}
   <div class="control-group">
-    <label for="id_location" class="control-label">Location</label>
+    {{ bookmarklet.location|label_with_classes:"control-label"}}
     <div class="controls">
-      <input id="id_location" type="text" name="location" placeholder="e.g. London, United Kingdom" required="required" class="input-block-level"/>
-      <input id="id_coords" type="hidden" name="coords"/>
+        {{ bookmarklet.location }}
+        {{ bookmarklet.coords }}
     </div>
   </div>
   <div class="control-group">
-    <label for="id_url" class="control-label">Article URL</label>
+    {{ bookmarklet.url|label_with_classes:"control-label" }}
     <div class="controls">
-      {% if url %}
-      <input id="id_url" readonly="readonly" type="text" name="url" value="{{ url }}" class="input-block-level"/>
-      {% else %}
-      <input id="id_url" type="text" name="url" placeholder="http://www.publisher.com/journal?id=XXXX" class="input-block-level"/>
-      {% endif %}
+        {{ bookmarklet.url }}
     </div>
   </div>
   <div class="control-group">
-    <label for="id_doi" class="control-label">DOI</label>
+    {{ bookmarklet.doi|label_with_classes:"control-label" }}
     <div class="controls">
-      {% if  doi %}
-      <input id="id_doi" readonly="readonly" type="text" name="doi" value="{{ doi }}" class="input-block-level"/>
-      {% else %}
-      <input id="id_doi" type="text" name="doi" placeholder="e.g. 10.1136/bmj.c7086" class="input-block-level"/>
-      {% endif %}
-      <p class="help-text">Document Object Identifier (DOI)</p>
+        {{ bookmarklet.doi }}
+        <p class="help-text">Document Object Identifier (DOI)</p>
     </div>
   </div>
   <div class="control-group">
-    <label for="id_description" class="control-label">Description</label>
-    <div class="controls"><textarea id="id_description" name="description" rows="4" placeholder="Title, Authors, Journal, etc" class="input-block-level"></textarea>
+    {{ bookmarklet.description|label_with_classes:"control-label" }}
+    {{ bookmarklet.description }}
     </div>
   </div>
   <div class="control-group">
-    <label for="id_story" class="control-label">Why do you need access?</label>
-    <div class="controls"><textarea id="id_story" name="story" rows="4" placeholder="e.g. I’m trying to save lives, dammit!" class="input-block-level"></textarea>
+    {{ bookmarklet.story|label_with_classes:"control-label" }}
+    <div class="controls">
+        {{ bookmarklet.story }}
     </div>
   </div>
   <div class="control-group">
