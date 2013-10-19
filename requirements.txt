@@ -28,6 +28,7 @@ ordereddict==1.1
 pep8==1.4.6
 plotly==0.4
 pyflakes==0.7.3
+pyjade==2.0.3
 pymongo==2.6.2
 python-openid==2.2.5
 python-social-auth==0.1.13

@@ -21,4 +21,4 @@ def homepage(req):
         'signin_form': SigninForm(),
         })
 
-    return render_to_response('web/index.html', c)
+    return render_to_response('web/index.jade', c)
