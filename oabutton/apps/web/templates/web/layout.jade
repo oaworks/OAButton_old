@@ -10,11 +10,23 @@ html(lang='en')
       title Open Access Button - #{title}
     else
       title Open Access Button
-    link(rel='shortcut icon', type='image/x-icon', href='/img/favicon.ico')
-    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='shortcut icon', type='image/x-icon', href='/static/img/favicon.ico')
+
+    link(rel='stylesheet', href='/static/css/bootstrap.min.css')
     //- link(rel='stylesheet', href='/css/font-awesome.min.css')
-    link(rel='stylesheet', href='/css/app.css')
-    //- TODO: add HTML5 and Respond.js
+
+    link(rel='stylesheet', href='/static/css/app.css')
+    link(rel='stylesheet', href='/static/css/forms.css')
+    link(rel='stylesheet', href='/static/css/MarkerCluster.css')
+    link(rel='stylesheet', href='/static/css/MarkerCluster.Default.css')
+    
+    //if lt IE 9
+      script(src='/static/js/html5shiv.js')
+      script(src='/static/js/respond.min.js')
+    
+    link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css') 
+    //if lte IE 8
+      link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css')
 
   body(data-spy='scroll', data-target='.bs-docs-sidebar')
     block body
