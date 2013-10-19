@@ -6,7 +6,7 @@ block body
         src='https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png',
         alt='Fork me on GitHub')
 
-  .navbar.navbar-inverse.navbar-fixed-top
+  .navbar.navbar-inverse.navbar-fixed-top(role='navigation')
       .container
         .navbar-header
           button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
@@ -85,12 +85,12 @@ block body
                   i.icon-bookmark
                   | Open Access Button
 
-  .container
+  .container.map
     a(name='map')
     #map
-    .map-underlay
+    .underlay
       .lead
-        #counter
+        span(id='counter')
           {{count|force_escape}}
         span 
           | Scholarly pursuits denied

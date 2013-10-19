@@ -35,9 +35,29 @@ header .lead span {
   opacity: 0.9;
 }
 
-#map {
+.map, #map {
   height: 500px;
   width: 100%;
+}
+
+.map .underlay {
+  position: relative;
+  width: 84%;
+  top: -11em;
+  background: #ffc425;
+  margin: 0 8%;
+  padding: 1em;
+  left: 0;
+}
+
+.map .underlay .lead {
+  background: #fff;
+  text-align: center;
+}
+
+#counter {
+  font-weight: bold;
+  font-size: 120%;
 }
 
 .thumbnail .caption {
