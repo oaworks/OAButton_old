@@ -19,7 +19,7 @@ header .container {
 
 header .container * { display:none; }
 
-.lead {
+header .lead {
   position: absolute;
   margin-top: 1em;
   font-size: 0.85em;
@@ -28,7 +28,7 @@ header .container * { display:none; }
   left: 0px;  
 }
 
-.lead span {
+header .lead span {
   background-color: #ef5b23;
   color: white;
   padding: 0.4em;

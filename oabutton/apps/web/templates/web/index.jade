@@ -34,9 +34,11 @@ block body
       h1 Need Access to Research?
       h2 Sign up below to get the Open Access Button
     .lead 
-      span Tearing down journal paywalls blocking millions of researchers, one click at a time.
+      span 
+        | Tearing down journal paywalls blocking millions of researchers, 
+        | one click at a time.
 
-  #start
+  .start
     a(name='start')
     .container
       form.form-bookmarklet#form-bookmarklet(action='/api/signin/', method='post')
@@ -44,7 +46,11 @@ block body
         .row
           .col-md-12
             p
-              | Create a free, anonymous account and get an easy and safe to use bookmarklet. When you are prevented from using an article for your research because access is restricted, just click the Open Access Button! Sign up here to get started right away:
+              | Create a free, anonymous account and get an easy and safe
+              | to use bookmarklet. When you are prevented from using an
+              | article for your research because access is restricted,
+              | just click the Open Access Button! Sign up here to get
+              | started right away:
         .row
           .col-md-6
             {{ signin_form.email }}
@@ -59,7 +65,8 @@ block body
           .col-md-12
             p
               | I have read the 
-              a(href='/privacy_statement/', target='privacy_popup') privacy statement 
+              a(href='/privacy_statement/', target='privacy_popup')
+                | privacy statement 
               | and my data should be:
         .row
           .col-md-12
@@ -78,32 +85,52 @@ block body
                   i.icon-bookmark
                   | Open Access Button
 
-  #map
+  .container
     a(name='map')
-    .container
+    #map
+    .map-underlay
+      .lead
+        #counter
+          {{count|force_escape}}
+        span 
+          | Scholarly pursuits denied
+      p
+        | This world map tracks clicks of the Open Access Button from
+        | our user community in real time, as it happens. Put yourself
+        | on the map to let the world know you are being restricted 
+        | from access to science.
 
-  #intro
+  .intro
     a(name='intro')
     .container
       h2 How this works.
       .row
         .col-md-12.hilite-left
           p
-            | Your action will help the Open Access community raise awareness to free this and even more scientific knowledge. Cras sodales magna ac libero pulvinar vestibulum. Praesent sit amet accumsan ante, eu imperdiet velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis adipiscing dictum lobortis. Sed mollis tempus ante id venenatis. Integer vulputate lectus in justo dignissim, sit amet ornare turpis egestas.
+            | Your action will help the Open Access community raise
+            | awareness to free this and even more scientific knowledge.
 
-  #contribute
+  .contribute
     a(name='contribute')
     .container
       h2 Get involved.
       .row
         .col-md-12.hilite-right
           p
-            | Using the Open Access Button (and you are using it, daily, right?) is just the first step. We need more people to be involved at every level of community action. The Open Access Working Group is where you can use the data our users create to take meaningful steps toward opening science. We are using every penny of contribution to raise awareness for this project. You can join our open source project as a developer.
-      #partners
-        h3 Made with support from wonderful partners and Web users like you!
-          // Partners
+            | Using the Open Access Button (and you are using it,
+            | daily, right?) is just the first step. We need more
+            | people to be involved at every level of community
+            | action. The Open Access Working Group is where you
+            | can use the data our users create to take meaningful
+            | steps toward opening science. We are using every penny
+            | of contribution to raise awareness for this project.
+            | You can join our open source project as a developer.
+      .partners
+        h3 
+          | Made with support from wonderful partners and 
+          | Web users like you!
 
-  #team
+  .team
     a(name='team')
     .container
       h2 Meet the team.
@@ -129,7 +156,9 @@ block body
           p Get the data
           p Contacts
         .col-md-4
-          p All site content is licensed under a Creative Commons Attribution License.
+          p
+            | All site content is licensed under a
+            | Creative Commons Attribution License.
 
   // Old body
     .row
@@ -237,58 +266,3 @@ block body
                 img(src='/img/elliot.jpg')
                 .caption
                   h3 Elliot
-
-  script(src='/js/jquery.min.js')
-  script(src='/js/bootstrap.js')
-  script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false')
-  script.
-    /*var map;
-    var marker;
-
-    function makeInfoWindowEvent(map, infowindow, contentString, marker) {
-      google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(contentString);
-        infowindow.open(map, marker);
-      });
-    }
-    
-    function initialise() {
-      var events = !{events};
-      var mapOptions = {
-        "zoom": 2,
-        "center": new google.maps.LatLng(0, 0),
-        "scrollwheel": false,
-        "mapTypeId": google.maps.MapTypeId.ROADMAP
-      };
-      map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-      addMarkers(map, events);
-    }
-    
-    function addMarkers(map, events) {
-      var infowindow = new google.maps.InfoWindow();
-      for (var i = 0; i < events.length; i++) {
-        if(events[i].coords.length !== 0) {
-          var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(events[i].coords.lat, events[i].coords.lng),
-            map: map,
-            icon: 'img/noalogo.png'
-          });
-
-          bubble_content = '<h4>' + events[i].name;
-          if (events[i].profession != '') {
-            bubble_content += ' <em>(' + events[i].profession + ')</em>';
-          }
-          bubble_content += '</h4>';
-          bubble_content += '<p>' + events[i].story + '</p>';
-          bubble_content += '<a target="_blank" href="http://dx.doi.org/' + events[i].doi + '">doi</a>';
-          bubble_content += ' | ';
-          bubble_content += '<a target="_blank" href="' + events[i].url + '">url</a>';
-          bubble_content += ' | ';
-          bubble_content += events[i].calendar_date || '';
-          
-          makeInfoWindowEvent(map, infowindow, bubble_content, marker);
-        }
-      }
-    }
-
-    google.maps.event.addDomListener(window, 'load', initialise);
