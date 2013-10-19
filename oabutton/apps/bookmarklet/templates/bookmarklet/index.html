@@ -3,20 +3,24 @@
 {% block content %}
 <img src="/static/img/oalogo.png" style="position: absolute; top: 0; right: 0;"/><a id="id_pmc" title="Available at PMC" target="_new" style="position: absolute; top: 0; right: 32px; display: none;"><img src="/static/img/pmc.png"/></a>
 <form id="event" action="/api/post/" method="post" class="form-horizontal">{% csrf_token %}
+  {{ bookmarklet..non_field_errors }}
   {{ bookmarklet.accessed }}
 
   <div class="control-group">
     {{ bookmarklet.name|label_with_classes:"control-label"}}
+    {{ bookmarklet.name.errors }}
     <div class="controls">
         {{ bookmarklet.name }}
     </div>
   </div>
   <div class="control-group">
+    {{ bookmarklet.profession.errors }}
     {{ bookmarklet.profession|label_with_classes:"control-label"}}
     <div class="controls">
         {{ bookmarklet.profession }}
     </div>
   </div>
+  {{ bookmarklet.remember.errors }}
   {{ bookmarklet.remember|label_with_classes:"checkbox" }}
   {{ bookmarklet.remember }}
   <div class="control-group">
@@ -28,12 +32,14 @@
   </div>
   <div class="control-group">
     {{ bookmarklet.url|label_with_classes:"control-label" }}
+    {{ bookmarklet.url.errors }}
     <div class="controls">
         {{ bookmarklet.url }}
     </div>
   </div>
   <div class="control-group">
     {{ bookmarklet.doi|label_with_classes:"control-label" }}
+    {{ bookmarklet.doi.errors }}
     <div class="controls">
         {{ bookmarklet.doi }}
         <p class="help-text">Document Object Identifier (DOI)</p>
@@ -41,10 +47,12 @@
   </div>
   <div class="control-group">
     {{ bookmarklet.description|label_with_classes:"control-label" }}
+    {{ bookmarklet.description.errors }}
     {{ bookmarklet.description }}
     </div>
   </div>
   <div class="control-group">
+    {{ bookmarklet.story.errors }}
     {{ bookmarklet.story|label_with_classes:"control-label" }}
     <div class="controls">
         {{ bookmarklet.story }}

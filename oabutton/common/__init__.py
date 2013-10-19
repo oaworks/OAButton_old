@@ -21,7 +21,7 @@ class SigninForm(forms.Form):
 
 
 class Bookmarklet(forms.Form):
-    name = forms.CharField(required=False,
+    name = forms.CharField(required=True,
                            label="Your name",
                            widget=forms.TextInput(
                                attrs={'placeholder': 'e.g. Dr John Doe',
@@ -29,7 +29,8 @@ class Bookmarklet(forms.Form):
                                       'class': 'input-block-level',
                                       }))
 
-    accessed = forms.CharField(widget=forms.HiddenInput)
+    accessed = forms.CharField(widget=forms.HiddenInput,
+                               required=False)
 
     profession = forms.CharField(required=False,
                                  label="Profession",
@@ -38,7 +39,7 @@ class Bookmarklet(forms.Form):
                                             'data-remember': "data-remember",
                                             'class': "input-block-level"}))
 
-    remember = forms.BooleanField(required=True)
+    remember = forms.BooleanField(required=False)
 
     location = forms.CharField(required=True,
                                label="Location",
@@ -46,9 +47,9 @@ class Bookmarklet(forms.Form):
                                    attrs={'placeholder': "e.g. London, United Kingdom",
                                           'class': "input-block-level"}))
 
-    coords = forms.CharField(widget=forms.HiddenInput)
+    coords = forms.CharField(widget=forms.HiddenInput, required=False)
 
-    doi = forms.CharField(required=True,
+    doi = forms.CharField(required=False,
                           label="DOI",
                           widget=forms.TextInput(attrs={'class': "input-block-level"}))
 

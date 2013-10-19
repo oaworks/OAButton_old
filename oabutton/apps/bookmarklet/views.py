@@ -90,28 +90,29 @@ def add(req):
 
 
 def add_post(req):
-    evt_dict = {}
-    for k in Event._fields.keys():
-        if k == 'id':
-            continue
-        evt_dict[k] = req.POST.get(k, '')
+    c = {}
+    c.update(csrf(req))
 
-        if evt_dict[k] == '':
-            evt_dict[k] = None
+    if req.method == 'POST':
+        # If the form has been submitted...
+        form = Bookmarklet(req.POST)  # A form bound to the POST data
+        if form.is_valid():  # All validation rules pass
+            evt_dict = dict(form.cleaned_data)
+            lat, lng = evt_dict['coords'].split(',')
+            evt_dict['coords'] = {'lat': float(lat), 'lng': float(lng)}
+            if evt_dict['accessed'] != '':
+                evt_dict['accessed'] = datetime.strptime(evt_dict['accessed'], "%a, %d %b %Y %H:%M:%S %Z")
 
-    lat, lng = evt_dict['coords'].split(',')
-    evt_dict['coords'] = {'lat': float(lat), 'lng': float(lng)}
-    if evt_dict['accessed'] != '':
-        evt_dict['accessed'] = datetime.strptime(evt_dict['accessed'], "%a, %d %b %Y %H:%M:%S %Z")
+            event = Event(**evt_dict)
+            event.save()
 
-    event = Event(**evt_dict)
-    event.save()
-
-    scholar_url = ''
-    if req.POST['doi']:
-        scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST[
-            'doi']
-    return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url, 'oid': str(event.id)})
+            scholar_url = ''
+            if req.POST['doi']:
+                scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST['doi']
+            return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url, 'oid': str(event.id)})
+        else:
+            c.update({'bookmarklet': form})
+            return render_to_response('bookmarklet/index.html', c)
 
 
 def generate_bookmarklet(req, user_id):
