@@ -135,6 +135,47 @@ block body
     .container
       h2 Meet the team.
         // Team profiles
+          ul.thumbnails
+            li.span2
+              a(href="http://twitter.com/Mcarthur_Joe")
+                .thumbnail
+                  img(src='/img/joe.jpg')
+                  .caption
+                    h3 Joe
+                    p @Mcarthur_Joe
+            li.span2
+              a(href="http://twitter.com/davidecarroll")
+                .thumbnail
+                  img(src='/img/david.jpg')
+                  .caption
+                    h3 David
+                    p @davidecarroll
+            li.span2
+              a(href="http://twitter.com/nicholascwng")
+                .thumbnail
+                  img(src='https://secure.gravatar.com/avatar/9637895e310caf25237e89155157b2a7?s=200')
+                  .caption
+                    h3 Nick
+                    p @nicholascwng
+            li.span2
+              a(href="http://twitter.com/andylolz")
+                .thumbnail
+                  img(src='https://secure.gravatar.com/avatar/bbb9eb1af3b427f8259df33f6e8844aa?s=200')
+                  .caption
+                    h3 Andy
+                    p @andylolz
+            li.span2
+              a(href="http://twitter.com/frathgeber")
+                .thumbnail
+                  img(src='https://secure.gravatar.com/avatar/d178a6201be696c466c41c355c671707?s=200')
+                  .caption
+                    h3 Florian
+                    p @frathgeber
+            li.span2
+              .thumbnail
+                img(src='/img/elliot.jpg')
+                .caption
+                  h3 Elliot
 
   #footer
     a(name='contact')
@@ -189,21 +230,6 @@ block body
               |individual moments of injustice and frustration to turn them into positive
               |change.
 
-        section#map
-          .page-header
-            h1= count
-              small  Scholarly pursuits denied
-          #map_canvas
-
-        section#get-it
-          .page-header
-            h1 Ok Ace! Give me the bookmarklet!
-          .hero-unit
-            p Drag this to your bookmark bar: 
-              a(class="btn btn-large", href="javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','#{ domain }/js/bookmarklet.js');")
-                i(class='icon-bookmark')
-                |  Open Access Button
-
         section#contribute
           .page-header
             h1 How can I help?
@@ -219,50 +245,3 @@ block body
               |, and get hacking. There are some instructions there on 
               a(href='https://github.com/OAButton/OAButton/blob/develop/instructions.md') how to set up your development server
               |.
-
-        section#the-team
-          .page-header
-            h1 The team
-          a(href="http://hacks.rewiredstate.org/events/bmj/open-access-button") A BMJ / Rewired State hackday hack
-
-          ul.thumbnails
-            li.span2
-              a(href="http://twitter.com/Mcarthur_Joe")
-                .thumbnail
-                  img(src='/img/joe.jpg')
-                  .caption
-                    h3 Joe
-                    p @Mcarthur_Joe
-            li.span2
-              a(href="http://twitter.com/davidecarroll")
-                .thumbnail
-                  img(src='/img/david.jpg')
-                  .caption
-                    h3 David
-                    p @davidecarroll
-            li.span2
-              a(href="http://twitter.com/nicholascwng")
-                .thumbnail
-                  img(src='https://secure.gravatar.com/avatar/9637895e310caf25237e89155157b2a7?s=200')
-                  .caption
-                    h3 Nick
-                    p @nicholascwng
-            li.span2
-              a(href="http://twitter.com/andylolz")
-                .thumbnail
-                  img(src='https://secure.gravatar.com/avatar/bbb9eb1af3b427f8259df33f6e8844aa?s=200')
-                  .caption
-                    h3 Andy
-                    p @andylolz
-            li.span2
-              a(href="http://twitter.com/frathgeber")
-                .thumbnail
-                  img(src='https://secure.gravatar.com/avatar/d178a6201be696c466c41c355c671707?s=200')
-                  .caption
-                    h3 Florian
-                    p @frathgeber
-            li.span2
-              .thumbnail
-                img(src='/img/elliot.jpg')
-                .caption
-                  h3 Elliot
