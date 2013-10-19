@@ -4,3 +4,5 @@ build
 *.sqlite3
 .vagrant
 *.sw?
+venv
+*.sublime-workspace
