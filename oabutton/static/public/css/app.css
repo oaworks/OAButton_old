@@ -35,8 +35,8 @@ header .lead span {
   opacity: 0.9;
 }
 
-#map_canvas {
-  height: 700px;
+#map {
+  height: 500px;
   width: 100%;
 }
 

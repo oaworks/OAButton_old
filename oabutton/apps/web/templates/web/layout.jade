@@ -21,12 +21,33 @@ html(lang='en')
     link(rel='stylesheet', href='/static/css/MarkerCluster.Default.css')
     
     //if lt IE 9
-      script(src='/static/js/html5shiv.js')
-      script(src='/static/js/respond.min.js')
+      script(src='/static/js/lib/html5shiv.js')
+      script(src='/static/js/lib/respond.min.js')
     
     link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css') 
     //if lte IE 8
       link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css')
 
-  body(data-spy='scroll', data-target='.bs-docs-sidebar')
+  body(data-spy='scroll', data-target='.navbar-nav')
     block body
+
+  // JQuery and plugins
+  script(src='/static/js/lib/jquery.min.js')
+  script(src='http://codeorigin.jquery.com/color/jquery.color-2.1.2.min.js')
+  script(src='/static/js/lib/jquery.form.js') 
+
+  // Bootstrap and plugins
+  script(src='/static/js/lib/bootstrap.js')
+  script(src='/static/js/lib/bootstrap-dialog.js')
+
+  // Leaflet
+  script(src='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js')
+  script(src='/static/js/lib/leaflet.markercluster.js')
+
+  // Server vars
+  script
+    var events = {{ events|safe }};
+
+  // Application scripts
+  script(src='/static/js/map.js')
+  script(src='/static/js/index.js')
