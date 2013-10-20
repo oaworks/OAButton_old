@@ -43,7 +43,7 @@ class APITest(TestCase):
         'url': u'http://www.ncbi.nlm.nih.gov/pubmed/20709373',
         'profession': u'engineer', 
         'coords': {u'lat': 44.0, u'lng': -79.5}, 
-        'location': None,
+        'location': '',
         'accessed': datetime.datetime(2013, 9, 9, 14, 54, 42),
         'pub_date': None, 
         'email': None}

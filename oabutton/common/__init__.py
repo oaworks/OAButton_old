@@ -41,7 +41,7 @@ class Bookmarklet(forms.Form):
 
     remember = forms.BooleanField(required=False)
 
-    location = forms.CharField(required=True,
+    location = forms.CharField(required=False,
                                label="Location",
                                widget=forms.TextInput(
                                    attrs={'placeholder': "e.g. London, United Kingdom",
