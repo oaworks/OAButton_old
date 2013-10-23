@@ -59,32 +59,25 @@ def signin(request):
     return HttpResponseServerError(form._errors.items())
 
 
-def add(req):
-    c = {}
-    c.update(csrf(req))
+def form(req):
+    """
+    Show the bookmarklet form
+    """
+
     # Display an entry page
-    # How does the DOI get in automatically?  This seems really wrong.
-    # At the least, we need a test here to illustrate why this should
-    # work at all.
-
-    # TODO: use a form thing here
-    doi = ''
-    url = ''
-    if 'url' in req.GET:
-        url = req.GET['url']
-
-    if 'doi' in req.GET:
-        doi = req.GET['doi']
 
     form = Bookmarklet(req.GET)
-    if url:
+    if 'url' in form.data:
         # Add readonly and value attributes to the widget
         form.fields['url'].widget.attrs['readonly'] = 'readonly'
-        form.fields['url'].widget.attrs['value'] = url
-    if doi:
+        form.fields['url'].widget.attrs['value'] = form.data['url']
+    if 'doi' in form.data:
         form.fields['doi'].widget.attrs['readonly'] = 'readonly'
-        form.fields['doi'].widget.attrs['value'] = doi
-    c.update({'url': url, 'doi': doi, 'bookmarklet': form})
+        form.fields['doi'].widget.attrs['value'] = form.data['doi']
+
+    c = {}
+    c.update(csrf(req))
+    c.update({'bookmarklet': form})
 
     return render_to_response('bookmarklet/index.html', c)
 
