@@ -2,22 +2,33 @@ from django import forms
 
 
 class SigninForm(forms.Form):
-    PRIVACY_CHOICES = (('PUBLIC', 'Public'),
-                       ('PRIVATE', 'Private'))
+    PROFESSION_CHOICES = (('STUDENT', 'Student'),
+                          ('DOCTOR', 'Doctor'),
+                          ('PATIENT', 'Patient'),
+                          ('ADVOCATE', 'Advocate'),
+                          ('OTHER', 'Other'),
+                          ('ACADEMIC', 'Academic'),
+                          ('RESEARCHER', 'Researcher'),
+                          ('BLANK', 'Prefer not to say'))
 
     email = forms.EmailField(required=True,
+                             label='Email address',
                              widget=forms.TextInput(
                                  attrs={'placeholder': 'Email address (required)'}))
-    name = forms.CharField(required=False,
+    name = forms.CharField(required=True,
+                           label="Full Name",
                            widget=forms.TextInput(
-                               attrs={'placeholder': 'Full Name'}))
-    profession = forms.CharField(required=False,
-                                 widget=forms.TextInput(
-                                     attrs={'placeholder': 'Profession'}))
-    university = forms.CharField(required=False,
-                                 widget=forms.TextInput(
-                                     attrs={'placeholder': 'Institution'}))
-    privacy = forms.ChoiceField(required=True, choices=PRIVACY_CHOICES,)
+                               attrs={'placeholder': 'Full Name (required)'}))
+
+    profession = forms.ChoiceField(required=True,
+                                   label="Profession",
+                                   choices=PROFESSION_CHOICES)
+
+    confirm_public = forms.BooleanField(label="I understand that information obtained by this button will be publicly accessible",
+                                        required=True)
+
+    mailinglist = forms.BooleanField(label="I would like to be added to a general OAbuton mailing list",
+                                        required=False)
 
 
 class Bookmarklet(forms.Form):

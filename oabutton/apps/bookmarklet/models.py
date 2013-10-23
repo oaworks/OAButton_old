@@ -13,8 +13,6 @@ import mongoengine.django.auth
 class Event(Document):
     # Note that this has a lowercase 'e' to maintain compatibility
     meta = {'collection': 'events'}
-    name = StringField()
-    profession = StringField()
     location = StringField()
     coords = DictField()
     accessed = DateTimeField()
@@ -28,6 +26,10 @@ class User(mongoengine.django.auth.User):
     """
     This model is modified from mongoengine.django.auth.User
     """
+    name = StringField()
+    profession = StringField()
+    mailinglist = BooleanField()
+
     def get_bookmarklet_url(self):
         # generate a boilerplate URL for each user
         from django.conf import settings
