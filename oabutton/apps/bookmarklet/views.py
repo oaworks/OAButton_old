@@ -56,7 +56,7 @@ def signin(request):
                 user = manager.create_user(**data)
 
             return HttpResponse(json.dumps({'url': user.get_bookmarklet_url()}), content_type="application/json")
-    return HttpResponseServerError(form._errors.items())
+    return HttpResponseServerError(json.dumps({'errors': form._errors}), content_type="application/json")
 
 
 def form(req):

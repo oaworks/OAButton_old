@@ -77,7 +77,8 @@ class APITest(TestCase):
         """
 
         EMAIL = 'new_email@foo.com'
-        POST_DATA = {u'email': [EMAIL], 'privacy': 'PUBLIC'}
+        POST_DATA = {u'email': [EMAIL], 'name': 'some name',
+                     'profession': 'STUDENT', 'confirm_public': 'checked'}
 
         for user in User.objects.filter(username=EMAIL):
             user.delete()
@@ -95,7 +96,8 @@ class APITest(TestCase):
         """
 
         EMAIL = 'new_email@foo.com'
-        POST_DATA = {u'email': [EMAIL], 'privacy': 'PUBLIC'}
+        POST_DATA = {u'email': [EMAIL], 'name': 'some name',
+                     'profession': 'STUDENT', 'confirm_public': 'checked'}
 
         for user in User.objects.filter(username=EMAIL):
             user.delete()

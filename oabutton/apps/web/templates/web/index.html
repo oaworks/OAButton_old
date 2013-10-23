@@ -1,4 +1,6 @@
-{% extends "web/layout.html" %}{% block body %}
+{% extends "web/layout.html" %}
+{% load oafilters %}
+{% block body %}
 <!-- Github ribbon--><a href="https://github.com/OAButton/OAButton"><img id="github_ribbon" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"/></a>
 <header class="jumbotron subhead">
   <div class="container">
@@ -76,12 +78,8 @@ change.
                     {{ signin_form.profession }}
                 </div>
                 <div>
-                    {{ signin_form.university }}
-                </div>
-                <div>
-                I've read the <a href="/privacy_statement/" target="privacy_popup">privacy statement</a>
-                and want my data to be:
-                    {{ signin_form.privacy}}
+                    {{ signin_form.confirm_public|label_with_classes:"confirm-label"}}
+                    {{ signin_form.confirm_public}}
                 </div>
                 <div>
                     <button class="btn btn-large btn-primary clear" type="submit">Generate Custom Bookmarklet</button>

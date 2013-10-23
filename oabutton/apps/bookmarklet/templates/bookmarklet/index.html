@@ -3,7 +3,7 @@
 {% block content %}
 <img src="/static/img/oalogo.png" style="position: absolute; top: 0; right: 0;"/><a id="id_pmc" title="Available at PMC" target="_new" style="position: absolute; top: 0; right: 32px; display: none;"><img src="/static/img/pmc.png"/></a>
 <form id="event" action="/api/post/" method="post" class="form-horizontal">{% csrf_token %}
-  {{ bookmarklet..non_field_errors }}
+  {{ bookmarklet.non_field_errors }}
   {{ bookmarklet.accessed }}
 
   <div class="control-group">
