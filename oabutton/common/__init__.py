@@ -21,25 +21,8 @@ class SigninForm(forms.Form):
 
 
 class Bookmarklet(forms.Form):
-    name = forms.CharField(required=True,
-                           label="Your name",
-                           widget=forms.TextInput(
-                               attrs={'placeholder': 'e.g. Dr John Doe',
-                                      'data-remember': "data-remember",
-                                      'class': 'input-block-level',
-                                      }))
-
     accessed = forms.CharField(widget=forms.HiddenInput,
                                required=False)
-
-    profession = forms.CharField(required=False,
-                                 label="Profession",
-                                 widget=forms.TextInput(
-                                     attrs={'placeholder': 'e.g. Doctor',
-                                            'data-remember': "data-remember",
-                                            'class': "input-block-level"}))
-
-    remember = forms.BooleanField(required=False)
 
     location = forms.CharField(required=False,
                                label="Location",
