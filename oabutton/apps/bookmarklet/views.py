@@ -63,14 +63,12 @@ def form(req):
     """
     Show the bookmarklet form
     """
-
-    # Display an entry page
-
     form = Bookmarklet(req.GET)
     if 'url' in form.data:
         # Add readonly and value attributes to the widget
         form.fields['url'].widget.attrs['readonly'] = 'readonly'
         form.fields['url'].widget.attrs['value'] = form.data['url']
+
     if 'doi' in form.data:
         form.fields['doi'].widget.attrs['readonly'] = 'readonly'
         form.fields['doi'].widget.attrs['value'] = form.data['doi']

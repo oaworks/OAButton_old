@@ -9,9 +9,9 @@ from django.test import TestCase
 from django.test.client import Client
 from nose.tools import eq_, ok_
 from oabutton.apps.bookmarklet.models import Event, User
-from test_mongoauth import MongoAuthTest
 import datetime
 import json
+
 
 class APITest(TestCase):
     def test_add_post(self):
@@ -77,8 +77,7 @@ class APITest(TestCase):
         """
 
         EMAIL = 'new_email@foo.com'
-        POST_DATA = {u'email': [EMAIL],
-                'privacy': 'PUBLIC'}
+        POST_DATA = {u'email': [EMAIL], 'privacy': 'PUBLIC'}
 
         for user in User.objects.filter(username=EMAIL):
             user.delete()
@@ -96,8 +95,7 @@ class APITest(TestCase):
         """
 
         EMAIL = 'new_email@foo.com'
-        POST_DATA = {u'email': [EMAIL],
-                'privacy': 'PUBLIC'}
+        POST_DATA = {u'email': [EMAIL], 'privacy': 'PUBLIC'}
 
         for user in User.objects.filter(username=EMAIL):
             user.delete()
