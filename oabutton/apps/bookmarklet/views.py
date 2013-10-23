@@ -48,9 +48,11 @@ def signin(request):
 
             try:
                 user = User.objects.get(username=data['email'])
-                # TODO: update the user information here?
-                # We should probably archive the old one and save a
-                # new one.
+                user.mailinglist = data['mailinglist']
+                user.name = data['name']
+                user.profession = data['profession']
+                user.usernmae = data['username']
+                user.save()
             except User.DoesNotExist:
                 # Default the username to be email address
                 user = manager.create_user(**data)

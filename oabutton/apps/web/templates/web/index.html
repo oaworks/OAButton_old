@@ -82,6 +82,10 @@ change.
                     {{ signin_form.confirm_public}}
                 </div>
                 <div>
+                    {{ signin_form.mailinglist|label_with_classes:"mailinglist-label"}}
+                    {{ signin_form.mailinglist}}
+                </div>
+                <div>
                     <button class="btn btn-large btn-primary clear" type="submit">Generate Custom Bookmarklet</button>
                 </div>
             </form>

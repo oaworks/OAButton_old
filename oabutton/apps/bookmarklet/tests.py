@@ -77,8 +77,9 @@ class APITest(TestCase):
         """
 
         EMAIL = 'new_email@foo.com'
-        POST_DATA = {u'email': [EMAIL], 'name': 'some name',
-                     'profession': 'STUDENT', 'confirm_public': 'checked'}
+        POST_DATA = {u'email': EMAIL, 'name': 'some name',
+                     'profession': 'STUDENT', 'confirm_public': 'checked',
+                     'mailinglist': 'checked'}
 
         for user in User.objects.filter(username=EMAIL):
             user.delete()
@@ -89,6 +90,13 @@ class APITest(TestCase):
         eq_(response.status_code, 200)
         ok_('url' in json.loads(response.content))
 
+        # check that we have all the signin fields
+        user = User.objects.filter(username=EMAIL)[0]
+        eq_(user.name, 'some name')
+        eq_(user.email, EMAIL)
+        eq_(user.profession, 'STUDENT')
+        ok_(user.mailinglist)
+
     def test_update_signon(self):
         """
         verify that the JSON emitted is compatible with the javascript
@@ -97,17 +105,25 @@ class APITest(TestCase):
 
         EMAIL = 'new_email@foo.com'
         POST_DATA = {u'email': [EMAIL], 'name': 'some name',
-                     'profession': 'STUDENT', 'confirm_public': 'checked'}
+                     'profession': 'STUDENT', 'confirm_public': 'checked',
+                     'mailinglist': 'checked'}
 
         for user in User.objects.filter(username=EMAIL):
             user.delete()
         from django.contrib.auth import get_user_model
         manager = get_user_model()._default_manager
 
-        user = manager.create_user(email=EMAIL, username=EMAIL, privacy='PUBLIC')
+        user = manager.create_user(email=EMAIL, username=EMAIL)
 
         c = Client()
         response = c.post('/api/signin/', POST_DATA)
 
         eq_(response.status_code, 200)
         eq_({'url': user.get_bookmarklet_url()}, json.loads(response.content))
+
+        # check that we have all the signin fields
+        user = User.objects.filter(username=EMAIL)[0]
+        eq_(user.name, 'some name')
+        eq_(user.email, EMAIL)
+        eq_(user.profession, 'STUDENT')
+        ok_(user.mailinglist)

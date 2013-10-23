@@ -27,6 +27,9 @@ class SigninForm(forms.Form):
     confirm_public = forms.BooleanField(label="I understand that information obtained by this button will be publicly accessible",
                                         required=True)
 
+    mailinglist = forms.BooleanField(label="I would like to be added to a general OAbuton mailing list",
+                                        required=False)
+
 
 class Bookmarklet(forms.Form):
     accessed = forms.CharField(widget=forms.HiddenInput,
