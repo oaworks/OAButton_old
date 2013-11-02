@@ -5,92 +5,136 @@ block body
     img#github_ribbon(
         src='https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png',
         alt='Fork me on GitHub')
+
+  .navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+      .container
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') Open Access Button
+        .navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li.active
+              a(href='#start') Get the button
+            li
+              a(href='#map') See the map
+            li
+              a(href='#contribute') Contribute
+            li
+              a(href='#about') Meet the team
+            li
+              a(href='#contact') Contact and follow
+        //
+          /.navbar-collapse 
+
   header.jumbotron.subhead
     .container
-      h1 Open Access Button
-      .lead Journal paywalls block millions of researchers every day.
-      .lead Help us tear them down.
+      h1 Need Access to Research?
+      h2 Sign up below to get the Open Access Button
+    .lead 
+      span 
+        | Tearing down journal paywalls blocking millions of researchers, 
+        | one click at a time.
 
-  // Main body
-  .container
-    .row
-      .span2.bs-docs-sidebar
-        ul.nav.nav-list.bs-docs-sidenav(data-spy="affix", data-offset-top="280")
-          li
-            a(href='#the-project') The project
-          li
-            a(href='#map') Map
-          li
-            a(href='#get-it') Get it!
-          li
-            a(href='#contribute') Contribute
-          li
-            a(href='#the-team') The team
-      .span10
-        section#the-project
-          .page-header
-            h1 The project
-          .hero-unit
-            p.
-              If we want to bring about a more open community we’ll need more tools,
-              more information and more engagement around the issue.
-
+  .start
+    a(name='start')
+    .container
+      form.form-bookmarklet#form-bookmarklet(action='/api/signin/', method='post')
+        {% csrf_token %}
+        .row
+          .col-md-12
             p
-              strong That’s where our idea comes in. 
-              |Imagine a browser-based tool that allows you to track every time someone
-              |is denied access to a paper? Better yet, imagine if that tool gave you
-              |basic information about where in the world they were or their profession
-              |and why they were looking. Integrating this into one place would create a
-              |realtime, worldwide, interactive picture of the problem. The integration
-              |of social media would allow us to make this problem visible to the world.
-              |Lastly, imagine if the tool actually helped the person gain access to the
-              |paper they’d been denied access to in the first place. Incentivising use
-              |and opening the barriers to knowledge combined can make this really
-              |powerful.
-
+              | Create a free, anonymous account and get an easy and safe
+              | to use bookmarklet. When you are prevented from using an
+              | article for your research because access is restricted,
+              | just click the Open Access Button! Sign up here to get
+              | started right away:
+        .row
+          .col-md-6
+            {{ signin_form.email }}
+          .col-md-6
+            {{ signin_form.name }}
+        .row
+          .col-md-6
+            {{ signin_form.profession }}
+          .col-md-6
+            {{ signin_form.university }}
+        .row
+          .col-md-12
             p
-              |That’s what we’re imagining. We’re calling it the 
-              strong Open Access button
-              |. Every paywall met is an isolated incident; it’s time we capture those
-              |individual moments of injustice and frustration to turn them into positive
-              |change.
+              | I have read the 
+              a(href='/privacy_statement/', target='privacy_popup')
+                | privacy statement 
+              | and my data should be:
+        .row
+          .col-md-12
+            center
+              div.form-group
+                {{ signin_form.privacy}}
+              button.btn.btn-lg.btn-primary.btn-block(type='submit', onclick="javascript:document.getElementById('bookmarklet').style.display='block';return false") 
+                | Get my personal Open Access button
+        .row
+          .col-md-12
+            #bookmarklet
+              p
+                | Drag this to your bookmark bar:
+              a(id='bookmarklet-js', href="javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','{{ hostname }}/static/js/bookmarklet.js');")
+                button.btn.btn-lg.btn-primary
+                  i.icon-bookmark
+                  | Open Access Button
 
-        section#map
-          .page-header
-            h1= count
-              small  Scholarly pursuits denied
-          #map_canvas
+  .container.map
+    a(name='map')
+    #map
+    .underlay
+      .lead
+        span(id='counter')
+          {{count|force_escape}}
+        span 
+          | Scholarly pursuits denied
+      p
+        | This world map tracks clicks of the Open Access Button from
+        | our user community in real time, as it happens. Put yourself
+        | on the map to let the world know you are being restricted 
+        | from access to science.
 
-        section#get-it
-          .page-header
-            h1 Ok Ace! Give me the bookmarklet!
-          .hero-unit
-            p Drag this to your bookmark bar: 
-              a(class="btn btn-large", href="javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','#{ domain }/js/bookmarklet.js');")
-                i(class='icon-bookmark')
-                |  Open Access Button
+  .intro
+    a(name='intro')
+    .container
+      h2 How this works.
+      .row
+        .col-md-12.hilite-left
+          p
+            | Your action will help the Open Access community raise
+            | awareness to free this and even more scientific knowledge.
 
-        section#contribute
-          .page-header
-            h1 How can I help?
-          .hero-unit
-            p.
-              We’re glad you asked! The Open Access Button has been created entirely by
-              volunteers, and we can always do with some extra help squashing bugs and
-              adding new features.
+  .contribute
+    a(name='contribute')
+    .container
+      h2 Get involved.
+      .row
+        .col-md-12.hilite-right
+          p
+            | Using the Open Access Button (and you are using it,
+            | daily, right?) is just the first step. We need more
+            | people to be involved at every level of community
+            | action. The Open Access Working Group is where you
+            | can use the data our users create to take meaningful
+            | steps toward opening science. We are using every penny
+            | of contribution to raise awareness for this project.
+            | You can join our open source project as a developer.
+      .partners
+        h3 
+          | Made with support from wonderful partners and 
+          | Web users like you!
 
-            p
-              |If you want to help out, 
-              a(href='http://github.com/OAButton/OAButton') check out the source on Github
-              |, and get hacking. There are some instructions there on 
-              a(href='https://github.com/OAButton/OAButton/blob/develop/instructions.md') how to set up your development server
-              |.
-
-        section#the-team
-          .page-header
-            h1 The team
-          a(href="http://hacks.rewiredstate.org/events/bmj/open-access-button") A BMJ / Rewired State hackday hack
-
+  .team
+    a(name='team')
+    .container
+      h2 Meet the team.
+        // Team profiles
           ul.thumbnails
             li.span2
               a(href="http://twitter.com/Mcarthur_Joe")
@@ -133,57 +177,71 @@ block body
                 .caption
                   h3 Elliot
 
-  script(src='/js/jquery.min.js')
-  script(src='/js/bootstrap.js')
-  script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false')
-  script.
-    var map;
-    var marker;
+  #footer
+    a(name='contact')
+    .container
+      .row
+        .col-md-4
+          INFO
+        .col-md-4
+          ABOUT
+        .col-md-4
+          [t] [f] [r]
+      .row
+        .col-md-4
+          p Terms of use
+          p Support community
+          p Collaborator login
+        .col-md-4
+          p Project blog
+          p Get the data
+          p Contacts
+        .col-md-4
+          p
+            | All site content is licensed under a
+            | Creative Commons Attribution License.
 
-    function makeInfoWindowEvent(map, infowindow, contentString, marker) {
-      google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(contentString);
-        infowindow.open(map, marker);
-      });
-    }
-    
-    function initialise() {
-      var events = !{events};
-      var mapOptions = {
-        "zoom": 2,
-        "center": new google.maps.LatLng(0, 0),
-        "scrollwheel": false,
-        "mapTypeId": google.maps.MapTypeId.ROADMAP
-      };
-      map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-      addMarkers(map, events);
-    }
-    
-    function addMarkers(map, events) {
-      var infowindow = new google.maps.InfoWindow();
-      for (var i = 0; i < events.length; i++) {
-        if(events[i].coords.length !== 0) {
-          var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(events[i].coords.lat, events[i].coords.lng),
-            map: map,
-            icon: 'img/noalogo.png'
-          });
+  // Old body
+    .row
+      .col-lg-4     
+        section#start
+          .hero-unit
+            p.
+              If we want to bring about a more open community we’ll need more tools,
+              more information and more engagement around the issue.
 
-          bubble_content = '<h4>' + events[i].name;
-          if (events[i].profession != '') {
-            bubble_content += ' <em>(' + events[i].profession + ')</em>';
-          }
-          bubble_content += '</h4>';
-          bubble_content += '<p>' + events[i].story + '</p>';
-          bubble_content += '<a target="_blank" href="http://dx.doi.org/' + events[i].doi + '">doi</a>';
-          bubble_content += ' | ';
-          bubble_content += '<a target="_blank" href="' + events[i].url + '">url</a>';
-          bubble_content += ' | ';
-          bubble_content += events[i].calendar_date || '';
-          
-          makeInfoWindowEvent(map, infowindow, bubble_content, marker);
-        }
-      }
-    }
+            p
+              strong That’s where our idea comes in. 
+              |Imagine a browser-based tool that allows you to track every time someone
+              |is denied access to a paper? Better yet, imagine if that tool gave you
+              |basic information about where in the world they were or their profession
+              |and why they were looking. Integrating this into one place would create a
+              |realtime, worldwide, interactive picture of the problem. The integration
+              |of social media would allow us to make this problem visible to the world.
+              |Lastly, imagine if the tool actually helped the person gain access to the
+              |paper they’d been denied access to in the first place. Incentivising use
+              |and opening the barriers to knowledge combined can make this really
+              |powerful.
 
-    google.maps.event.addDomListener(window, 'load', initialise);
+            p
+              |That’s what we’re imagining. We’re calling it the 
+              strong Open Access button
+              |. Every paywall met is an isolated incident; it’s time we capture those
+              |individual moments of injustice and frustration to turn them into positive
+              |change.
+
+        section#contribute
+          .page-header
+            h1 How can I help?
+          .hero-unit
+            p.
+              We’re glad you asked! The Open Access Button has been created entirely by
+              volunteers, and we can always do with some extra help squashing bugs and
+              adding new features.
+
+            p
+              |If you want to help out, 
+              a(href='http://github.com/OAButton/OAButton') check out the source on Github
+              |, and get hacking. There are some instructions there on 
+              a(href='https://github.com/OAButton/OAButton/blob/develop/instructions.md') how to set up your development server
+              |.

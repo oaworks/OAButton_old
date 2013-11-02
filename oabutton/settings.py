@@ -85,6 +85,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -92,8 +93,15 @@ SECRET_KEY = 'vds2d@yy^4hi_et38)31kkq(pp@06275u&amp;q1tnoz16wo&amp;=127z'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
+    ('pyjade.ext.django.Loader',(
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
+)
+
+# Production LESS compression via django-compressor
+COMPRESS_PRECOMPILERS = (
+   ('text/less', 'lessc {infile} {outfile}'),
 )
 
 MIDDLEWARE_CLASSES = (
@@ -137,6 +145,8 @@ INSTALLED_APPS = (
 
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'compressor',
 
     # The Django admin assumes you're running on a RDBMS and isn't
     # suitable for a pure MongoDB 
