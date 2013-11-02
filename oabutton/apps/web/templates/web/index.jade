@@ -1,4 +1,5 @@
 extends web/layout
+- load oafilters
 block body
   // Github ribbon
   a(href='https://github.com/OAButton/OAButton')
@@ -40,43 +41,36 @@ block body
 
   .start
     a(name='start')
-    .container
+    .container.center
       form.form-bookmarklet#form-bookmarklet(action='/api/signin/', method='post')
         {% csrf_token %}
         .row
-          .col-md-12
+          .col-md-8.col-md-offset-2
             p
               | Create a free, anonymous account and get an easy and safe
               | to use bookmarklet. When you are prevented from using an
               | article for your research because access is restricted,
               | just click the Open Access Button! Sign up here to get
               | started right away:
-        .row
-          .col-md-6
-            {{ signin_form.email }}
-          .col-md-6
-            {{ signin_form.name }}
-        .row
-          .col-md-6
-            {{ signin_form.profession }}
-          .col-md-6
-            {{ signin_form.university }}
-        .row
-          .col-md-12
             p
-              | I have read the 
-              a(href='/privacy_statement/', target='privacy_popup')
-                | privacy statement 
-              | and my data should be:
-        .row
-          .col-md-12
-            center
+              {{ signin_form.email }}
+            p
+              {{ signin_form.name }}
+            p
+              {{ signin_form.profession }}
+            p
+              {{ signin_form.confirm_public}}
+              {{ signin_form.confirm_public|label_with_classes:"confirm-label"}}
+            p
+              {{ signin_form.mailinglist}}
+              {{ signin_form.mailinglist|label_with_classes:"mailinglist-label"}}
+            p
               div.form-group
                 {{ signin_form.privacy}}
               button.btn.btn-lg.btn-primary.btn-block(type='submit', onclick="javascript:document.getElementById('bookmarklet').style.display='block';return false") 
                 | Get my personal Open Access button
         .row
-          .col-md-12
+          .col-md-8.col-md-offset-2
             #bookmarklet
               p
                 | Drag this to your bookmark bar:
