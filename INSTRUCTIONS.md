@@ -15,7 +15,7 @@ Clone the [git repository][repo] and set up:
 git clone https://github.com/OAButton/OAButton.git /path/to/repo
 cd /path/to/repo                     # Switch to the directory where
                                      # you've cloned the repo
-git checkout django                  # Switch to the django branch
+git checkout develop                  # Switch to the develop branch
 
 virtualenv oab-env                   # Set up a new virtualenv (optional)
 . oab-env/bin/activate               # Activate the virtualenv (optional)
