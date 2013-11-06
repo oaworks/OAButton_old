@@ -72,10 +72,8 @@ block body
                         #bookmarklet
                             p
                                 | Drag this to your bookmark bar:
-                            a(id='bookmarklet-js', href="javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','{{ hostname }}/static/js/bookmarklet.js');")
-                                button.btn.btn-lg.btn-primary
-                                    i.icon-bookmark
-                                    | Open Access Button
+                            a.btn.btn-lg.btn-primary(id='bookmarklet-js', href="javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','{{ hostname }}/static/js/bookmarklet.js');")
+                                i.icon-bookmark Open Access Button
 
     .container.map
         a(name='map')
