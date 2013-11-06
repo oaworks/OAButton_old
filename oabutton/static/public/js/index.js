@@ -41,20 +41,6 @@ $(document).ready(function() {
 
             // Show the new bookmarklet
             $('#bookmarklet').show();
-
-            var dialog = new BootstrapDialog({
-                title : $('<h2>Drag this to your bookmark bar</h2>'),
-                content: $("<a href=\"javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','"+responseJSON['url']+"');\" class=\"btn btn-large\"><i class=\"icon-bookmark\"></i> Open Access Button </a>"),
-                buttons :   [{
-                    label : 'OK',
-                    onclick :
-                    function(dialog){
-                        dialog.close();
-                    }
-                }]
-            });
-            dialog.open();
-
         } 
     }; 
     $('#form-bookmarklet').ajaxForm(options);
