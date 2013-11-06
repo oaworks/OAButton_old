@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.core import serializers
 from django.core.context_processors import csrf
@@ -8,6 +7,7 @@ from django.views.decorators.csrf import csrf_protect
 from models import Event
 from oabutton.apps.bookmarklet.models import User
 from oabutton.common import SigninForm, Bookmarklet
+import dateutil
 import json
 
 
@@ -94,7 +94,7 @@ def add_post(req):
             lat, lng = evt_dict['coords'].split(',')
             evt_dict['coords'] = {'lat': float(lat), 'lng': float(lng)}
             if evt_dict['accessed'] != '':
-                evt_dict['accessed'] = datetime.strptime(evt_dict['accessed'], "%a, %d %b %Y %H:%M:%S %Z")
+                evt_dict['accessed'] = dateutil.parser.parse(evt_dict['accessed'])
 
             event = Event(**evt_dict)
             event.save()
