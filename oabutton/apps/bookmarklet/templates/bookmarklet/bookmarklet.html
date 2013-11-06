@@ -3,6 +3,9 @@
   var detectDOI = function() {
     var nodes, node, childNode, matches, i, j;
 
+    // match DOI: test on http://t.co/eIJciunBRJ
+    var doi_re = /10\.\d{4,}(?:\.\d+)*\/\S+/;
+
     // look for meta[name=citation_doi][content]
     nodes = document.getElementsByTagName("meta");
     for (i = 0; i < nodes.length; i++) {
@@ -12,9 +15,6 @@
         return node.getAttribute("content").replace(/^doi:/, "");
       }
     }
-
-    // match DOI: test on http://t.co/eIJciunBRJ
-    var doi_re = /10\.\d{4,}(?:\.\d+)*\/\S+/;
 
     // look in all text nodes for a DOI
     nodes = document.getElementsByTagName("*");
@@ -38,8 +38,7 @@
         }
 
         if (matches = doi_re.exec(childNode.nodeValue)) {
-          // if present, remove trailing full stop
-          return matches[0].replace(/\.$/, '');
+          return matches[0];
         }
       }
     }
@@ -93,7 +92,8 @@
 		loader.parentNode.removeChild(loader);
 
 		// build the iframe URL
-		var url = base + "/api/add/?url=" + encodeURIComponent(window.location);
+        // Custom URL for user: [{{user_id}}]
+		var url = base + "/api/form/?userid={{ user_id }}&url=" + encodeURIComponent(window.location);
 		var doi = detectDOI();
 		if(doi) {
 		  url += "&doi=" + encodeURIComponent(doi);

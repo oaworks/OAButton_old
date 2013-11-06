@@ -1,5 +1,7 @@
-{% extends "web/layout.html" %}{% block body %}
-<!-- Github ribbon--><a href="https://github.com/OAButton/server"><img id="github_ribbon" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"/></a>
+{% extends "web/layout.html" %}
+{% load oafilters %}
+{% block body %}
+<!-- Github ribbon--><a href="https://github.com/OAButton/OAButton"><img id="github_ribbon" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"/></a>
 <header class="jumbotron subhead">
   <div class="container">
     <h1>Open Access Button</h1>
@@ -65,9 +67,32 @@ change.
           <h1>Ok Ace! Give me the bookmarklet!</h1>
         </div>
         <div class="hero-unit">
-            <p>Drag this to your bookmark bar: <a
-                href="
-                javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','http://{{ hostname }}/static/js/bookmarklet.js');" class="btn btn-large"><i class="icon-bookmark"></i> Open Access Button
+            <form id="form-bookmarklet" class="form-bookmarklet" action="/api/signin/" method="post">{% csrf_token %}
+                <div>
+                    {{ signin_form.email }}
+                </div>
+                <div>
+                    {{ signin_form.name }}
+                </div>
+                <div>
+                    {{ signin_form.profession }}
+                </div>
+                <div>
+                    {{ signin_form.confirm_public|label_with_classes:"confirm-label"}}
+                    {{ signin_form.confirm_public}}
+                </div>
+                <div>
+                    {{ signin_form.mailinglist|label_with_classes:"mailinglist-label"}}
+                    {{ signin_form.mailinglist}}
+                </div>
+                <div>
+                    <button class="btn btn-large btn-primary clear" type="submit">Generate Custom Bookmarklet</button>
+                </div>
+            </form>
+
+            <p id="bookmarklet">Drag this to your bookmark bar: <a
+                id="bookmarklet-js"
+                href="javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','{{ hostname }}/static/js/bookmarklet.js');" class="btn btn-large"><i class="icon-bookmark"></i> Open Access Button
 </a>
           </p>
         </div>
@@ -83,8 +108,8 @@ adding new features.
 
 </p>
           <p>If you want to help out, 
-<a href="http://github.com/OAButton/server">check out the source on Github</a>, and get hacking. There are some instructions there on 
-<a href="https://github.com/OAButton/server/blob/develop/instructions.md">how to set up your development server</a>.
+<a href="http://github.com/OAButton/OAButton">check out the source on Github</a>, and get hacking. There are some instructions there on 
+<a href="https://github.com/OAButton/OAButton/blob/develop/instructions.md">how to set up your development server</a>.
 
           </p>
         </div>

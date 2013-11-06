@@ -11,12 +11,9 @@ urlpatterns = patterns('',
 
                        # I just jammed this in here while i sort out all the URL
                        # mappings.
-                       url(r'^api/', include(
-                           'oabutton.apps.bookmarklet.urls')),
+                       url(r'^api/', include('oabutton.apps.bookmarklet.urls')),
 
                        url(r'^metadata/', include(
                            'oabutton.apps.metadata.urls')),
 
-                       # Uncomment the next line to enable the admin:
-                       url(r'^admin/', include(admin.site.urls)),
                        )
