@@ -129,7 +129,7 @@ class APITest(TestCase):
         eq_(user.profession, 'STUDENT')
         ok_(user.mailinglist)
 
-    def test_add_success_response(self):
+    def test_search_doi_after_post(self):
         '''
         Tests to make sure the response to submitting the form is rendered
         correctly.
@@ -138,8 +138,8 @@ class APITest(TestCase):
                      'profession': 'mock profession',
                      'location': 'mock location',
                      'coords': '33.2,21.9',
-                     'accessed': '2013-09-07T04:21:02.407511',
-                     'pub_date': '2013-10-07T04:21:02.407511',
+                     'accessed': 'Mon, 09 Sep 2013 14:54:42 GMT',
+                     'pub_date': 'Mon, 09 Sep 2013 14:54:42 GMT',
                      'doi': 'some.doi',
                      'url': 'http://some.url/some_path',
                      'story': 'some_story',
