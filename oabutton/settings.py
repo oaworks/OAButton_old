@@ -4,6 +4,10 @@ import os
 from os.path import dirname, abspath, join
 from mongoengine import connect
 import re
+try:
+    from settings_local import *
+except:
+    print "Can't load settings_local - CORE won't work"
 
 ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
