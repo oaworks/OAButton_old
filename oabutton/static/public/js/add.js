@@ -1,5 +1,5 @@
 $(function() {
-  $('#id_accessed').val(new Date());
+  $('#id_accessed').val(new Date().toISOString());
 
   function getLocation() {
     if (navigator.geolocation) {
