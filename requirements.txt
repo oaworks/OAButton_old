@@ -33,7 +33,6 @@ pyjade==2.0.3
 pymongo==2.6.2
 python-openid==2.2.5
 python-social-auth==0.1.13
-requests==1.2.3
 requests-oauthlib==0.3.3
 six==1.4.1
 static==0.4
