@@ -10,7 +10,10 @@ $.fn.animateHighlight = function(highlightColor, duration) {
 
 
 // wait for the DOM to be loaded 
-$(document).ready(function() {
+$(document).ready(function() { 
+    // first hide the bookmarklet
+    $('#bookmarklet').hide();
+
     // bind 'myForm' and provide a simple callback function 
     var options = { 
         target:     '#divToUpdate',

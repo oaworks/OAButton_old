@@ -65,15 +65,16 @@ block body
                         p
                             div.form-group
                                 {{ signin_form.privacy}}
-                            button.btn.btn-lg.btn-primary.btn-block(type='submit') 
+                            button.btn.btn-lg.btn-primary.btn-block(type='submit', onclick="javascript:document.getElementById('bookmarklet').style.display='block';return false") 
                                 | Get my personal Open Access button
                 .row
                     .col-md-8.col-md-offset-2
-                        #bookmarklet(style='display:none')
+                        #bookmarklet
                             p
                                 | Drag this to your bookmark bar:
                             a.btn.btn-lg.btn-primary(id='bookmarklet-js', href="javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','{{ hostname }}/static/js/bookmarklet.js');")
                                 i.icon-bookmark Open Access Button
+
     .container.map
         a(name='map')
         #map
