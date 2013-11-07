@@ -1,3 +1,4 @@
+// This is just for successful submission to generate the xref links
 var oabSuccess = (function($) {
 
   function parseCrossRef(entry, doi) {
