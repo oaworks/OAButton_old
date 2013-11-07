@@ -3,15 +3,16 @@ from os import environ
 import requests
 import logging
 import json
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
 CORE_API_BASE = 'http://core.kmi.open.ac.uk/api'
 CORE_API_SEARCH = CORE_API_BASE + '/search/'
-if 'CORE_API_KEY' in environ:
-    CORE_API_KEY = environ['CORE_API_KEY']
-else:
-    logger.warn("CORE_API_KEY not set in environment: using default value")
+try:
+    CORE_API_KEY = settings.CORE_API_KEY
+except:
+    logger.warn("CORE_API_KEY not set in django.conf")
     CORE_API_KEY = '01234567890abcdefghijklmnopqrstu'
 
 
