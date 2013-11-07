@@ -100,13 +100,17 @@ def add_post(req):
             event.save()
 
             scholar_url = ''
-            if req.POST['doi']:
-                scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST['doi']
+            if 'doi' in evt_dict:
+                # Some dumb DOIs end with '.' characters
+                while evt_dict['doi'].endswith('.'):
+                    evt_dict['doi'] = evt_dict['doi'][:-1]
 
-            # TODO: stop using raw request and check that the scholar
-            # urls are all correct
-            c.update({'doi': req.POST['doi']})
-            c.update({'scholar_url': scholar_url, 'oid': str(event.id)})
+                doi = evt_dict['doi']
+                scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % doi
+
+                c.update({'scholar_url': scholar_url, 'doi': doi})
+
+            c.update({'oid': str(event.id)})
 
             return render_to_response('bookmarklet/success.html', c)
         else:
