@@ -160,8 +160,14 @@ $(function() {
         address: $('#id_location').val()
       },
       success: function(response) {
-        var location = response.results[0].geometry.location;
-        $('#id_coords').val([location.lat, location.lng]);
+       if (response.results.length == 0) {
+           // Something went wrong with the reponse from google maps -
+           // just hardcode a 0,0 co-ordinate here
+           $('#id_coords').val([0, 0]);
+       } else {
+           var location = response.results[0].geometry.location;
+           $('#id_coords').val([location.lat, location.lng]);
+       }
       }
     });
   }
