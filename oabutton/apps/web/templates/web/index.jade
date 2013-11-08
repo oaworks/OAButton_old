@@ -24,7 +24,7 @@ block body
                     li
                         a(href='#contribute') Contribute
                     li
-                        a(href='#team') Meet the team
+                        a(href='#about') Meet the team
                     li
                         a(href='#contact') Contact and follow
 
@@ -42,7 +42,7 @@ block body
         .container.center
             form.form-bookmarklet#form-bookmarklet(action='/api/signin/', method='post')
                 {% csrf_token %}
-                .row.form-body
+                .row
                     .col-md-8.col-md-offset-2
                         p
                             | Create a free, anonymous account and get an easy and safe
@@ -67,42 +67,27 @@ block body
                                 {{ signin_form.privacy}}
                             button.btn.btn-lg.btn-primary.btn-block(type='submit') 
                                 | Get my personal Open Access button
-
-                .row#bookmarklet(style='display:none')
+                .row
                     .col-md-8.col-md-offset-2
-                        .content
+                        #bookmarklet(style='display:none')
                             p
                                 | Drag this to your bookmark bar:
-                            a.btn.btn-lg.btn-primary
+                            a.btn.btn-lg.btn-primary(id='bookmarklet-js', href="javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','{{ hostname }}/static/js/bookmarklet.js');")
                                 i.icon-bookmark Open Access Button
-
-    .modal.fade(id="bookmarklet-modal", tabindex="-1", role="dialog", aria-labelledby="bookmarklet-header", aria-hidden="true")
-        .modal-dialog
-            .modal-content
-                .modal-header
-                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
-                    h4.modal-title(id="bookmarklet-header") 
-                        | Thanks for registering
-                .modal-body
-                    // To be replaced by #bookmarklet content
-                .modal-footer
-                    button.btn.btn-default(type="button", data-dismiss="modal") OK
-    
-    .map
+    .container.map
         a(name='map')
-        .container
-            #map
-            .underlay
-                .lead
-                    span(id='counter')
-                        {{count|force_escape}}
-                    span 
-                        | Scholarly pursuits denied
-                p
-                    | This world map tracks clicks of the Open Access Button from
-                    | our user community in real time, as it happens. Put yourself
-                    | on the map to let the world know you are being restricted 
-                    | from access to science.
+        #map
+        .underlay
+            .lead
+                span(id='counter')
+                    {{count|force_escape}}
+                span 
+                    | Scholarly pursuits denied
+            p
+                | This world map tracks clicks of the Open Access Button from
+                | our user community in real time, as it happens. Put yourself
+                | on the map to let the world know you are being restricted 
+                | from access to science.
 
     .intro
         a(name='intro')
