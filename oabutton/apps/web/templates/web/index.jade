@@ -42,7 +42,7 @@ block body
         .container.center
             form.form-bookmarklet#form-bookmarklet(action='/api/signin/', method='post')
                 {% csrf_token %}
-                .row.form-body
+                .row
                     .col-md-8.col-md-offset-2
                         p
                             | Create a free, anonymous account and get an easy and safe
@@ -68,25 +68,24 @@ block body
                             button.btn.btn-lg.btn-primary.btn-block(type='submit')
                                 | Get my personal Open Access button
 
-                .row#bookmarklet(style='display:none')
-                    .col-md-8.col-md-offset-2
-                        .content
-                            p
-                                | Drag this to your bookmark bar:
-                            a.btn.btn-lg.btn-primary
-                                i.icon-bookmark Open Access Button
+            #bookmarklet(style='display:none')
+                .content
+                    p
+                        | Drag me to your bookmark bar:
+                    a.btn.btn-lg.btn-primary
+                        i.icon-bookmark Open Access Button
 
-    .modal.fade(id="bookmarklet-modal", tabindex="-1", role="dialog", aria-labelledby="bookmarklet-header", aria-hidden="true")
-        .modal-dialog
-            .modal-content
-                .modal-header
-                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
-                    h4.modal-title(id="bookmarklet-header") 
-                        | Thanks for registering
-                .modal-body
-                    // To be replaced by #bookmarklet content
-                .modal-footer
-                    button.btn.btn-default(type="button", data-dismiss="modal") OK
+            .modal.fade(id="bookmarklet-modal", tabindex="-1", role="dialog", aria-labelledby="bookmarklet-header", aria-hidden="true")
+                .modal-dialog
+                    .modal-content
+                        .modal-header
+                            button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                            h4.modal-title(id="bookmarklet-header") 
+                                | Thanks for registering
+                        .modal-body
+                            // To be replaced by #bookmarklet content
+                        .modal-footer
+                            button.btn.btn-default(type="button", data-dismiss="modal") OK
     
     .map
         a(name='map')

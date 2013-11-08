@@ -50,7 +50,7 @@ $(document).ready(function() {
             $('#bookmarklet').show();
 
             // Roll up the form
-            $('#form-bookmarklet .form-body').slideUp();
+            $('#form-bookmarklet').slideUp();
 
         } // -success
     }); // -ajaxForm
