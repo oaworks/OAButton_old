@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.core import serializers
 from django.core.context_processors import csrf
@@ -8,6 +7,7 @@ from django.views.decorators.csrf import csrf_protect
 from models import Event
 from oabutton.apps.bookmarklet.models import User
 from oabutton.common import SigninForm, Bookmarklet
+import dateutil
 import json
 
 
@@ -94,15 +94,24 @@ def add_post(req):
             lat, lng = evt_dict['coords'].split(',')
             evt_dict['coords'] = {'lat': float(lat), 'lng': float(lng)}
             if evt_dict['accessed'] != '':
-                evt_dict['accessed'] = datetime.strptime(evt_dict['accessed'], "%a, %d %b %Y %H:%M:%S %Z")
+                evt_dict['accessed'] = dateutil.parser.parse(evt_dict['accessed'])
 
             event = Event(**evt_dict)
             event.save()
 
             scholar_url = ''
-            if req.POST['doi']:
-                scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % req.POST['doi']
-            return render_to_response('bookmarklet/success.html', {'scholar_url': scholar_url, 'oid': str(event.id)})
+            if 'doi' in evt_dict:
+                # Some dumb DOIs end with '.' characters
+                while evt_dict['doi'].endswith('.'):
+                    evt_dict['doi'] = evt_dict['doi'][:-1]
+                doi = evt_dict['doi']
+                scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % doi
+
+                c.update({'scholar_url': scholar_url, 'doi': doi})
+
+            c.update({'oid': str(event.id)})
+
+            return render_to_response('bookmarklet/success.html', c)
         else:
             c.update({'bookmarklet': form})
             return render_to_response('bookmarklet/index.html', c)

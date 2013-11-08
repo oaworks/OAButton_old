@@ -13,4 +13,6 @@ urlpatterns = patterns('',
                        # mappings.
                        url(r'^api/', include('oabutton.apps.bookmarklet.urls')),
 
+                       url(r'^metadata/', include(
+                           'oabutton.apps.metadata.urls')),
                        )

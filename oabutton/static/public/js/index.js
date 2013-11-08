@@ -10,14 +10,29 @@ $.fn.animateHighlight = function(highlightColor, duration) {
 
 
 // wait for the DOM to be loaded 
-$(document).ready(function() {
+$(document).ready(function() { 
+    // first hide the bookmarklet
+    // $('#bookmarklet').hide();
+
     // bind 'myForm' and provide a simple callback function 
     var options = { 
         target:     '#divToUpdate',
         dataType:   'json',
         url:        '/api/signin/',
-        error:      function() {
-            $('#id_email').animateHighlight("#dd0000", 1000);
+        error:      function(ctx) {
+            var errors = JSON.parse(ctx.responseText).errors;
+
+            if ('email' in errors) {
+                $('#id_email').animateHighlight("#dd0000", 1000);
+            }
+
+            if ('name' in errors) {
+                $('#id_name').animateHighlight("#dd0000", 1000);
+            }
+
+            if ('confirm_public' in errors) {
+                $('label.confirm-label').animateHighlight("#dd0000", 1000);
+            }
         },
         success:    function(responseJSON, statusText, xhr, formElem) { 
             $('#bookmarklet-js').attr('href',
@@ -25,20 +40,6 @@ $(document).ready(function() {
 
             // Show the new bookmarklet
             $('#bookmarklet').show();
-
-            var dialog = new BootstrapDialog({
-                title : $('<h2>Drag this to your bookmark bar</h2>'),
-                content: $("<a href=\"javascript:document.getElementsByTagName('body')[0].appendChild(document.createElement('script')).setAttribute('src','"+responseJSON['url']+"');\" class=\"btn btn-large\"><i class=\"icon-bookmark\"></i> Open Access Button </a>"),
-                buttons :   [{
-                    label : 'OK',
-                    onclick :
-                    function(dialog){
-                        dialog.close();
-                    }
-                }]
-            });
-            dialog.open();
-
         } 
     }; 
     $('#form-bookmarklet').ajaxForm(options);
