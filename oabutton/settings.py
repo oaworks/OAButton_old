@@ -4,6 +4,10 @@ import os
 from os.path import dirname, abspath, join
 from mongoengine import connect
 import re
+try:
+    from settings_local import *   # NOQA
+except:
+    print "Can't load settings_local - CORE won't work"
 
 ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
@@ -18,15 +22,15 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {'default': {
-     'ENGINE': 'django.db.backends.sqlite3',
-     'NAME': 'oabutton.sqlite3',      # Path to database file.
-     'USER': '',                      # Not used with sqlite3.
-     'PASSWORD': '',                  # Not used with sqlite3.
-     # Set to empty string for localhost. Not used with sqlite3.
-     'HOST': '',
-     # Set to empty string for default. Not used with sqlite3.
-     'PORT': '',
-     }}
+             'ENGINE': 'django.db.backends.sqlite3',
+             'NAME': 'oabutton.sqlite3',      # Path to database file.
+             'USER': '',                      # Not used with sqlite3.
+             'PASSWORD': '',                  # Not used with sqlite3.
+             # Set to empty string for localhost. Not used with sqlite3.
+             'HOST': '',
+             # Set to empty string for default. Not used with sqlite3.
+             'PORT': '',
+             }}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -93,7 +97,7 @@ SECRET_KEY = 'vds2d@yy^4hi_et38)31kkq(pp@06275u&amp;q1tnoz16wo&amp;=127z'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    ('pyjade.ext.django.Loader',(
+    ('pyjade.ext.django.Loader', (
         'django.template.loaders.filesystem.Loader',
         'django.template.loaders.app_directories.Loader',
     )),
@@ -101,7 +105,7 @@ TEMPLATE_LOADERS = (
 
 # Production LESS compression via django-compressor
 COMPRESS_PRECOMPILERS = (
-   ('text/less', 'lessc {infile} {outfile}'),
+    ('text/less', 'lessc {infile} {outfile}'),
 )
 
 MIDDLEWARE_CLASSES = (
@@ -149,7 +153,7 @@ INSTALLED_APPS = (
     'compressor',
 
     # The Django admin assumes you're running on a RDBMS and isn't
-    # suitable for a pure MongoDB 
+    # suitable for a pure MongoDB
     # Do *not* enable it.
     'django.contrib.admin',
 
@@ -158,6 +162,8 @@ INSTALLED_APPS = (
 
     # The web app is the main website
     'oabutton.apps.web',
+
+    'oabutton.apps.metadata',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -168,12 +174,25 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
         }
     },
     'handlers': {
+        'console': {
+            'level': 'WARN',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -186,6 +205,10 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'oabutton.apps.metadata.views': {
+            'handlers': ['console'],
+            'level': 'WARN',
+        },
     }
 }
 
@@ -193,7 +216,7 @@ LOGGING = {
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Bind MongoEngine
-if os.environ.has_key('HOST'):
+if 'HOST' in os.environ:
     MONGOLAB_REGEX = re.compile(r'^mongodb\:\/\/(?P<username>[_\w]+):(?P<password>[\w]+)@(?P<host>[\.\w]+):(?P<port>\d+)/(?P<database>[_\w]+)$')
     # grab the MONGOLAB_URI
     mongolab_url = os.environ['MONGOLAB_URI']
@@ -202,17 +225,15 @@ if os.environ.has_key('HOST'):
     connect(data['database'], host=data['host'],
             port=int(data['port']), username=data['username'],
             password=data['password'])
-    HOSTNAME=os.environ['HOST']
+    HOSTNAME = os.environ['HOST']
 else:
     connect('oabutton-server-dev', port=27017)
-    HOSTNAME='http://localhost:8000'
+    HOSTNAME = 'http://localhost:8000'
 
 
 # MongoEngine support requires overloading the session storage and the
 # authentication backends
 SESSION_ENGINE = 'mongoengine.django.sessions'
-AUTHENTICATION_BACKENDS = (
-        'mongoengine.django.auth.MongoEngineBackend',
-        )
+AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 MONGOENGINE_USER_DOCUMENT = 'oabutton.apps.bookmarklet.models.User'

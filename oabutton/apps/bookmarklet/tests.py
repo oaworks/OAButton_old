@@ -11,6 +11,7 @@ from nose.tools import eq_, ok_
 from oabutton.apps.bookmarklet.models import Event, User
 import datetime
 import json
+import re
 
 
 class APITest(TestCase):
@@ -127,3 +128,27 @@ class APITest(TestCase):
         eq_(user.email, EMAIL)
         eq_(user.profession, 'STUDENT')
         ok_(user.mailinglist)
+
+    def test_search_doi_after_post(self):
+        '''
+        Tests to make sure the response to submitting the form is rendered
+        correctly.
+        '''
+        POST_DATA = {'name': 'mock name',
+                     'profession': 'mock profession',
+                     'location': 'mock location',
+                     'coords': '33.2,21.9',
+                     'accessed': 'Mon, 09 Sep 2013 14:54:42 GMT',
+                     'pub_date': 'Mon, 09 Sep 2013 14:54:42 GMT',
+                     'doi': 'some.doi',
+                     'url': 'http://some.url/some_path',
+                     'story': 'some_story',
+                     'email': 'foo@blah.com'}
+
+        c = Client()
+        response = c.post('/api/post/', POST_DATA)
+
+        # Check that the DOI is passed through correctly
+        data_doi_re = re.compile('<body [^>]*data-doi="%s">'
+                                 % POST_DATA['doi'])
+        assert data_doi_re.search(response.content) is not None
