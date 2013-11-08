@@ -20,4 +20,4 @@ def homepage(req):
               'hostname': settings.HOSTNAME,
               'signin_form': SigninForm()})
 
-    return render_to_response('web/index.jade', c)
+    return render_to_response('web/signin.jade', c)

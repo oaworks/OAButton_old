@@ -42,15 +42,10 @@ $(document).ready(function() {
                 ".setAttribute('src','"+responseJSON['url']+"');"
             );
 
-            // Open the modal dialog
-            $('.modal-body', dialog).empty().append(bookmarklet.html());
-            dialog.modal();
-
-            // Show the new bookmarklet
+            // Show the new bookmarklet and instructions, roll up form
             $('#bookmarklet').show();
-
-            // Roll up the form
             $('#form-bookmarklet').slideUp();
+            dialog.modal();
 
         } // -success
     }); // -ajaxForm
