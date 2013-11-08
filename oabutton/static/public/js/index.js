@@ -50,4 +50,37 @@ $(document).ready(function() {
         } // -success
     }); // -ajaxForm
 
+    // Move into DB or so
+    var teamData = [
+        {
+            link: "http://twitter.com/Mcarthur_Joe",
+            thumb_url: '/img/joe.jpg',
+            name: "Joe",
+            twitter: "Mcarthur_Joe"
+        },{
+            link: "http://twitter.com/davidecarroll",
+            thumb_url: '/img/david.jpg',
+            name: "David",
+            twitter: "davidecarroll"
+        },{
+            link: "http://twitter.com/nicholascwng",
+            thumb_url: 'https://secure.gravatar.com/avatar/9637895e310caf25237e89155157b2a7?s=200',
+            name: "Nick",
+            twitter: "nicholascwng"
+        },{
+            link: "http://twitter.com/andylolz",
+            thumb_url: 'https://secure.gravatar.com/avatar/bbb9eb1af3b427f8259df33f6e8844aa?s=200',
+            name: "Andy",
+            twitter: "andylolz"
+        },{
+            link: "http://twitter.com/frathgeber",
+            thumb_url: 'https://secure.gravatar.com/avatar/d178a6201be696c466c41c355c671707?s=200',
+            name: "Florian",
+            twitter: "frathgeber"
+        },{
+            thumb_url: '/img/elliot.jpg',
+            name: "Elliot"
+        }
+    ]; //-teamdata
+
 }); 
