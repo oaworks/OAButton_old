@@ -1,3 +1,10 @@
+/* Shared styles */
+
+@oayellow: #ffc425;
+@oaorange: #ef5b23;
+
+/* Navigation and header area */
+
 .navbar-header .navbar-brand {
   font-size:0px; text-indent:-9999px;
   width:16px; height:25px;
@@ -27,41 +34,12 @@ header {
     left: 0px;  
 
     span {
-      background-color: #ef5b23;
+      background-color: @oaorange;
       color: white;
       padding: 0.4em;
       opacity: 0.9;
     }
   }
-}
-
-.map, #map { height: 500px; width: 100%; }
-.map {
-  .underlay {
-    position: relative;
-    width: 84%;
-    top: -11em;
-    background: #ffc425;
-    margin: 0 8%;
-    padding: 1em;
-    left: 0;
-
-    .lead {
-      background: #fff;
-      text-align: center;
-    }
-  }
-}
-
-#counter {
-  font-weight: bold;
-  font-size: 120%;
-}
-
-.thumbnail .caption {
-  padding: 0px;
-
-  p { font-size: 95%; }
 }
 
 #github_ribbon {
@@ -71,6 +49,8 @@ header {
   border: 0;
   z-index: 1;
 }
+
+/* Bookmarklet popup */
 
 #bookmarklet {
   display: none;
@@ -98,4 +78,94 @@ header {
 .modal-backdrop.in {
   opacity: .8;
   filter: alpha(opacity=80);
+}
+
+/* Activity map */
+
+.map, #map { height: 500px; width: 100%; }
+.map {
+  .underlay {
+    position: relative;
+    width: 84%;
+    top: -11em;
+    background: @oayellow;
+    margin: 0 8%;
+    padding: 1em 0;
+    left: 0;
+
+    .lead {
+      background: #fff;
+      text-align: center;
+    }
+
+    p { padding: 0 1em; }
+  }
+}
+
+#counter {
+  font-weight: bold;
+  font-size: 120%;
+}
+
+.thumbnail .caption {
+  padding: 0px;
+
+  p { font-size: 95%; }
+}
+
+/* Content areas */
+
+.intro, .contribute, .team {
+  
+  padding: 2em 4em;
+
+  p { line-height: 1.7; }
+
+  .row {
+    border-left:  7px solid transparent;
+    border-right: 7px solid transparent;
+    padding: 0 1.5em;
+  }  
+  .row.hilite-left {
+    border-left: 7px solid @oaorange;
+  }
+  .row.hilite-right {
+    border-right: 7px solid @oaorange;
+  }
+
+  h2 { 
+    color: #494949;
+    font-size: 40px; 
+    text-align: center; 
+    padding-top: 0;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  h3 {
+    color: #555;
+    font-size: 19px;
+    text-align: center;
+    border-top: 1px solid #aaa;
+    padding-top: 15px;
+  }
+}
+
+.intro, .team {
+  background: #eee;
+}
+
+.buttons {
+  margin-top: 2em;
+  text-align: center;
+
+  button {
+    font-size: 20px;
+    padding: 4px 10px;
+    margin: 0 20px;
+  }
+}
+
+.contribute {
+  background: #fff;
 }

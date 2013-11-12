@@ -1,6 +1,6 @@
 extends web/index
 - load oafilters
-block signin
+block start
     form.form-bookmarklet#form-bookmarklet(action='/api/signin/', method='post')
         {% csrf_token %}
         .row

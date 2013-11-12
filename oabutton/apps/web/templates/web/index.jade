@@ -61,8 +61,8 @@ block body
         a(name='intro')
         .container
             h2 How this works.
-            .row
-                .col-md-12.hilite-left
+            .row.hilite-left
+                .col-md-12
                     p
                         | Your action will help the Open Access community raise
                         | awareness to free this and even more scientific knowledge.
@@ -71,8 +71,8 @@ block body
         a(name='contribute')
         .container
             h2 Get involved.
-            .row
-                .col-md-12.hilite-right
+            .row.hilite-right
+                .col-md-12
                     p
                         | Using the Open Access Button (and you are using it,
                         | daily, right?) is just the first step. We need more
@@ -82,10 +82,19 @@ block body
                         | steps toward opening science. We are using every penny
                         | of contribution to raise awareness for this project.
                         | You can join our open source project as a developer.
-            .partners
-                h3 
-                    | Made with support from wonderful partners and 
-                    | Web users like you!
+            .row.buttons
+                .col-md-12
+                    button.btn.btn-default.bug(type="button")
+                        | Report a bug
+                    button.btn.btn-warning.donate(type="button") 
+                        | Donate!
+                    button.btn.btn-success.suggest(type="button")
+                        | Suggestions
+            .row.partners
+                .col-md-12
+                    h3 
+                        | Made with support from wonderful partners and 
+                        | Web users like you!
 
     .team
         a(name='team')
