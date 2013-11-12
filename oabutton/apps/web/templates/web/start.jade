@@ -5,7 +5,6 @@ block start
         {% csrf_token %}
         .row
             .col-md-8.col-md-offset-2
-                p Every time you hit a paywall is an isolated moment of frustration, that is unlikely to shake the ivory tower of academic publishing. By putting these moments together using the Open Access Button, we will capture your individual moments of injustice and frustration and display them on full view to the world. Only by making this problem impossible to ignore can we change the system. 
                 p Sign up below to get the Open Access Button, an easy, safe bookmarklet so you can show the global impact of research paywalls - and to help get access to the research you need. Simply drag the Open Access Button to your bookmark bar, click it each time you hit a paywall on academic research, and it will put your experience on the map along with thousands of others.  Then use our tools to search for access to the article, and use social media to spread the word.  Every person who uses the Open Access Button brings us closer to changing the system. Watch the video above for a quick introduction, then sign up here:
                 p
                     {{ signin_form.email }}
