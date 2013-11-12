@@ -15,6 +15,33 @@ import re
 
 
 class APITest(TestCase):
+    def setUp(self):
+        """
+        verify that the JSON emitted is compatible with the javascript
+        map stuff
+        """
+        # check that we have all the signin fields
+        self.EMAIL = 'new_email@foo.com'
+        self.POST_DATA = {u'email': self.EMAIL,
+                     'name': 'some name',
+                     'profession': 'STUDENT',
+                     'confirm_public': 'checked',
+                     'mailinglist': 'checked'}
+
+        for user in User.objects.filter(username=self.EMAIL):
+            user.delete()
+
+        c = Client()
+        response = c.post('/api/signin/', self.POST_DATA)
+
+        eq_(response.status_code, 200)
+        self.user = User.objects.get(username=self.EMAIL)
+
+        eq_(self.user.name, 'some name')
+        eq_(self.user.email, self.EMAIL)
+        eq_(self.user.profession, 'STUDENT')
+        ok_(self.user.mailinglist)
+
     def test_add_post(self):
         '''
         We need to make sure all fields of the Event object are
@@ -26,7 +53,8 @@ class APITest(TestCase):
                      u'coords': [u'44,-79.5'],
                      u'location': [u'Somewhere'],
                      u'accessed': [u'Mon, 09 Sep 2013 14:54:42 GMT'],
-                     u'description': [u'some description']}
+                     u'description': [u'some description'],
+                     u'user_id': self.user.id, }
 
         c = Client()
         response = c.post('/api/post/', POST_DATA)
@@ -40,7 +68,6 @@ class APITest(TestCase):
                     'coords': {u'lat': 44.0, u'lng': -79.5},
                     'location': 'Somewhere',
                     'accessed': datetime.datetime(2013, 9, 9, 14, 54, 42),
-                    'pub_date': None,
                     'email': None}
         for k, v in expected.items():
             assert getattr(evt, k) == v
@@ -50,6 +77,7 @@ class APITest(TestCase):
         verify that the JSON emitted is compatible with the javascript
         map stuff
         """
+        user = self.user
 
         POST_DATA = {u'story': [u'some access requirement'],
                      u'doi': [u'10.1016/j.urology.2010.05.009.'],
@@ -57,7 +85,8 @@ class APITest(TestCase):
                      u'coords': [u'44,-79.5'],
                      u'location': [u''],
                      u'accessed': [u'Mon, 09 Sep 2013 14:54:42 GMT'],
-                     u'description': [u'some description']}
+                     u'description': [u'some description'],
+                     u'user_id': user.id}
 
         c = Client()
         response = c.post('/api/post/', POST_DATA)
@@ -67,65 +96,41 @@ class APITest(TestCase):
         json_data = Event.objects.filter(id=response.context['oid']).to_json()
         jdata = json.loads(json_data)
         eq_(len(jdata), 1)
-        eq_(jdata[0]['coords'], {'lat': 44.0, 'lng': -79.5})
-        eq_(jdata[0]['doi'], '10.1016/j.urology.2010.05.009.')
-        eq_(jdata[0]['url'], 'http://www.ncbi.nlm.nih.gov/pubmed/20709373')
+        data = jdata[0]
+        eq_(data['coords'], {'lat': 44.0, 'lng': -79.5})
+        eq_(data['doi'], '10.1016/j.urology.2010.05.009.')
+        eq_(data['url'], 'http://www.ncbi.nlm.nih.gov/pubmed/20709373')
 
-    def test_new_signon(self):
-        """
-        verify that the JSON emitted is compatible with the javascript
-        map stuff
-        """
+        actual_date = datetime.datetime.fromtimestamp(data['accessed']['$date']/1000)
+        eq_(actual_date.year, 2013)
+        eq_(actual_date.month, 9)
+        eq_(actual_date.day, 9)
 
-        EMAIL = 'new_email@foo.com'
-        POST_DATA = {u'email': EMAIL, 'name': 'some name',
-                     'profession': 'STUDENT', 'confirm_public': 'checked',
-                     'mailinglist': 'checked'}
+        eq_(data['user_name'], 'some name')
+        eq_(data['user_profession'], 'STUDENT')
+        eq_(data['story'], 'some access requirement')
 
-        for user in User.objects.filter(username=EMAIL):
-            user.delete()
-
-        c = Client()
-        response = c.post('/api/signin/', POST_DATA)
-
-        eq_(response.status_code, 200)
-        ok_('url' in json.loads(response.content))
-
-        # check that we have all the signin fields
-        user = User.objects.filter(username=EMAIL)[0]
-        eq_(user.name, 'some name')
-        eq_(user.email, EMAIL)
-        eq_(user.profession, 'STUDENT')
-        ok_(user.mailinglist)
+        # Check that we can resolve the original user oid
+        evt = Event.objects.filter(id=response.context['oid'])[0]
+        assert evt.user_id != None
 
     def test_update_signon(self):
         """
         verify that the JSON emitted is compatible with the javascript
         map stuff
         """
-
-        EMAIL = 'new_email@foo.com'
-        POST_DATA = {u'email': [EMAIL], 'name': 'some name',
-                     'profession': 'STUDENT', 'confirm_public': 'checked',
-                     'mailinglist': 'checked'}
-
-        for user in User.objects.filter(username=EMAIL):
-            user.delete()
-        from django.contrib.auth import get_user_model
-        manager = get_user_model()._default_manager
-
-        user = manager.create_user(email=EMAIL, username=EMAIL)
+        user = self.user
 
         c = Client()
-        response = c.post('/api/signin/', POST_DATA)
+        response = c.post('/api/signin/', self.POST_DATA)
 
         eq_(response.status_code, 200)
         eq_({'url': user.get_bookmarklet_url()}, json.loads(response.content))
 
         # check that we have all the signin fields
-        user = User.objects.filter(username=EMAIL)[0]
+        user = User.objects.filter(username=self.EMAIL)[0]
         eq_(user.name, 'some name')
-        eq_(user.email, EMAIL)
+        eq_(user.email, self.EMAIL)
         eq_(user.profession, 'STUDENT')
         ok_(user.mailinglist)
 
@@ -139,11 +144,12 @@ class APITest(TestCase):
                      'location': 'mock location',
                      'coords': '33.2,21.9',
                      'accessed': 'Mon, 09 Sep 2013 14:54:42 GMT',
-                     'pub_date': 'Mon, 09 Sep 2013 14:54:42 GMT',
                      'doi': 'some.doi',
                      'url': 'http://some.url/some_path',
                      'story': 'some_story',
-                     'email': 'foo@blah.com'}
+                     'email': 'foo@blah.com',
+                     'user_id': self.user.id,
+                     }
 
         c = Client()
         response = c.post('/api/post/', POST_DATA)
