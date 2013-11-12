@@ -11,10 +11,11 @@ urlpatterns = patterns('',
                        # can evolve it
                        url(r'^$', get_json, name="get_json"),
 
-                       url(r'^form/$', form, name="form"),
+                       url(r'^form/(?P<user_id>.*)/$', form, name="form"),
 
                        url(r'^post/$', add_post, name="add_post"),
                        url(r'^signin/$', signin, name="signin"),
                        url(r'^bookmarklet/(?P<user_id>.*).js$',
                            generate_bookmarklet,
-                           name="generate_bookmarklet"))
+                           name="generate_bookmarklet"),
+                       )
