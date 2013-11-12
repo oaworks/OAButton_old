@@ -1,9 +1,7 @@
 # Django settings for oabutton project.
 
-import os
 from os.path import dirname, abspath, join
 from mongoengine import connect
-import re
 try:
     from settings_local import *   # NOQA
 except:
@@ -216,19 +214,8 @@ LOGGING = {
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Bind MongoEngine
-if 'HOST' in os.environ:
-    MONGOLAB_REGEX = re.compile(r'^mongodb\:\/\/(?P<username>[_\w]+):(?P<password>[\w]+)@(?P<host>[\.\w]+):(?P<port>\d+)/(?P<database>[_\w]+)$')
-    # grab the MONGOLAB_URI
-    mongolab_url = os.environ['MONGOLAB_URI']
-    match = MONGOLAB_REGEX.search(mongolab_url)
-    data = match.groupdict()
-    connect(data['database'], host=data['host'],
-            port=int(data['port']), username=data['username'],
-            password=data['password'])
-    HOSTNAME = os.environ['HOST']
-else:
-    connect('oabutton-server-dev', port=27017)
-    HOSTNAME = 'http://localhost:8000'
+connect('oabutton-server-dev', port=27017)
+HOSTNAME = 'http://localhost:8000'
 
 
 # MongoEngine support requires overloading the session storage and the
