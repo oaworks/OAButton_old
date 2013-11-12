@@ -32,7 +32,9 @@ class SigninForm(forms.Form):
 
 
 class Bookmarklet(forms.Form):
-    accessed = forms.CharField(widget=forms.HiddenInput,
+    user_id = forms.CharField(widget=forms.HiddenInput, required=True)
+
+    accessed = forms.CharField( widget=forms.HiddenInput,
                                required=False)
 
     location = forms.CharField(required=False,
@@ -47,6 +49,7 @@ class Bookmarklet(forms.Form):
                           label="DOI",
                           widget=forms.TextInput(attrs={'class': "input-block-level"}))
 
+    # TODO: check that this is validated by JS
     url = forms.URLField(required=True,
                          label='Article URL',
                          widget=forms.TextInput(
