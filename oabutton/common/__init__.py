@@ -55,9 +55,11 @@ class Bookmarklet(forms.Form):
 
     story = forms.CharField(required=False,
                             label="Why do you need access?",
+                            max_length = 140,
                             widget=forms.Textarea(
                                 attrs={'rows': "4",
-                                       'placeholder': "e.g. I'm trying to save lives, dammit!",
+                                       'maxlength': 140,
+                                       'placeholder': "e.g. I'm looking for the most up to date research on my patients disease.",
                                        'class': "input-block-level"}))
 
     description = forms.CharField(required=False,
