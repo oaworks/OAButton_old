@@ -15,6 +15,16 @@
     <!-- Main body-->
     <div class="container">{% block content %}{% endblock %}
     </div>
+
+    {% block footer %}
+    <div class="control-group">
+        <div class="controls">
+            <a href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report">Report a bug</a>
+            <a href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton">Donate</a>
+        </div>
+    </div>
+    {% endblock %}
+
     <script src="/static/js/lib/jquery.min.js"></script>
     <script src="/static/js/lib/bootstrap.js"></script>{% block scripts %}{% endblock %}
   </body>
