@@ -93,7 +93,7 @@
 
 		// build the iframe URL
         // Custom URL for user: [{{user_id}}]
-		var url = base + "/api/form/{{ user_id }}/?url=" + encodeURIComponent(window.location);
+		var url = base + "/api/form/page1/{{ user_id }}/?url=" + encodeURIComponent(window.location);
 		var doi = detectDOI();
 		if(doi) {
 		  url += "&doi=" + encodeURIComponent(doi);

@@ -2,21 +2,12 @@
 {% load oafilters %}
 {% block content %}
 <img src="/static/img/oalogo.png" style="position: absolute; top: 0; right: 0;"/><a id="id_pmc" title="Available at PMC" target="_new" style="position: absolute; top: 0; right: 32px; display: none;"><img src="/static/img/pmc.png"/></a>
-
-<p>
-You've hit a paywall!?
-<br />
-That sucks.
-<br />
-Tell us why and we'll put you on the map.
-</p>
-
 <form id="event" action="/api/post/" method="post" class="form-horizontal">{% csrf_token %}
   {{ bookmarklet.non_field_errors }}
 
   {{ bookmarklet.accessed }}
+
   {{ bookmarklet.user_id }}
-  {{ bookmarklet.url }}
 
   <div class="control-group">
     {{ bookmarklet.location|label_with_classes:"control-label"}}
@@ -26,10 +17,18 @@ Tell us why and we'll put you on the map.
     </div>
   </div>
   <div class="control-group">
+    {{ bookmarklet.url|label_with_classes:"control-label" }}
+    {{ bookmarklet.url.errors }}
+    <div class="controls">
+        {{ bookmarklet.url }}
+    </div>
+  </div>
+  <div class="control-group">
     {{ bookmarklet.doi|label_with_classes:"control-label" }}
     {{ bookmarklet.doi.errors }}
     <div class="controls">
         {{ bookmarklet.doi }}
+        <p class="help-text">Document Object Identifier (DOI)</p>
     </div>
   </div>
   <div class="control-group">
@@ -47,14 +46,16 @@ Tell us why and we'll put you on the map.
   </div>
   <div class="control-group">
     <div class="controls">
-      <button class="btn btn-primary">Submit</button>
+      <button class="btn btn-primary pull-right">Open Access, please!</button>
     </div>
   </div>
 </form>
-
-
+   <div class="control-group">
+    <div class="controls">
+      <a href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report">Report a bug</a>
+    </div>
+   </div>
 {% endblock %}
-
 {% block scripts %}
 <script src="/static/js/lib/jquery.min.js"></script>
 <script src="/static/js/add.js"></script>

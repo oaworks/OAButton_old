@@ -62,7 +62,28 @@ def signin(request):
     return HttpResponseServerError(json.dumps({'errors': form._errors}), content_type="application/json")
 
 
-def form(req, user_id):
+#def form(req, user_id):
+#    """
+#    Show the bookmarklet form
+#    """
+#    form = Bookmarklet(req.GET)
+#
+#    if 'doi' in form.data:
+#        form.fields['doi'].widget.attrs['readonly'] = 'readonly'
+#        form.fields['doi'].widget.attrs['value'] = form.data['doi']
+#
+#    if 'url' in form.data:
+#        form.fields['url'].widget.attrs['value'] = form.data['url']
+#
+#    form.fields['user_id'].widget.attrs['value'] = user_id
+#
+#    c = {}
+#    c.update(csrf(req))
+#    c.update({'bookmarklet': form, 'user_id': user_id})
+#    return render_to_response('bookmarklet/index.html', c)
+#
+
+def form1(req, user_id):
     """
     Show the bookmarklet form
     """
@@ -80,7 +101,30 @@ def form(req, user_id):
     c = {}
     c.update(csrf(req))
     c.update({'bookmarklet': form, 'user_id': user_id})
-    return render_to_response('bookmarklet/index.html', c)
+    return render_to_response('bookmarklet/page1.html', c)
+
+
+def form2(req):
+    """
+    Show the bookmarklet form
+    """
+    form = Bookmarklet(req.POST)
+
+    c = {}
+    c.update(csrf(req))
+    c.update({'bookmarklet': form, 'user_id': form.user_id})
+    return render_to_response('bookmarklet/page2.html', c)
+
+
+def form3(req):
+    """
+    Show the bookmarklet form
+    """
+    form = Bookmarklet(req.POST)
+    c = {}
+    c.update(csrf(req))
+    c.update({'bookmarklet': form, 'user_id': form.user_id})
+    return render_to_response('bookmarklet/page3.html', c)
 
 
 def add_post(req):
