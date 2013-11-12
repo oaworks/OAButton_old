@@ -49,12 +49,9 @@ class Bookmarklet(forms.Form):
                           label="DOI",
                           widget=forms.TextInput(attrs={'class': "input-block-level"}))
 
-    # TODO: check that this is validated by JS
     url = forms.URLField(required=True,
                          label='Article URL',
-                         widget=forms.TextInput(
-                             attrs={'placeholder': "http://www.publisher.com/journal?id=XXXX",
-                                    'class': "input-block-level"}))
+                         widget=forms.HiddenInput)
 
     story = forms.CharField(required=False,
                             label="Why do you need access?",
