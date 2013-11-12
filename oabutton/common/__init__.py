@@ -27,7 +27,7 @@ class SigninForm(forms.Form):
     confirm_public = forms.BooleanField(label="I understand that information obtained by this button will be publicly accessible",
                                         required=True)
 
-    mailinglist = forms.BooleanField(label="I would like to be added to a general OAbuton mailing list",
+    mailinglist = forms.BooleanField(label="I would like to be added to the Open Access Button Mailing List",
                                         required=False)
 
 

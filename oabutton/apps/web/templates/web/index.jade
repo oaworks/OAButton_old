@@ -30,11 +30,10 @@ block body
     header.jumbotron.subhead
         .container
             h1 Need Access to Research?
-            h2 Sign up below to get the Open Access Button
+            h2 Sign up to get the Open Access Button
         .lead 
             span 
-                | Tearing down journal paywalls blocking millions of researchers, 
-                | one click at a time.
+                | Tearing down barriers to accessing research, one click at a time
 
     .start
         a(name='start')
@@ -50,22 +49,19 @@ block body
                     span(id='counter')
                         {{count|force_escape}}
                     span 
-                        | Scholarly pursuits denied
+                        | Paywalls Hit
                 p
-                    | This world map tracks clicks of the Open Access Button from
-                    | our user community in real time, as it happens. Put yourself
-                    | on the map to let the world know you are being restricted 
-                    | from access to science.
+                    | This map displays people being denied access to the research they both need and paid for. Put yourself on the map using the Open Access Button to tell the world you are being denied access to knowledge. Using the Open Access Button will make the individual moments of injustice and frustration visible to the world.
 
     .intro
         a(name='intro')
         .container
-            h2 How this works.
+            h2 What is this about?
             .row.hilite-left
                 .col-md-12
                     p
-                        | Your action will help the Open Access community raise
-                        | awareness to free this and even more scientific knowledge.
+                        | People are denied access to research hidden behind paywalls every day. This problem is invisible, but it slows innovation, kills curiosity and harms patients. This is an indictment of the current system. Open Access has given us the solution to this problem by allowing everyone to read and re-use research. 
+                        | We created the Open Access Button to track the impact of paywalls and help you get access to the research you need. By using the Open Access Button you’ll help show the impact of this problem, drive awareness of the issue, and help change the system. As if this wasn’t enough, the Open Access Button has several ways of helping you get access to the research you need right now. 
 
     .contribute
         a(name='contribute')
@@ -74,14 +70,8 @@ block body
             .row.hilite-right
                 .col-md-12
                     p
-                        | Using the Open Access Button (and you are using it,
-                        | daily, right?) is just the first step. We need more
-                        | people to be involved at every level of community
-                        | action. The Open Access Working Group is where you
-                        | can use the data our users create to take meaningful
-                        | steps toward opening science. We are using every penny
-                        | of contribution to raise awareness for this project.
-                        | You can join our open source project as a developer.
+                        | The first step is using the Open Access Button (and you are using it, daily, on every paywall, right?). But don’t think that’s all there is to do! This project was made possible by developers, advocates, students and general clever folk from Open community and we need continued support to take this to the next level. Of course, the code, text, and data we’ve pulled together are openly available, so you can innovate and advocate with it. If you can, donate to the project to help us support and maintain service as well as helping us with our future development plans. Bottom line, we’d love to hear from you, so whether it’s a suggestion, virtual pat on the back, or, dare I say a bug you’ve noticed, get in touch. 
+
             .row.buttons
                 .col-md-12
                     button.btn.btn-default.bug(type="button")
@@ -90,24 +80,61 @@ block body
                         | Donate!
                     button.btn.btn-success.suggest(type="button")
                         | Suggestions
-            .row.partners
-                .col-md-12
-                    h3 
-                        | Made with support from wonderful partners and 
-                        | Web users like you!
 
     .team
         a(name='team')
         .container
-            h2 Meet the team.
-                ul.thumbnails
-                    li.span2
-                        a
-                            .thumbnail
-                                img
-                            .caption
-                                h3
-                                p
+            .row
+                .col-md-12
+                    h3 Meet the team of people and organisations who made this a reality
+                        ul.thumbnails
+                            li.span2
+                                a
+                                    .thumbnail
+                                        img
+                                    .caption
+                                        h3
+                                        p
+            .row
+                .col-md-12
+                    h3 And many thanks to those who helped along the way
+                        ul
+                            li
+                                a(href="http://opensciencefederation.com/") 
+                                    | Open Science Federation
+                            li
+                                a(href="http://originalcontentlondon.com/")
+                                    | Original Content London
+                            li
+                                a(href="https://twitter.com/McDawg")
+                                     | Graham Steel
+                            li
+                                a(href="http://okfn.org/")
+                                    | Open Knowledge Foundation
+                            li
+                                a(href="http://rewiredstate.org/")
+                                    | Rewired State
+                            li
+                                a(href="http://www.bmj.com/")
+                                    | BMJ
+                            li
+                                a(href="http://www.plos.org/")
+                                    | PLoS
+                            li
+                                a(href="https://twitter.com/Protohedgehog")
+                                    | Jon Tennant
+                            li
+                                a(href="https://twitter.com/petermurrayrust")
+                                    | Peter Murray-Rust 
+                            li
+                                a(href="http://sparc.arl.org/")
+                                    | SPARC
+                            li
+                                a(href="https://twitter.com/CameronNeylon")
+                                    | Cameron Neylon
+                            li
+                                | Everyone who joined the thunderclap or contacted us with messages of support or suggestions!
+
 
     #footer
         a(name='contact')
