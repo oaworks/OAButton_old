@@ -16,11 +16,17 @@ class Event(Document):
     location = StringField()
     coords = DictField()
     accessed = DateTimeField()
-    pub_date = DateTimeField()
     doi = StringField()
     url = URLField()
     story = StringField()
+    description = StringField()
     email = EmailField()
+
+    # This is a lookup to the user object
+    user_id = StringField()
+
+    user_name = StringField()
+    user_profession = StringField()
 
 class User(mongoengine.django.auth.User):
     """
