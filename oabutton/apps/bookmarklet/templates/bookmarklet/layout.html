@@ -13,15 +13,18 @@
   </head>
   <body style="margin-top: 20px" {% block body_attrs %}{% endblock %}>
     <!-- Main body-->
-    <div class="container">{% block content %}{% endblock %}
+    <div class="container">
+        {% block content %}
+        {% endblock %}
     </div>
 
     {% block footer %}
-    <div class="control-group">
-        <div class="controls">
-            <a href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report">Report a bug</a>
-            <a href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton">Donate</a>
-        </div>
+    <div class="bookmarklet-footer">
+        <p>
+            For instructions, more info and your contribution head to <a href="http://www.openaccessbutton.org">www.openaccessbutton.org</a>
+        </p>
+        <a href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report">Report a bug</a>
+        <a href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton">Donate</a>
     </div>
     {% endblock %}
 
