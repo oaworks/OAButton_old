@@ -31,6 +31,7 @@ block body
         .container
             h1 Need Access to Research?
             h2 Sign up to get the Open Access Button
+            iframe(width="462", height="260", src="//www.youtube.com/embed/Z93Yq0_DP7I", frameborder="0", allowfullscreen)
         .lead 
             span 
                 | Tearing down barriers to accessing research, one click at a time
@@ -87,14 +88,15 @@ block body
             .row
                 .col-md-12
                     h3 Meet the team of people and organisations who made this a reality
-                        ul.thumbnails
-                            li.span2
-                                a
-                                    .thumbnail
-                                        img
-                                    .caption
-                                        h3
-                                        p
+                    {{ home_data.team }}
+                    ul.thumbnails
+                        li.span2
+                            a
+                                .thumbnail
+                                    img
+                                .caption
+                                    h3
+                                    p
             .row
                 .col-md-12
                     h3 Many thanks to those who helped along the way
