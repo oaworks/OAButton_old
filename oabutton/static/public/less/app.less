@@ -67,7 +67,7 @@ header {
 }
 
 #video-header {
-  background: url(../img/video.png) no-repeat left center;
+  background: url(../img/iconmonstr-video-5.png) no-repeat left center;
   background-size: 1em;
   padding-left: 1.5em;
 }
@@ -87,7 +87,7 @@ header {
   border-radius: 10px;
 }
 
-#bookmarklet .wedge-up {
+.wedge-up {
   display: block;
   width: 15px;
   height: 15px;
@@ -195,8 +195,66 @@ header {
   background: #fff;
 }
 
-.team ul {
-  text-align: left;
+@thumbsize: 48;
+@captwidth: 400;
+@captheight: 156;
+@captmargin: @captwidth - @thumbsize;
+.team {
+  ul { text-align: left; list-style: none; }
+  .thumbnails {
+
+    li { display: inline-block; margin: 0 2px; }
+
+    .wedge-up { border-left-color: @oagreen1; margin-top:-19px; }
+
+    img.thumb { 
+      width: unit(@thumbsize, px); height: unit(@thumbsize, px);
+      cursor: pointer;
+    }
+
+    li:hover img.thumb { opacity: 0.2; }
+
+    li.right {
+      .caption { margin-left:unit(-@captmargin, px); }
+      .wedge-up { margin-left:unit(@captmargin, px); }
+    }
+
+    .caption { 
+      position: absolute; z-index: 99;
+      margin: 0;
+      width: unit(@captwidth, px);
+      height: unit(@captheight, px);
+      max-width: 90%;
+      padding: 4px;
+      border: 2px solid @oagreen1;
+      background: white;
+      font-size: 20px;
+
+      .name { font-size: 23px; font-weight: bold; }
+
+      img { 
+        height: unit(@thumbsize*3, px); 
+        float: left; margin-right: 5px;
+      }
+
+      .web, .twitter {
+        display: inline-block;
+        width: auto; height: 24px; 
+        font-size: 18px; 
+        margin-left: 7px;
+        padding-left: 27px;
+        background-size: 24px 24px;
+        background-repeat: no-repeat;
+        background-position: left;
+      }
+
+      .web { background-image: url(../img/iconmonstr-globe-3.png); }
+      .twitter { background-image: url(../img/iconmonstr-twitter-4.png); }
+    }
+
+    li .caption { display:none; }
+    li:hover .caption { display: block; }
+  }
 }
 
 /* Responsive styles */

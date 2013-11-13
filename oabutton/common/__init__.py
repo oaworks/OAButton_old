@@ -72,12 +72,12 @@ class HomeData:
     team = json.loads('''[
           {
               "link": "http://twitter.com/Mcarthur_Joe",
-              "thumb_url": "/img/joe.jpg",
+              "thumb_url": "/static/img/joe.jpg",
               "name": "Joe",
               "twitter": "Mcarthur_Joe"
           },{
               "link": "http://twitter.com/davidecarroll",
-              "thumb_url": "/img/david.jpg",
+              "thumb_url": "/static/img/david.jpg",
               "name": "David",
               "twitter": "davidecarroll"
           },{
@@ -96,7 +96,8 @@ class HomeData:
               "name": "Florian",
               "twitter": "frathgeber"
           },{
-              "thumb_url": "/img/elliot.jpg",
+              "link": "#",
+              "thumb_url": "/static/img/elliot.jpg",
               "name": "Elliot"
           }
       ]''')
