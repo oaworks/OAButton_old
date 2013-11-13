@@ -2,14 +2,14 @@ from django import forms
 
 
 class SigninForm(forms.Form):
-    PROFESSION_CHOICES = (('STUDENT', 'Student'),
-                          ('DOCTOR', 'Doctor'),
-                          ('PATIENT', 'Patient'),
-                          ('ADVOCATE', 'Advocate'),
-                          ('OTHER', 'Other'),
-                          ('ACADEMIC', 'Academic'),
-                          ('RESEARCHER', 'Researcher'),
-                          ('BLANK', 'Prefer not to say'))
+    PROFESSION_CHOICES = (('Student', 'Student'),
+                          ('Doctor', 'Doctor'),
+                          ('Patient', 'Patient'),
+                          ('Advocate', 'Advocate'),
+                          ('Other', 'Other'),
+                          ('Academic', 'Academic'),
+                          ('Researcher', 'Researcher'),
+                          ('Undisclosed', 'Prefer not to say'))
 
     email = forms.EmailField(required=True,
                              label='Email address',
