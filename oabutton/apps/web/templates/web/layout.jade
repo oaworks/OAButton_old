@@ -14,6 +14,7 @@ html(lang='en')
 
     link(rel='stylesheet', href='/static/css/bootstrap.min.css')
     //- link(rel='stylesheet', href='/css/font-awesome.min.css')
+    script(src='//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js')
 
     link(rel='stylesheet/less', type='text/css', media='all', href='/static/less/styles.less')
     script(src='/static/js/lib/less-1.4.2.min.js')
@@ -35,22 +36,20 @@ html(lang='en')
   body(data-spy='scroll', data-target='.navbar')
     block body
 
-  // JQuery and plugins
   script(src='/static/js/lib/jquery.min.js')
   script(src='http://codeorigin.jquery.com/color/jquery.color-2.1.2.min.js')
   script(src='/static/js/lib/jquery.form.js') 
 
-  // Bootstrap and plugins
   script(src='/static/js/lib/bootstrap.js')
   script(src='/static/js/lib/bootstrap-dialog.js')
 
-  // Leaflet
   script(src='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js')
   script(src='/static/js/lib/leaflet.markercluster.js')
 
   // Server vars
   script
     var events = {{ events|safe }};
+    WebFont.load({ google: { families: ['Raleway'] }});
 
   // Application scripts
   script(src='/static/js/map.js')
