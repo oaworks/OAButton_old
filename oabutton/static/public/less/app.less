@@ -85,13 +85,15 @@ header {
 .map, #map { height: 500px; width: 100%; }
 .map {
   .underlay {
-    position: relative;
+    display: none;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
     width: 84%;
-    top: -11em;
-    background: @oayellow;
     margin: 0 8%;
     padding: 1em 0;
-    left: 0;
+    z-index: 99;
+    background: @oayellow;
 
     .lead {
       background: #fff;
