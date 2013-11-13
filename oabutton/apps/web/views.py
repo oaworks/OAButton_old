@@ -17,15 +17,14 @@ def homepage(req):
     data = []
 
     for evt in Event.objects.all():
-        data.append({'doi': evt.doi, 
-            'coords': dict(evt.coords),
-            'accessed': evt.accessed.strftime("%b %d, %Y"),
-            'user_name': evt.user_name,
-            'user_profession': evt.user_profession,
-            'description': evt.description,
-            'story': evt.story,
-            'url': evt.url,
-            })
+        data.append({'doi': evt.doi,
+                     'coords': dict(evt.coords),
+                     'accessed': evt.accessed.strftime("%b %d, %Y"),
+                     'user_name': evt.user_name,
+                     'user_profession': evt.user_profession,
+                     'description': evt.description,
+                     'story': evt.story,
+                     'url': evt.url})
 
     c.update({'count': evt_count,
               'events': json.dumps(data),

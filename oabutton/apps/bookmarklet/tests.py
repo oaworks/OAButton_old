@@ -23,10 +23,10 @@ class APITest(TestCase):
         # check that we have all the signin fields
         self.EMAIL = 'new_email@foo.com'
         self.POST_DATA = {u'email': self.EMAIL,
-                     'name': 'some name',
-                     'profession': 'Student',
-                     'confirm_public': 'checked',
-                     'mailinglist': 'checked'}
+                          'name': 'some name',
+                          'profession': 'Student',
+                          'confirm_public': 'checked',
+                          'mailinglist': 'checked'}
 
         for user in User.objects.filter(username=self.EMAIL):
             user.delete()
@@ -101,7 +101,7 @@ class APITest(TestCase):
         eq_(data['doi'], '10.1016/j.urology.2010.05.009.')
         eq_(data['url'], 'http://www.ncbi.nlm.nih.gov/pubmed/20709373')
 
-        actual_date = datetime.datetime.fromtimestamp(data['accessed']['$date']/1000)
+        actual_date = datetime.datetime.fromtimestamp(data['accessed']['$date'] / 1000)
         eq_(actual_date.year, 2013)
         eq_(actual_date.month, 9)
         eq_(actual_date.day, 9)
@@ -112,7 +112,7 @@ class APITest(TestCase):
 
         # Check that we can resolve the original user oid
         evt = Event.objects.filter(id=response.context['oid'])[0]
-        assert evt.user_id != None
+        assert evt.user_id is not None
 
     def test_update_signon(self):
         """

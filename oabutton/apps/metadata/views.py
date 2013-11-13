@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-from os import environ
 import requests
 import logging
 import json

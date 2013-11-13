@@ -28,14 +28,13 @@ class SigninForm(forms.Form):
                                         required=True)
 
     mailinglist = forms.BooleanField(label="I would like to be added to a general OAbuton mailing list",
-                                        required=False)
+                                     required=False)
 
 
 class Bookmarklet(forms.Form):
     user_id = forms.CharField(widget=forms.HiddenInput, required=True)
 
-    accessed = forms.CharField( widget=forms.HiddenInput,
-                               required=False)
+    accessed = forms.CharField(widget=forms.HiddenInput, required=False)
 
     location = forms.CharField(required=False,
                                label="Location",
