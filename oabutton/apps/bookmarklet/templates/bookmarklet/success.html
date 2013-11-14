@@ -3,10 +3,30 @@
 <p>Now to find an Open Access version…</p>
 <ul id="oa_links">
 </ul>
-<div>
+
+<p>
 <a href="http://en.wikipedia.org/wiki/Digital_object_identifier" target="_blank">What's a DOI?</a>
-</div>
+</p>
+
+<p>
+<a href="https://twitter.com/OA_Button" class="twitter-follow-button" data-show-count="true" data-lang="en" data-size="large">Follow @OA_Button</a>
+<a href='https://twitter.com/share?url=http://openaccessbutton.org&text=I hit a #paywall trying to access {{ url }}! Help me demand open access at&via=OA_Button&related=OA_Button' class="twitter-share-button" data-lang="en" data-size="large">Tweet</a> 
+<div class="fb-like" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+<div class="fb-share-button" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-type="button_count"></div>
+<div class="fb-send" data-href="https://www.facebook.com/openaccessbutton" data-colorscheme="light"></div>
+</p>
+
 {% endblock %}
 {% block scripts %}
-<script src="/static/js/success.js"></script>{% endblock %}
+<script src="/static/js/success.js"></script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=570391483000074";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+{% endblock %}
 {% block body_attrs %}data-doi="{{doi|urlencode}}"{% endblock %}

@@ -115,7 +115,8 @@ def add_post(req):
 
                 c.update({'scholar_url': scholar_url, 'doi': doi})
 
-            c.update({'oid': str(event.id)})
+            c['oid'] = str(event.id)
+            c['url'] = event.url
 
             return render_to_response('bookmarklet/success.html', c)
         else:
