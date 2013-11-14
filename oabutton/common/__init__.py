@@ -64,7 +64,7 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Andy Lulham",
             "link": "http://twitter.com/andylolz",
-            "thumb": "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash3/561606_10100163994442552_1232040854_n.jpg",
+            "thumb": "https://1.gravatar.com/avatar/bbb9eb1af3b427f8259df33f6e8844aa?s=200",
             "twitter": "andylolz",
             "blurb": "Lead developer and central to the project from the first second at the BMJ hackday"
             }, {
