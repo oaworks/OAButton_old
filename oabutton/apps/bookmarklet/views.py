@@ -110,8 +110,14 @@ def form2(req):
     """
     Show the bookmarklet form. We just need the CSRF token here.
     """
+    data = req.session['data']
+    scholar_url = data['scholar_url']
+    doi = data['doi']
+    event = Event.objects.get(id=data['event_id'])
+
     c = {}
     c.update(csrf(req))
+    c.update({'scholar_url': scholar_url, 'doi': doi, 'url': event.url})
     return render_to_response('bookmarklet/page2.html', c)
 
 
@@ -126,10 +132,11 @@ def form3(req):
     data = req.session['data']
     scholar_url = data['scholar_url']
     doi = data['doi']
+    event = Event.objects.get(id=data['event_id'])
 
     c = {}
     c.update(csrf(req))
-    c.update({'scholar_url': scholar_url, 'doi': doi})
+    c.update({'scholar_url': scholar_url, 'doi': doi, 'url': event.url})
     return render_to_response('bookmarklet/page3.html', c)
 
 
