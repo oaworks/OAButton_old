@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/static/css/app.css">
   </head>
   <body style="margin-top: 20px" {% block body_attrs %}{% endblock %}>
+    <div id="fb-root"></div>
     <!-- Main body-->
     <div class="container">
 
@@ -23,7 +24,7 @@
     </div>
 
     {% block footer %}
-    <div class="bookmarklet-footer">
+    <div class="container bookmarklet-footer">
         <p>
             For instructions, more info and your contribution head to <a href="http://www.openaccessbutton.org">www.openaccessbutton.org</a>
         </p>
@@ -33,6 +34,8 @@
     {% endblock %}
 
     <script src="/static/js/lib/jquery.min.js"></script>
-    <script src="/static/js/lib/bootstrap.js"></script>{% block scripts %}{% endblock %}
+    <script src="/static/js/lib/bootstrap.js"></script>
+    {% block scripts %}
+    {% endblock %}
   </body>
 </html>

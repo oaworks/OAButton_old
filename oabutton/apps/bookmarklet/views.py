@@ -99,6 +99,8 @@ def form1(req, user_id):
     form.fields['user_id'].widget.attrs['value'] = user_id
 
     c = {}
+    req.session['user_id'] = user_id
+
     c.update(csrf(req))
     c.update({'bookmarklet': form, 'user_id': user_id})
     return render_to_response('bookmarklet/page1.html', c)
@@ -106,13 +108,10 @@ def form1(req, user_id):
 
 def form2(req):
     """
-    Show the bookmarklet form
+    Show the bookmarklet form. We just need the CSRF token here.
     """
-    form = Bookmarklet(req.POST)
-
     c = {}
     c.update(csrf(req))
-    c.update({'bookmarklet': form, 'user_id': form.user_id})
     return render_to_response('bookmarklet/page2.html', c)
 
 
@@ -120,10 +119,17 @@ def form3(req):
     """
     Show the bookmarklet form
     """
-    form = Bookmarklet(req.POST)
+
+    if req.method != 'POST':
+        return redirect('bookmarklet:form1', user_id=req.session['user_id'])
+
+    data = req.session['data']
+    scholar_url = data['scholar_url']
+    doi = data['doi']
+
     c = {}
     c.update(csrf(req))
-    c.update({'bookmarklet': form, 'user_id': form.user_id})
+    c.update({'scholar_url': scholar_url, 'doi': doi})
     return render_to_response('bookmarklet/page3.html', c)
 
 
@@ -156,13 +162,13 @@ def add_post(req):
                 doi = evt_dict['doi']
                 scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % doi
 
-                c.update({'scholar_url': scholar_url, 'doi': doi})
+            req.session['data'] = {'event_id': event.id,
+                                   'scholar_url': scholar_url,
+                                   'doi': doi}
 
-            c.update({'oid': str(event.id)})
-
-            return render_to_response('bookmarklet/success.html', c)
+            return redirect('bookmarklet:form2')
         else:
-            redirect('form', user_id=req.POST['user_id'])
+            return redirect('bookmarklet:form1', user_id=req.session['user_id'])
 
 
 def generate_bookmarklet(req, user_id):

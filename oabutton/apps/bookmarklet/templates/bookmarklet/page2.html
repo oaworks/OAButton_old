@@ -1,62 +1,38 @@
-{% extends "bookmarklet/layout.html" %}
-{% load oafilters %}
-{% block content %}
-<img src="/static/img/oalogo.png" style="position: absolute; top: 0; right: 0;"/><a id="id_pmc" title="Available at PMC" target="_new" style="position: absolute; top: 0; right: 32px; display: none;"><img src="/static/img/pmc.png"/></a>
-<form id="event" action="/api/post/" method="post" class="form-horizontal">{% csrf_token %}
-  {{ bookmarklet.non_field_errors }}
+{% extends "bookmarklet/layout.html" %}{% block content %}
+<p>
+Before we try and get you access, why not share your frustration -
+help make this problem visible!
+</p>
 
-  {{ bookmarklet.accessed }}
+<p>
+<a href="https://twitter.com/OA_Button" class="twitter-follow-button" data-show-count="true" data-lang="en" data-size="large">Follow @OA_Button</a>
+<a href='https://twitter.com/share?url=http://openaccessbutton.org&text=I hit a #paywall trying to access {{ url }}! Help me demand open access at&via=OA_Button&related=OA_Button' class="twitter-share-button" data-lang="en" data-size="large">Tweet</a> 
 
-  {{ bookmarklet.user_id }}
+<div class="fb-like" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+<br /> <!-- Damn you facebook and your weird JS+CSS overrides -->
 
-  <div class="control-group">
-    {{ bookmarklet.location|label_with_classes:"control-label"}}
-    <div class="controls">
-        {{ bookmarklet.location }}
-        {{ bookmarklet.coords }}
-    </div>
-  </div>
-  <div class="control-group">
-    {{ bookmarklet.url|label_with_classes:"control-label" }}
-    {{ bookmarklet.url.errors }}
-    <div class="controls">
-        {{ bookmarklet.url }}
-    </div>
-  </div>
-  <div class="control-group">
-    {{ bookmarklet.doi|label_with_classes:"control-label" }}
-    {{ bookmarklet.doi.errors }}
-    <div class="controls">
-        {{ bookmarklet.doi }}
-        <p class="help-text">Document Object Identifier (DOI)</p>
-    </div>
-  </div>
-  <div class="control-group">
-    {{ bookmarklet.description|label_with_classes:"control-label" }}
-    {{ bookmarklet.description.errors }}
-    {{ bookmarklet.description }}
-    </div>
-  </div>
-  <div class="control-group">
-    {{ bookmarklet.story.errors }}
-    {{ bookmarklet.story|label_with_classes:"control-label" }}
-    <div class="controls">
-        {{ bookmarklet.story }}
-    </div>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-      <button class="btn btn-primary pull-right">Open Access, please!</button>
-    </div>
-  </div>
+<div class="fb-share-button" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-type="button_count"></div>
+<br /> <!-- Damn you facebook and your weird JS+CSS overrides -->
+
+<div class="fb-send" data-href="https://www.facebook.com/openaccessbutton" data-colorscheme="light"></div>
+<br /> <!-- Damn you facebook and your weird JS+CSS overrides -->
+</p>
+
+<p>
+We're also on <a href="https://www.facebook.com/openaccessbutton">Facebook</a> and <a href="https://twitter.com/OA_Button">Twitter</a>! Join us!
+</p>
+
+<form method="POST" action="{% url 'bookmarklet:form3' %}">{% csrf_token %}
+<button class="btn btn-primary pull-right">Get me access!</button>
 </form>
-   <div class="control-group">
-    <div class="controls">
-      <a href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report">Report a bug</a>
-    </div>
-   </div>
 {% endblock %}
 {% block scripts %}
-<script src="/static/js/lib/jquery.min.js"></script>
-<script src="/static/js/add.js"></script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=570391483000074";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 {% endblock %}

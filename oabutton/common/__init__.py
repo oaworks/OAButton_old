@@ -27,15 +27,13 @@ class SigninForm(forms.Form):
     confirm_public = forms.BooleanField(label="I understand that information obtained by this button will be publicly accessible",
                                         required=True)
 
-    mailinglist = forms.BooleanField(label="I would like to be added to a general OAbuton mailing list",
-                                        required=False)
+    mailinglist = forms.BooleanField(label="I would like to be added to a general OAbuton mailing list", required=False)
 
 
 class Bookmarklet(forms.Form):
     user_id = forms.CharField(widget=forms.HiddenInput, required=True)
 
-    accessed = forms.CharField( widget=forms.HiddenInput,
-                               required=False)
+    accessed = forms.CharField(widget=forms.HiddenInput, required=False)
 
     location = forms.CharField(required=False,
                                label="Location",
@@ -55,7 +53,7 @@ class Bookmarklet(forms.Form):
 
     story = forms.CharField(required=False,
                             label="Why do you need access?",
-                            max_length = 140,
+                            max_length=140,
                             widget=forms.Textarea(
                                 attrs={'rows': "4",
                                        'maxlength': 140,

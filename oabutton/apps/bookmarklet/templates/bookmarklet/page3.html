@@ -1,62 +1,12 @@
-{% extends "bookmarklet/layout.html" %}
-{% load oafilters %}
-{% block content %}
-<img src="/static/img/oalogo.png" style="position: absolute; top: 0; right: 0;"/><a id="id_pmc" title="Available at PMC" target="_new" style="position: absolute; top: 0; right: 32px; display: none;"><img src="/static/img/pmc.png"/></a>
-<form id="event" action="/api/post/" method="post" class="form-horizontal">{% csrf_token %}
-  {{ bookmarklet.non_field_errors }}
-
-  {{ bookmarklet.accessed }}
-
-  {{ bookmarklet.user_id }}
-
-  <div class="control-group">
-    {{ bookmarklet.location|label_with_classes:"control-label"}}
-    <div class="controls">
-        {{ bookmarklet.location }}
-        {{ bookmarklet.coords }}
-    </div>
-  </div>
-  <div class="control-group">
-    {{ bookmarklet.url|label_with_classes:"control-label" }}
-    {{ bookmarklet.url.errors }}
-    <div class="controls">
-        {{ bookmarklet.url }}
-    </div>
-  </div>
-  <div class="control-group">
-    {{ bookmarklet.doi|label_with_classes:"control-label" }}
-    {{ bookmarklet.doi.errors }}
-    <div class="controls">
-        {{ bookmarklet.doi }}
-        <p class="help-text">Document Object Identifier (DOI)</p>
-    </div>
-  </div>
-  <div class="control-group">
-    {{ bookmarklet.description|label_with_classes:"control-label" }}
-    {{ bookmarklet.description.errors }}
-    {{ bookmarklet.description }}
-    </div>
-  </div>
-  <div class="control-group">
-    {{ bookmarklet.story.errors }}
-    {{ bookmarklet.story|label_with_classes:"control-label" }}
-    <div class="controls">
-        {{ bookmarklet.story }}
-    </div>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-      <button class="btn btn-primary pull-right">Open Access, please!</button>
-    </div>
-  </div>
-</form>
-   <div class="control-group">
-    <div class="controls">
-      <a href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report">Report a bug</a>
-    </div>
-   </div>
+{% extends "bookmarklet/layout.html" %}{% block content %}
+<h2>Thanks!</h2>
+<p>Below are a number of ways to get access to your paper, unfortunately
+they won't always work but it's worth a shot.
+</p>
+<!-- Email link goes here -->
+<ul id="oa_links">
+</ul>
 {% endblock %}
 {% block scripts %}
-<script src="/static/js/lib/jquery.min.js"></script>
-<script src="/static/js/add.js"></script>
-{% endblock %}
+<script src="/static/js/success.js"></script>{% endblock %}
+{% block body_attrs %}data-doi="{{doi|urlencode}}"{% endblock %}
