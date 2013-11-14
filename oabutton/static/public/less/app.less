@@ -199,24 +199,32 @@ header {
 @captwidth: 400;
 @captheight: 156;
 @captmargin: @captwidth - @thumbsize;
+@thumbmargin: @captmargin + @thumbsize/2.4;
 .team {
   ul { text-align: left; list-style: none; }
   .thumbnails {
 
     li { display: inline-block; margin: 0 2px; }
 
-    .wedge-up { border-left-color: @oagreen1; margin-top:-19px; }
+    .wedge-up { border-left-color: @oaorange; margin-top:-19px; }
 
-    img.thumb { 
-      width: unit(@thumbsize, px); height: unit(@thumbsize, px);
-      cursor: pointer;
+    .thumb { 
+      width: unit(@thumbsize, px); 
+      height: unit(@thumbsize, px);
+      overflow: hidden;
+      display: inline-block;
+      img { width: 100%; }
     }
 
-    li:hover img.thumb { opacity: 0.2; }
+    li:hover .thumb { opacity: 0.1; }
 
     li.right {
       .caption { margin-left:unit(-@captmargin, px); }
-      .wedge-up { margin-left:unit(@captmargin, px); }
+      .wedge-up { 
+        margin-left:unit(@thumbmargin, px); 
+        border-left: none; 
+        border-right: 15px solid @oaorange; 
+      }
     }
 
     .caption { 
@@ -226,22 +234,41 @@ header {
       height: unit(@captheight, px);
       max-width: 90%;
       padding: 4px;
-      border: 2px solid @oagreen1;
+      border: 2px solid @oaorange;
       background: white;
       font-size: 20px;
 
-      .name { font-size: 23px; font-weight: bold; }
+      .name { 
+        font-size: 23px; 
+        font-weight: bold; 
+      }
 
-      img { 
+      p {
+        margin-top: 4px;
+        font-size: 15px;
+        line-height: 1.2;
+      }
+
+      .large { 
         height: unit(@thumbsize*3, px); 
+        max-width: unit(@thumbsize*3, px); 
         float: left; margin-right: 5px;
+
+        overflow: hidden;
+        img { width: 100%; }
+      }
+
+      .links {
+        position: absolute; 
+        left: unit(@thumbsize*3, px);
+        bottom: 5px;
       }
 
       .web, .twitter {
         display: inline-block;
         width: auto; height: 24px; 
         font-size: 18px; 
-        margin-left: 7px;
+        margin-left: 10px;
         padding-left: 27px;
         background-size: 24px 24px;
         background-repeat: no-repeat;

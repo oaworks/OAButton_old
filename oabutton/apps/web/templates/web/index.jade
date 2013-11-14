@@ -3,99 +3,99 @@ block body
     a(name='top')
     
     // Github ribbon
-        a(href='https://github.com/OAButton/OAButton')
-            img#github_ribbon(
-                src='https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png',
-                alt='Fork me on GitHub')
+    a(href='https://github.com/OAButton/OAButton')
+        img#github_ribbon(
+            src='https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png',
+            alt='Fork me on GitHub')
 
-        .navbar.navbar-inverse.navbar-fixed-top(role='navigation')
-            .container
-                .navbar-header
-                    button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
-                        span.icon-bar
-                        span.icon-bar
-                        span.icon-bar
-                    a.navbar-brand(href='#') Open Access Button
-                .navbar-collapse.collapse
-                    ul.nav.navbar-nav
-                        li.active
-                            a(href='#start') Get the button
-                        li
-                            a(href='#map') See the map
-                        li
-                            a(href='#contribute') Contribute
-                        li
-                            a(href='#team') Meet the team
-                        li
-                            a(href='#contact') Contact and follow
+    .navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+        .container
+            .navbar-header
+                button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href='#') Open Access Button
+            .navbar-collapse.collapse
+                ul.nav.navbar-nav
+                    li.active
+                        a(href='#start') Get the button
+                    li
+                        a(href='#map') See the map
+                    li
+                        a(href='#contribute') Contribute
+                    li
+                        a(href='#team') Meet the team
+                    li
+                        a(href='#contact') Contact and follow
 
-        header.jumbotron.subhead
-            .container
-                h1 Need Access to Research?
-                h2 Sign up below to get your Open Access Button
-            a(href="#top", data-toggle="modal", data-target="#video-modal", alt="Need access to research?", title="Learn more about the project in this video")
-                | Learn more about the project in this video
-            .lead 
-                span 
-                    | Tearing down barriers to accessing research, one click at a time
+    header.jumbotron.subhead
+        .container
+            h1 Need Access to Research?
+            h2 Sign up below to get your Open Access Button
+        a(href="#top", data-toggle="modal", data-target="#video-modal", alt="Need access to research?", title="Learn more about the project in this video")
+            | Learn more about the project in this video
+        .lead 
+            span 
+                | Tearing down barriers to accessing research, one click at a time
 
-        .modal.fade(id="video-modal", tabindex="-1", role="dialog", aria-labelledby="video-header", aria-hidden="true")
-            .modal-dialog
-                .modal-content
-                    .modal-header
-                        button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
-                        h4.modal-title(id="video-header") 
-                            | Introduction video
-                    .modal-body
-                        iframe(width="538", height="303", src="//www.youtube.com/embed/Z93Yq0_DP7I", frameborder="0", allowfullscreen)
-                    .modal-footer
-                        button.btn.btn-default(type="button", data-dismiss="modal") Close
+    .modal.fade(id="video-modal", tabindex="-1", role="dialog", aria-labelledby="video-header", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                    h4.modal-title(id="video-header") 
+                        | Introduction video
+                .modal-body
+                    iframe(width="538", height="303", src="//www.youtube.com/embed/Z93Yq0_DP7I", frameborder="0", allowfullscreen)
+                .modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") Close
 
-        .start
-            a(name='start')
-            .container.center
-                block start
-        
-        .map
-            a(name='map')
-            .container
-                #map
-                    .underlay
-                        .lead
-                            span(id='counter')
-                                {{count|force_escape}}
-                            span 
-                                | Paywalls Hit
-                        p
-                            | This map displays people being denied access to the research they both need and paid for. Put yourself on the map using the Open Access Button to tell the world you are being denied access to knowledge. Using the Open Access Button will make the individual moments of injustice and frustration visible to the world.
+    .start
+        a(name='start')
+        .container.center
+            block start
+    
+    .map
+        a(name='map')
+        .container
+            #map
+                .underlay
+                    .lead
+                        span(id='counter')
+                            {{count|force_escape}}
+                        span 
+                            | Paywalls Hit
+                    p
+                        | This map displays people being denied access to the research they both need and paid for. Put yourself on the map using the Open Access Button to tell the world you are being denied access to knowledge. Using the Open Access Button will make the individual moments of injustice and frustration visible to the world.
 
-        .intro
-            a(name='intro')
-            .container
-                h2 What is this about?
-                .row.hilite-left
-                    .col-md-12
-                        p
-                            | People are denied access to research hidden behind paywalls every day. This problem is invisible, but it slows innovation, kills curiosity and harms patients. This is an indictment of the current system. Open Access has given us the solution to this problem by allowing everyone to read and re-use research. 
-                            | We created the Open Access Button to track the impact of paywalls and help you get access to the research you need. By using the Open Access Button you’ll help show the impact of this problem, drive awareness of the issue, and help change the system. As if this wasn’t enough, the Open Access Button has several ways of helping you get access to the research you need right now. 
+    .intro
+        a(name='intro')
+        .container
+            h2 What is this about?
+            .row.hilite-left
+                .col-md-12
+                    p
+                        | People are denied access to research hidden behind paywalls every day. This problem is invisible, but it slows innovation, kills curiosity and harms patients. This is an indictment of the current system. Open Access has given us the solution to this problem by allowing everyone to read and re-use research. 
+                        | We created the Open Access Button to track the impact of paywalls and help you get access to the research you need. By using the Open Access Button you’ll help show the impact of this problem, drive awareness of the issue, and help change the system. As if this wasn’t enough, the Open Access Button has several ways of helping you get access to the research you need right now. 
 
-        .contribute
-            a(name='contribute')
-            .container
-                h2 Get involved.
-                .row.hilite-right
-                    .col-md-12
-                        p
-                            | The first step is using the Open Access Button (and you are using it, daily, on every paywall, right?). But don’t think that’s all there is to do! This project was made possible by developers, advocates, students and general clever folk from Open community and we need continued support to take this to the next level. Of course, the code, text, and data we’ve pulled together are openly available, so you can innovate and advocate with it. If you can, donate to the project to help us support and maintain service as well as helping us with our future development plans. Bottom line, we’d love to hear from you, so whether it’s a suggestion, virtual pat on the back, or, dare I say a bug you’ve noticed, get in touch. 
+    .contribute
+        a(name='contribute')
+        .container
+            h2 Get involved.
+            .row.hilite-right
+                .col-md-12
+                    p
+                        | The first step is using the Open Access Button (and you are using it, daily, on every paywall, right?). But don’t think that’s all there is to do! This project was made possible by developers, advocates, students and general clever folk from Open community and we need continued support to take this to the next level. Of course, the code, text, and data we’ve pulled together are openly available, so you can innovate and advocate with it. If you can, donate to the project to help us support and maintain service as well as helping us with our future development plans. Bottom line, we’d love to hear from you, so whether it’s a suggestion, virtual pat on the back, or, dare I say a bug you’ve noticed, get in touch. 
 
-                .row.buttons
-                    .col-md-12
-                        button.btn.btn-default.bug(type="button")
-                            | Report a bug
-                        button.btn.btn-warning.donate(type="button") 
-                            | Donate!
-                        button.btn.btn-success.suggest(type="button")
-                            | Suggestions
+            .row.buttons
+                .col-md-12
+                    button.btn.btn-default.bug(type="button")
+                        | Report a bug
+                    button.btn.btn-warning.donate(type="button") 
+                        | Donate!
+                    button.btn.btn-success.suggest(type="button")
+                        | Suggestions
 
     .team
         a(name='team')
@@ -104,20 +104,19 @@ block body
                 .col-md-12
                     h3 Meet the team of people and organisations who made this a reality
                     ul.thumbnails
-                        each person, i in home_data.team
-                            if i < 4
-                                - var col = "left"
-                            else
-                                - var col = "right"
-                            li(class="#{col}")
-                                img.thumb(src="#{person['thumb_url']}")
+                        each person in home_data.team
+                            li
+                                a.thumb(href="#{person['link']}", target="_blank")
+                                    img(src="#{person['thumb']}")
                                 .caption
                                     i.wedge-up
-                                    img(src="#{person['thumb_url']}")
+                                    .large
+                                        img(src="#{person['thumb']}")
                                     a.name(href="#{person['link']}", target="_blank") {{ person.name }}
-                                    p {{ person.text }}
-                                    if person.twitter
-                                        a.twitter(href="http://twitter.com/#{person['twitter']}", target="_blank") Twitter
+                                    p {{ person.blurb }}
+                                    .links
+                                        if person.twitter
+                                            a.twitter(href="http://twitter.com/#{person['twitter']}", target="_blank") Twitter
             .row
                 .col-md-12
                     h3 Many thanks to those who helped along the way
