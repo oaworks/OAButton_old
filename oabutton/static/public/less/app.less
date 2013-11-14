@@ -18,6 +18,16 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 /* Navigation and header area */
 
+body { padding-top: 25px; }
+
+.anchor { padding-top: 50px; margin-top: -50px; }
+
+a[name] {
+  padding-top: 75px;
+  margin-top: -75px;
+  display: inline-block;
+}
+
 .navbar-header .navbar-brand {
   font-size:0px; text-indent:-9999px;
   width:16px; height:25px;
@@ -26,7 +36,6 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 header {
-  margin-top:2em;
   background:url(http://farm7.staticflickr.com/6039/6303965123_ee370be50a_b.jpg) no-repeat;
   background-size:100% auto;
   text-align: center;
@@ -104,8 +113,8 @@ header {
 
 /* Activity map */
 
-.map, #map { height: 500px; width: 100%; }
-.map {
+#world, #map { height: 500px; width: 100%; }
+#world {
   .underlay {
     display: none;
     position: absolute;
@@ -159,7 +168,7 @@ h3 {
   margin-bottom: 1em;
 }
 
-.intro, .contribute, .team, .thanks {
+#intro, #contribute, #team, #thanks {
   
   padding: 2em 3em;
 
@@ -178,9 +187,9 @@ h3 {
   }
 }
 
-.team { background: #ffd; }
+#team { background: #ffd; }
 
-.intro, .thanks { background: #eee; }
+#intro, #thanks { background: #eee; }
 
 .buttons {
   margin-top: 2em;
@@ -193,7 +202,7 @@ h3 {
   }
 }
 
-.contribute {
+#contribute {
   background: #fff;
 }
 
@@ -202,7 +211,7 @@ h3 {
 @captheight: 156;
 @captmargin: @captwidth - @thumbsize;
 @thumbmargin: @captmargin + @thumbsize/2.4;
-.team {
+#team {
   ul { text-align: left; list-style: none; }
   .thumbnails {
 
@@ -286,14 +295,36 @@ h3 {
   }
 }
 
-.thanks {
-
+#thanks {
   li { width: 25%; float: left; }
+  p { 
+    display: block; clear: both; 
+    padding-top:1em; text-align: center; 
+  }
+}
+
+#contact {
+  padding-top: 2em;
+
+  .icon {
+    height: 32px;
+    width: 32px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 100%;
+    position: relative;
+    font-size: 0px;
+    text-indent: -9999px;
+    margin: 0 25px 0 0;
+  }
+  .twitter { background-image: url(../img/webicon-twitter.png); }
+  .facebook { background-image: url(../img/webicon-facebook.png); }
+  .wordpress { background-image: url(../img/webicon-wordpress.png); }
 }
 
 /* Responsive styles */
-
 @media screen and (max-width: 768px) {
-
+  body { padding-top: 0px; }
   header a { background-size:100%; }
 }
