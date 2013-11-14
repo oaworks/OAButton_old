@@ -24,12 +24,18 @@
     </div>
 
     {% block footer %}
-    <div class="container bookmarklet-footer">
+    <div style="margin-top:1em; border-top: 1px dashed rgb(85, 85, 85);">
+    <div class="container" id="bookmarklet-footer" style="margin-top:1em;">
         <p>
             For instructions, more info and your contribution head to <a href="http://www.openaccessbutton.org">www.openaccessbutton.org</a>
         </p>
-        <a href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report">Report a bug</a>
-        <a href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton">Donate</a>
+        <a href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report" target="_blank">
+            <button class="btn btn-default bug" type="button">Report a bug</button>
+        </a>
+        <a href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton" target="_blank">
+            <button class="btn btn-warning bug" type="button">Donate</button>
+        </a>
+    </div>
     </div>
     {% endblock %}
 
