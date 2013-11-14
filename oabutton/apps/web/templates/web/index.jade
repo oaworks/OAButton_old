@@ -1,6 +1,8 @@
 extends web/layout
-- load oafilters
 block body
+    #top
+        a(name='top')
+    
     // Github ribbon
     a(href='https://github.com/OAButton/OAButton')
         img#github_ribbon(
@@ -17,10 +19,10 @@ block body
                 a.navbar-brand(href='#') Open Access Button
             .navbar-collapse.collapse
                 ul.nav.navbar-nav
-                    li.active
-                        a(href='#start') Get the button
                     li
-                        a(href='#map') See the map
+                        a(href='#top') Get the button
+                    li
+                        a(href='#world') See the map
                     li
                         a(href='#contribute') Contribute
                     li
@@ -31,221 +33,173 @@ block body
     header.jumbotron.subhead
         .container
             h1 Need Access to Research?
-            h2 Sign up below to get the Open Access Button
+            h2 Sign up below to get your Open Access Button
+        a(href="#start", data-toggle="modal", data-target="#video-modal", alt="Need access to research?", title="Learn more about the project in this video")
+            | Learn more about the project in this video
         .lead 
             span 
-                | Tearing down journal paywalls blocking millions of researchers, 
-                | one click at a time.
+                | Tearing down barriers to accessing research, one click at a time
 
-    .start
-        a(name='start')
-        .container.center
-            form.form-bookmarklet#form-bookmarklet(action='/api/signin/', method='post')
-                {% csrf_token %}
-                .row.form-body
-                    .col-md-8.col-md-offset-2
-                        p
-                            | Create a free, anonymous account and get an easy and safe
-                            | to use bookmarklet. When you are prevented from using an
-                            | article for your research because access is restricted,
-                            | just click the Open Access Button! Sign up here to get
-                            | started right away:
-                        p
-                            {{ signin_form.email }}
-                        p
-                            {{ signin_form.name }}
-                        p
-                            {{ signin_form.profession }}
-                        p
-                            {{ signin_form.confirm_public}}
-                            {{ signin_form.confirm_public|label_with_classes:"confirm-label"}}
-                        p
-                            {{ signin_form.mailinglist}}
-                            {{ signin_form.mailinglist|label_with_classes:"mailinglist-label"}}
-                        p
-                            div.form-group
-                                {{ signin_form.privacy}}
-                            button.btn.btn-lg.btn-primary.btn-block(type='submit')
-                                | Get my personal Open Access button
-
-                .row#bookmarklet(style='display:none')
-                    .col-md-8.col-md-offset-2
-                        .content
-                            p
-                                | Drag this to your bookmark bar:
-                            a.btn.btn-lg.btn-primary
-                                i.icon-bookmark Open Access Button
-
-    .modal.fade(id="bookmarklet-modal", tabindex="-1", role="dialog", aria-labelledby="bookmarklet-header", aria-hidden="true")
+    .modal.fade(id="video-modal", tabindex="-1", role="dialog", aria-labelledby="video-header", aria-hidden="true")
         .modal-dialog
             .modal-content
                 .modal-header
                     button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
-                    h4.modal-title(id="bookmarklet-header") 
-                        | Thanks for registering
+                    h4.modal-title(id="video-header") 
+                        | Introduction video
                 .modal-body
-                    // To be replaced by #bookmarklet content
+                    iframe(width="538", height="303", src="//www.youtube.com/embed/Z93Yq0_DP7I", frameborder="0", allowfullscreen)
                 .modal-footer
-                    button.btn.btn-default(type="button", data-dismiss="modal") OK
+                    button.btn.btn-default(type="button", data-dismiss="modal") Close
+
+    #start
+        .container.center
+            block start
     
-    .map
-        a(name='map')
+    #world
+        a(name='world')
         .container
             #map
-            .underlay
-                .lead
-                    span(id='counter')
-                        {{count|force_escape}}
-                    span 
-                        | Scholarly pursuits denied
-                p
-                    | This world map tracks clicks of the Open Access Button from
-                    | our user community in real time, as it happens. Put yourself
-                    | on the map to let the world know you are being restricted 
-                    | from access to science.
+                .underlay
+                    .lead
+                        span(id='counter')
+                            {{count|force_escape}}
+                        span 
+                            | Paywalls Hit
+                    p
+                        | This map displays people being denied access to the research they both need and paid for. Put yourself on the map using the Open Access Button to tell the world you are being denied access to knowledge. Using the Open Access Button will make the individual moments of injustice and frustration visible to the world.
 
-    .intro
+    #intro
         a(name='intro')
         .container
-            h2 How this works.
-            .row
-                .col-md-12.hilite-left
+            h2 What is this about?
+            .row.hilite-left
+                .col-md-12
                     p
-                        | Your action will help the Open Access community raise
-                        | awareness to free this and even more scientific knowledge.
+                        | People are denied access to research hidden behind paywalls every day. This problem is invisible, but it slows innovation, kills curiosity and harms patients. This is an indictment of the current system. Open Access has given us the solution to this problem by allowing everyone to read and re-use research. 
+                        | We created the Open Access Button to track the impact of paywalls and help you get access to the research you need. By using the Open Access Button you’ll help show the impact of this problem, drive awareness of the issue, and help change the system. As if this wasn’t enough, the Open Access Button has several ways of helping you get access to the research you need right now. 
 
-    .contribute
+    #contribute
         a(name='contribute')
         .container
             h2 Get involved.
-            .row
-                .col-md-12.hilite-right
+            .row.hilite-right
+                .col-md-12
                     p
-                        | Using the Open Access Button (and you are using it,
-                        | daily, right?) is just the first step. We need more
-                        | people to be involved at every level of community
-                        | action. The Open Access Working Group is where you
-                        | can use the data our users create to take meaningful
-                        | steps toward opening science. We are using every penny
-                        | of contribution to raise awareness for this project.
-                        | You can join our open source project as a developer.
-            .partners
-                h3 
-                    | Made with support from wonderful partners and 
-                    | Web users like you!
+                        | The first step is using the Open Access Button (and you are using it, daily, on every paywall, right?). But don’t think that’s all there is to do! This project was made possible by developers, advocates, students and general clever folk from Open community and we need continued support to take this to the next level. Of course, the code, text, and data we’ve pulled together are openly available, so you can innovate and advocate with it. If you can, donate to the project to help us support and maintain service as well as helping us with our future development plans. Bottom line, we’d love to hear from you, so whether it’s a suggestion, virtual pat on the back, or, dare I say a bug you’ve noticed, get in touch. 
 
-    .team
+            .row.buttons
+                .col-md-12
+                    a(href="mailto:oabutton+bug@gmail.com")
+                        button.btn.btn-default.bug(type="button")
+                            | Report a bug
+                    a(target="_blank", href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton")
+                        button.btn.btn-warning.donate(type="button") 
+                            | Donate!
+                    a(href="mailto:oabutton+suggestion@gmail.com")
+                        button.btn.btn-success.suggest(type="button")
+                            | Suggestions
+
+    #team
         a(name='team')
         .container
-            h2 Meet the team.
-                // Team profiles
+            .row
+                .col-md-12
+                    h3 Meet the team of people and organisations who made this a reality
                     ul.thumbnails
-                        li.span2
-                            a(href="http://twitter.com/Mcarthur_Joe")
-                                .thumbnail
-                                    img(src='/img/joe.jpg')
-                                    .caption
-                                        h3 Joe
-                                        p @Mcarthur_Joe
-                        li.span2
-                            a(href="http://twitter.com/davidecarroll")
-                                .thumbnail
-                                    img(src='/img/david.jpg')
-                                    .caption
-                                        h3 David
-                                        p @davidecarroll
-                        li.span2
-                            a(href="http://twitter.com/nicholascwng")
-                                .thumbnail
-                                    img(src='https://secure.gravatar.com/avatar/9637895e310caf25237e89155157b2a7?s=200')
-                                    .caption
-                                        h3 Nick
-                                        p @nicholascwng
-                        li.span2
-                            a(href="http://twitter.com/andylolz")
-                                .thumbnail
-                                    img(src='https://secure.gravatar.com/avatar/bbb9eb1af3b427f8259df33f6e8844aa?s=200')
-                                    .caption
-                                        h3 Andy
-                                        p @andylolz
-                        li.span2
-                            a(href="http://twitter.com/frathgeber")
-                                .thumbnail
-                                    img(src='https://secure.gravatar.com/avatar/d178a6201be696c466c41c355c671707?s=200')
-                                    .caption
-                                        h3 Florian
-                                        p @frathgeber
-                        li.span2
-                            .thumbnail
-                                img(src='/img/elliot.jpg')
+                        each person in team_data
+                            li
+                                a.thumb(href="#{person['link']}", target="_blank")
+                                    img(src="#{person['thumb']}")
                                 .caption
-                                    h3 Elliot
+                                    i.wedge-up
+                                    .large
+                                        img(src="#{person['thumb']}")
+                                    a.name(href="#{person['link']}", target="_blank") {{ person.name }}
+                                    p {{ person.blurb }}
+                                    .links
+                                        if person.twitter
+                                            a.twitter(href="http://twitter.com/#{person['twitter']}", target="_blank") Twitter
+    #thanks
+        a(name='thanks')
+        .container
+            .row
+                .col-md-12
+                    h3 Many thanks to all who helped along the way
+                    ul
+                        li
+                            a(href="http://opensciencefederation.com/") 
+                                | Open Science Federation
+                        li
+                            a(href="http://originalcontentlondon.com/")
+                                | Original Content London
+                        li
+                            a(href="https://twitter.com/McDawg")
+                                 | Graham Steel
+                        li
+                            a(href="http://okfn.org/")
+                                | Open Knowledge Foundation
+                        li
+                            a(href="http://rewiredstate.org/")
+                                | Rewired State
+                        li
+                            a(href="http://www.bmj.com/")
+                                | BMJ
+                        li
+                            a(href="http://www.plos.org/")
+                                | PLoS
+                        li
+                            a(href="https://twitter.com/Protohedgehog")
+                                | Jon Tennant
+                        li
+                            a(href="https://twitter.com/petermurrayrust")
+                                | Peter Murray-Rust 
+                        li
+                            a(href="http://sparc.arl.org/")
+                                | SPARC
+                        li
+                            a(href="https://twitter.com/CameronNeylon")
+                                | Cameron Neylon
+                        p + Everyone who joined the thunderclap or contacted us with messages of support or suggestions!
 
-    #footer
+
+    #contact
         a(name='contact')
         .container
             .row
                 .col-md-4
-                    INFO
-                .col-md-4
-                    ABOUT
-                .col-md-4
-                    [t] [f] [r]
-            .row
-                .col-md-4
-                    p Terms of use
-                    p Support community
-                    p Collaborator login
-                .col-md-4
-                    p Project blog
-                    p Get the data
-                    p Contacts
+                    p
+                        b INFO
+                    p
+                        a(href="http://blog.openaccessbutton.org")
+                            | Project blog
+                    p
+                        a(href="https://groups.google.com/d/forum/open-access-button-general")
+                            | Join the community
+                    p Disclaimer
                 .col-md-4
                     p
-                        | All site content is licensed under a
-                        | Creative Commons Attribution License.
+                        b ABOUT
+                    p
+                        a(href="mailto:oabutton+press@medsin.org")
+                            | Media inquiries
+                    p
+                        a(href="https://github.com/oabutton")
+                            | Get the code
+                    p
+                        a(href="oabutton+data@gmail.com")
+                            | Get the data
+                .col-md-4
+                    p
+                        a.icon.twitter(href="https://twitter.com/oa_button") Twitter
+                        a.icon.facebook(href="https://www.facebook.com/openaccess.net") Facebook
+                        a.icon.wordpress(href="http://oabutton.wordpress.com/") Wordpress
 
-    // Old body
-        .row
-            .col-lg-4     
-                section#start
-                    .hero-unit
-                        p.
-                            If we want to bring about a more open community we’ll need more tools,
-                            more information and more engagement around the issue.
-
-                        p
-                            strong That’s where our idea comes in. 
-                            |Imagine a browser-based tool that allows you to track every time someone
-                            |is denied access to a paper? Better yet, imagine if that tool gave you
-                            |basic information about where in the world they were or their profession
-                            |and why they were looking. Integrating this into one place would create a
-                            |realtime, worldwide, interactive picture of the problem. The integration
-                            |of social media would allow us to make this problem visible to the world.
-                            |Lastly, imagine if the tool actually helped the person gain access to the
-                            |paper they’d been denied access to in the first place. Incentivising use
-                            |and opening the barriers to knowledge combined can make this really
-                            |powerful.
-
-                        p
-                            |That’s what we’re imagining. We’re calling it the 
-                            strong Open Access button
-                            |. Every paywall met is an isolated incident; it’s time we capture those
-                            |individual moments of injustice and frustration to turn them into positive
-                            |change.
-
-                section#contribute
-                    .page-header
-                        h1 How can I help?
-                    .hero-unit
-                        p.
-                            We’re glad you asked! The Open Access Button has been created entirely by
-                            volunteers, and we can always do with some extra help squashing bugs and
-                            adding new features.
-
-                        p
-                            |If you want to help out, 
-                            a(href='http://github.com/OAButton/OAButton') check out the source on Github
-                            |, and get hacking. There are some instructions there on 
-                            a(href='https://github.com/OAButton/OAButton/blob/develop/instructions.md') how to set up your development server
-                            |.
+                    p
+                        a(rel="license", href="http://creativecommons.org/licenses/by/3.0/")
+                            img(alt="Creative Commons License", style="border-width:0", src="http://i.creativecommons.org/l/by/3.0/88x31.png")
+                        | &nbsp;The 
+                        span(xmlns:dct="http://purl.org/dc/terms/", property="dct:title") Open Access Button 
+                        | is licensed under a 
+                        a(rel="license", href="http://creativecommons.org/licenses/by/3.0/") Creative Commons Attribution 3.0 Unported License
+                        |.
