@@ -141,7 +141,7 @@ var oabSuccess = (function($) {
 			 + '</a></li>');
 	  }
 
-	  $li = $('<li>Matches from CORE repository:</li>');
+	  $li = $('<li>Matches from the <a href="http://core.kmi.open.ac.uk/">CORE</a> repository:</li>');
 	  $li.append($list);
 	  $("#oa_links").append($li);
         }

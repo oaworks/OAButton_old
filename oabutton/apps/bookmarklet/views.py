@@ -62,26 +62,75 @@ def signin(request):
     return HttpResponseServerError(json.dumps({'errors': form._errors}), content_type="application/json")
 
 
-def form(req, user_id):
+#def form(req, user_id):
+#    """
+#    Show the bookmarklet form
+#    """
+#    form = Bookmarklet(req.GET)
+#
+#    if 'doi' in form.data:
+#        form.fields['doi'].widget.attrs['readonly'] = 'readonly'
+#        form.fields['doi'].widget.attrs['value'] = form.data['doi']
+#
+#    if 'url' in form.data:
+#        form.fields['url'].widget.attrs['value'] = form.data['url']
+#
+#    form.fields['user_id'].widget.attrs['value'] = user_id
+#
+#    c = {}
+#    c.update(csrf(req))
+#    c.update({'bookmarklet': form, 'user_id': user_id})
+#    return render_to_response('bookmarklet/index.html', c)
+#
+
+def form1(req, user_id):
     """
     Show the bookmarklet form
     """
     form = Bookmarklet(req.GET)
-    if 'url' in form.data:
-        # Add readonly and value attributes to the widget
-        form.fields['url'].widget.attrs['readonly'] = 'readonly'
-        form.fields['url'].widget.attrs['value'] = form.data['url']
 
     if 'doi' in form.data:
         form.fields['doi'].widget.attrs['readonly'] = 'readonly'
         form.fields['doi'].widget.attrs['value'] = form.data['doi']
 
+    if 'url' in form.data:
+        form.fields['url'].widget.attrs['value'] = form.data['url']
+
     form.fields['user_id'].widget.attrs['value'] = user_id
 
     c = {}
+    req.session['user_id'] = user_id
+
     c.update(csrf(req))
     c.update({'bookmarklet': form, 'user_id': user_id})
-    return render_to_response('bookmarklet/index.html', c)
+    return render_to_response('bookmarklet/page1.html', c)
+
+
+def form2(req):
+    """
+    Show the bookmarklet form. We just need the CSRF token here.
+    """
+    c = {}
+    c.update(csrf(req))
+    return render_to_response('bookmarklet/page2.html', c)
+
+
+def form3(req):
+    """
+    Show the bookmarklet form
+    """
+
+    if req.method != 'POST':
+        return redirect('bookmarklet:form1', user_id=req.session['user_id'])
+
+    data = req.session['data']
+    scholar_url = data['scholar_url']
+    doi = data['doi']
+
+    c = {}
+    c.update(csrf(req))
+    c.update({'scholar_url': scholar_url, 'doi': doi})
+    return render_to_response('bookmarklet/page3.html', c)
 
 
 def add_post(req):
@@ -113,14 +162,13 @@ def add_post(req):
                 doi = evt_dict['doi']
                 scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % doi
 
-                c.update({'scholar_url': scholar_url, 'doi': doi})
+            req.session['data'] = {'event_id': event.id,
+                                   'scholar_url': scholar_url,
+                                   'doi': doi}
 
-            c['oid'] = str(event.id)
-            c['url'] = event.url
-
-            return render_to_response('bookmarklet/success.html', c)
+            return redirect('bookmarklet:form2')
         else:
-            redirect('form', user_id=req.POST['user_id'])
+            return redirect('bookmarklet:form1', user_id=req.session['user_id'])
 
 
 def generate_bookmarklet(req, user_id):

@@ -24,7 +24,8 @@ def homepage(req):
                      'user_profession': evt.user_profession,
                      'description': evt.description,
                      'story': evt.story,
-                     'url': evt.url})
+                     'url': evt.url,
+                     })
 
     c.update({'count': evt_count,
               'events': json.dumps(data),

@@ -32,7 +32,6 @@ class SigninForm(forms.Form):
 class Bookmarklet(forms.Form):
     user_id = forms.CharField(widget=forms.HiddenInput, required=True)
     accessed = forms.CharField(widget=forms.HiddenInput, required=False)
-
     coords = forms.CharField(widget=forms.HiddenInput, required=False)
 
     location = forms.CharField(required=False, label="Location", widget=forms.TextInput(attrs={'placeholder': "e.g. London, United Kingdom", 'class': "input-block-level"}))

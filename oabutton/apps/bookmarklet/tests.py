@@ -59,9 +59,9 @@ class APITest(TestCase):
         c = Client()
         response = c.post('/api/post/', POST_DATA)
 
-        assert response.status_code == 200
+        assert response.status_code == 302
 
-        evt = Event.objects.get(id=response.context['oid'])
+        evt = Event.objects.get(id=c.session['data']['event_id'])
 
         expected = {'doi': u'10.1016/j.urology.2010.05.009.',
                     'url': u'http://www.ncbi.nlm.nih.gov/pubmed/20709373',
@@ -91,9 +91,9 @@ class APITest(TestCase):
         c = Client()
         response = c.post('/api/post/', POST_DATA)
 
-        assert response.status_code == 200
+        assert response.status_code == 302
 
-        json_data = Event.objects.filter(id=response.context['oid']).to_json()
+        json_data = Event.objects.filter(id=c.session['data']['event_id']).to_json()
         jdata = json.loads(json_data)
         eq_(len(jdata), 1)
         data = jdata[0]
@@ -111,7 +111,7 @@ class APITest(TestCase):
         eq_(data['story'], 'some access requirement')
 
         # Check that we can resolve the original user oid
-        evt = Event.objects.filter(id=response.context['oid'])[0]
+        evt = Event.objects.filter(id=c.session['data']['event_id'])[0]
         assert evt.user_id is not None
 
     def test_update_signon(self):
@@ -154,6 +154,7 @@ class APITest(TestCase):
         c = Client()
         response = c.post('/api/post/', POST_DATA)
 
+        response = c.post('/api/form/page3/')
         # Check that the DOI is passed through correctly
         data_doi_re = re.compile('<body [^>]*data-doi="%s">'
                                  % POST_DATA['doi'])

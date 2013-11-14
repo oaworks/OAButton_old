@@ -12,10 +12,30 @@
     <link rel="stylesheet" href="/static/css/app.css">
   </head>
   <body style="margin-top: 20px" {% block body_attrs %}{% endblock %}>
+    <div id="fb-root"></div>
     <!-- Main body-->
-    <div class="container">{% block content %}{% endblock %}
+    <div class="container">
+
+        <img id="bookmarklet-logo" src="/static/img/oabutton_logo.png" />
+        <img id="bookmarklet-badge" src="/static/img/oabutton_badge.png" />
+        <a id="id_pmc" title="Available at PMC" target="_new" style="position: absolute; top: 0; right: 32px; display: none;"><img src="/static/img/pmc.png"/></a>
+        {% block content %}
+        {% endblock %}
     </div>
+
+    {% block footer %}
+    <div class="container bookmarklet-footer">
+        <p>
+            For instructions, more info and your contribution head to <a href="http://www.openaccessbutton.org">www.openaccessbutton.org</a>
+        </p>
+        <a href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report">Report a bug</a>
+        <a href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton">Donate</a>
+    </div>
+    {% endblock %}
+
     <script src="/static/js/lib/jquery.min.js"></script>
-    <script src="/static/js/lib/bootstrap.js"></script>{% block scripts %}{% endblock %}
+    <script src="/static/js/lib/bootstrap.js"></script>
+    {% block scripts %}
+    {% endblock %}
   </body>
 </html>

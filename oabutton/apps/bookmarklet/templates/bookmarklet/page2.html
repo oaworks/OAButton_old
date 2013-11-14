@@ -1,26 +1,33 @@
 {% extends "bookmarklet/layout.html" %}{% block content %}
-<h2>Thanks!</h2>
-<p>Now to find an Open Access version…</p>
-<ul id="oa_links">
-</ul>
-
 <p>
-<a href="http://en.wikipedia.org/wiki/Digital_object_identifier" target="_blank">What's a DOI?</a>
+Before we try and get you access, why not share your frustration -
+help make this problem visible!
 </p>
 
 <p>
 <a href="https://twitter.com/OA_Button" class="twitter-follow-button" data-show-count="true" data-lang="en" data-size="large">Follow @OA_Button</a>
 <a href='https://twitter.com/share?url=http://openaccessbutton.org&text=I hit a #paywall trying to access {{ url }}! Help me demand open access at&via=OA_Button&related=OA_Button' class="twitter-share-button" data-lang="en" data-size="large">Tweet</a> 
+
 <div class="fb-like" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+<br /> <!-- Damn you facebook and your weird JS+CSS overrides -->
+
 <div class="fb-share-button" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-type="button_count"></div>
+<br /> <!-- Damn you facebook and your weird JS+CSS overrides -->
+
 <div class="fb-send" data-href="https://www.facebook.com/openaccessbutton" data-colorscheme="light"></div>
+<br /> <!-- Damn you facebook and your weird JS+CSS overrides -->
 </p>
 
+<p>
+We're also on <a href="https://www.facebook.com/openaccessbutton">Facebook</a> and <a href="https://twitter.com/OA_Button">Twitter</a>! Join us!
+</p>
+
+<form method="POST" action="{% url 'bookmarklet:form3' %}">{% csrf_token %}
+<button class="btn btn-primary pull-right">Get me access!</button>
+</form>
 {% endblock %}
 {% block scripts %}
-<script src="/static/js/success.js"></script>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -29,4 +36,3 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 {% endblock %}
-{% block body_attrs %}data-doi="{{doi|urlencode}}"{% endblock %}
