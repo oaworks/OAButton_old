@@ -70,7 +70,7 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Florian Rathgeber",
             "link": "http://twitter.com/frathgeber",
-            "thumb": "https://secure.gravatar.com/avatar/d178a6201be696c466c41c355c671707?s=200",
+            "thumb": "https://lh5.googleusercontent.com/-TQyLDuEMj1E/Umm1CqZohdI/AAAAAAAAZAA/PdCXgUG5d0Y/s200-no",
             "twitter": "frathgeber",
             "blurb": "Joined the project at the BMJ hackday and helped throughout providing solutions to our many problems"
             }, {
