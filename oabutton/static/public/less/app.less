@@ -52,12 +52,12 @@ header {
 
   .lead {
     position: absolute;
-    margin-top: 1em;
-    font-size: 0.85em;
     text-align: center;
+    font-size: 20px;
+    font-weight: 600;
     width: 100%;
-    left: 0px;  
-
+    left: 0px;
+    margin-top: 15px;
     span {
       background-color: @oaorange;
       color: white;
@@ -80,6 +80,10 @@ header {
   background-size: 1em;
   padding-left: 1.5em;
 }
+
+.jumbotron { margin-bottom: 0; }
+
+#start form { border: none; }
 
 /* Bookmarklet popup */
 
@@ -113,7 +117,11 @@ header {
 
 /* Activity map */
 
-#world, #map { height: 500px; width: 100%; }
+#world, #map { 
+  height: 500px; 
+  width: 100%; 
+  margin-top: -20px;
+}
 #world {
   .underlay {
     display: none;
@@ -227,7 +235,7 @@ h3 {
       img { width: 100%; }
     }
 
-    li:hover .thumb { opacity: 0.1; }
+    li:hover, li.hover { .thumb { opacity: 0.1; } }
 
     li.right {
       .caption { margin-left:unit(-@captmargin, px); }
@@ -291,7 +299,7 @@ h3 {
     }
 
     li .caption { display:none; }
-    li:hover .caption { display: block; }
+    li:hover, li.hover { .caption { display: block; } }
   }
 }
 
@@ -327,4 +335,9 @@ h3 {
 @media screen and (max-width: 768px) {
   body { padding-top: 0px; }
   header a { background-size:100%; }
+  header .lead { font-size:15px; position:relative; }
+}
+@media screen and (max-width: 520px) {
+  header a { height: auto; background-size:auto 50%; background-position: bottom left; }
+  header .lead { visibility: hidden; }
 }

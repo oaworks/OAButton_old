@@ -90,12 +90,15 @@ block body
 
             .row.buttons
                 .col-md-12
-                    a.btn.btn-default.bug(type="button", href="mailto:oabutton+bug@gmail.com")
-                        | Report a bug
-                    button.btn.btn-warning.donate(type="button", target="_blank", href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton") 
-                        | Donate!
-                    button.btn.btn-success.suggest(type="button", href="mailto:oabutton+suggestion@gmail.com")
-                        | Suggestions
+                    a(href="mailto:oabutton+bug@gmail.com")
+                        button.btn.btn-default.bug(type="button")
+                            | Report a bug
+                    a(target="_blank", href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton")
+                        button.btn.btn-warning.donate(type="button") 
+                            | Donate!
+                    a(href="mailto:oabutton+suggestion@gmail.com")
+                        button.btn.btn-success.suggest(type="button")
+                            | Suggestions
 
     #team
         a(name='team')
