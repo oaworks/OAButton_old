@@ -1,9 +1,11 @@
-.PHONY: test
+.PHONY: test lessc
 
 all: build
 
-build:
+build: lessc
 
+lessc:
+	lessc oabutton/static/public/less/styles.less oabutton/static/public/css/styles.css
 
 
 test:
