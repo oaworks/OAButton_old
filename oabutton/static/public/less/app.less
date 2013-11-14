@@ -140,9 +140,28 @@ header {
 
 /* Content areas */
 
-.intro, .contribute, .team {
+h2 { 
+  color: #494949;
+  font-size: 40px; 
+  text-align: center; 
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+h3 {
+  color: #555;
+  font-size: 19px;
+  text-align: center;
+  border-top: 1px solid #aaa;
+  padding-top: 15px;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.intro, .contribute, .team, .thanks {
   
-  padding: 2em 4em;
+  padding: 2em 3em;
 
   p { line-height: 1.7; }
 
@@ -157,28 +176,11 @@ header {
   .row.hilite-right {
     border-right: 7px solid @oaorange;
   }
-
-  h2 { 
-    color: #494949;
-    font-size: 40px; 
-    text-align: center; 
-    padding-top: 0;
-    margin-top: 0;
-    margin-bottom: 15px;
-  }
-
-  h3 {
-    color: #555;
-    font-size: 19px;
-    text-align: center;
-    border-top: 1px solid #aaa;
-    padding-top: 15px;
-  }
 }
 
-.intro, .team {
-  background: #eee;
-}
+.team { background: #ffd; }
+
+.intro, .thanks { background: #eee; }
 
 .buttons {
   margin-top: 2em;
@@ -282,6 +284,11 @@ header {
     li .caption { display:none; }
     li:hover .caption { display: block; }
   }
+}
+
+.thanks {
+
+  li { width: 25%; float: left; }
 }
 
 /* Responsive styles */
