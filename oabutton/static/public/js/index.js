@@ -98,6 +98,29 @@ $(document).ready(function() {
 
         } // -success
     }); // -ajaxForm
+    //
+    // Scrollspy effects
+    $('body').on('activate.bs.scrollspy', function (e) {
+        console.log(e);
+    });
+
+    $('#map .underlay').fadeIn();
+
+    var midpoint = $('.thumbnails').width() / 2;
+    $('.thumbnails li').each(function() {
+        if ($(this).position().left >= midpoint) {
+            $(this).addClass("right");
+        }
+    });
+
+    $('.thumbnails a.thumb').bind('touchstart', function(e){
+        $(this).parent().addClass('hover');
+        e.stopPropagation();
+    }).bind('touchend', function(e){
+
+    $(this).parent().parent().find('.hover').removeClass('hover');
+        e.stopPropagation();
+    });
 
     oabutton.renderMap();
 }); 
