@@ -1,7 +1,8 @@
 from django.shortcuts import render_to_response
 from django.conf import settings
 from django.core.context_processors import csrf
-from oabutton.common import SigninForm, HomeData
+from oabutton.common import SigninForm, teamdata
+import json
 
 
 def homepage(req):
@@ -13,12 +14,22 @@ def homepage(req):
     from oabutton.apps.bookmarklet.models import Event
 
     evt_count = Event.objects.count()
-    json_data = Event.objects.all().to_json()
+    data = []
+
+    for evt in Event.objects.all():
+        data.append({'doi': evt.doi,
+                     'coords': dict(evt.coords),
+                     'accessed': evt.accessed.strftime("%b %d, %Y"),
+                     'user_name': evt.user_name,
+                     'user_profession': evt.user_profession,
+                     'description': evt.description,
+                     'story': evt.story,
+                     'url': evt.url})
 
     c.update({'count': evt_count,
-              'events': json_data,
+              'events': json.dumps(data),
               'hostname': settings.HOSTNAME,
               'signin_form': SigninForm(),
-              'home_data': HomeData()})
+              'team_data': teamdata})
 
     return render_to_response('web/start.jade', c)

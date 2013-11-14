@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core import serializers
 from django.core.context_processors import csrf
 from django.http import HttpResponse, HttpResponseServerError
+from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_protect
 from models import Event
@@ -61,7 +62,7 @@ def signin(request):
     return HttpResponseServerError(json.dumps({'errors': form._errors}), content_type="application/json")
 
 
-def form(req):
+def form(req, user_id):
     """
     Show the bookmarklet form
     """
@@ -75,10 +76,11 @@ def form(req):
         form.fields['doi'].widget.attrs['readonly'] = 'readonly'
         form.fields['doi'].widget.attrs['value'] = form.data['doi']
 
+    form.fields['user_id'].widget.attrs['value'] = user_id
+
     c = {}
     c.update(csrf(req))
-    c.update({'bookmarklet': form})
-
+    c.update({'bookmarklet': form, 'user_id': user_id})
     return render_to_response('bookmarklet/index.html', c)
 
 
@@ -96,6 +98,10 @@ def add_post(req):
             if evt_dict['accessed'] != '':
                 evt_dict['accessed'] = dateutil.parser.parse(evt_dict['accessed'])
 
+            user = User.objects.get(id=evt_dict['user_id'])
+            evt_dict['user_name'] = user.name
+            evt_dict['user_profession'] = user.profession
+
             event = Event(**evt_dict)
             event.save()
 
@@ -109,12 +115,12 @@ def add_post(req):
 
                 c.update({'scholar_url': scholar_url, 'doi': doi})
 
-            c.update({'oid': str(event.id)})
+            c['oid'] = str(event.id)
+            c['url'] = event.url
 
             return render_to_response('bookmarklet/success.html', c)
         else:
-            c.update({'bookmarklet': form})
-            return render_to_response('bookmarklet/index.html', c)
+            redirect('form', user_id=req.POST['user_id'])
 
 
 def generate_bookmarklet(req, user_id):

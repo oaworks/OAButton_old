@@ -107,7 +107,7 @@ block body
                 .col-md-12
                     h3 Meet the team of people and organisations who made this a reality
                     ul.thumbnails
-                        each person in home_data.team
+                        each person in team_data
                             li
                                 a.thumb(href="#{person['link']}", target="_blank")
                                     img(src="#{person['thumb']}")
