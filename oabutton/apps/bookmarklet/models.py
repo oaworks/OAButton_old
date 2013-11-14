@@ -5,7 +5,6 @@ from mongoengine import EmailField
 from mongoengine import StringField
 from mongoengine import URLField
 from mongoengine import BooleanField
-from django.utils.translation import ugettext_lazy as _  # NOQA
 import mongoengine.django.auth
 
 

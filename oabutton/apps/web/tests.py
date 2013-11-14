@@ -40,4 +40,4 @@ class SimpleTest(TestCase):
         eq_(response.context['count'], 2)
 
         content = re.sub(r'\s+', ' ', response.content)
-        ok_(content.find(r"""<span id="counter">2 </span><span>Scholarly pursuits denied </span>""") != -1)
+        ok_(content.find(r"""<span id="counter">2 </span><span>Paywalls Hit </span>""") != -1)

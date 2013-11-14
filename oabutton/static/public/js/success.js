@@ -132,7 +132,7 @@ var oabSuccess = (function($) {
 	  var $list = $('<ul></ul>');
 	  for (var i = 1; i < records.length; i++) {
 	    metadata = records[i]['record']['metadata']['oai_dc:dc'];
-	    $list.append('<li><a href="'
+	    $list.append('<li><a target="_blank" href="'
 			 + metadata['dc:identifier']
 			 + '">'
 			 + metadata['dc:creator']

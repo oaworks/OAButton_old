@@ -1,0 +1,50 @@
+extends web/index
+- load oafilters
+block start
+    form.form-bookmarklet#form-bookmarklet(action='/api/signin/', method='post')
+        {% csrf_token %}
+        .row
+            .col-md-8.col-md-offset-2
+                p Sign up below to get the Open Access Button, an easy, safe bookmarklet so you can show the global impact of research paywalls - and to help get access to the research you need. Simply drag the Open Access Button to your bookmark bar, click it each time you hit a paywall on academic research, and it will put your experience on the map along with thousands of others.  Then use our tools to search for access to the article, and use social media to spread the word.  Every person who uses the Open Access Button brings us closer to changing the system. 
+                p 
+                    a(data-toggle="modal", data-target="#video-modal", alt="Need access to research?", title="Learn more about the project in this video")
+                        | Watch the video
+                    | for a quick introduction, then sign up here:
+                p
+                    {{ signin_form.email }}
+                p
+                    {{ signin_form.name }}
+                p
+                    {{ signin_form.profession }}
+                p
+                    {{ signin_form.confirm_public}}
+                    {{ signin_form.confirm_public|label_with_classes:"confirm-label"}}
+                p
+                    {{ signin_form.mailinglist}}
+                    {{ signin_form.mailinglist|label_with_classes:"mailinglist-label"}}
+                p
+                    div.form-group
+                        {{ signin_form.privacy}}
+                    button.btn.btn-lg.btn-primary.btn-block(type='submit')
+                        | Get my personal Open Access Button
+
+    #bookmarklet(style='display:none')
+        .content
+            i.wedge-up
+            p
+                | Drag me to your bookmark bar:
+            a.btn.btn-lg.btn-primary
+                i.icon-bookmark Open Access Button
+
+    .modal.fade(id="bookmarklet-modal", tabindex="-1", role="dialog", aria-labelledby="bookmarklet-header", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                    h4.modal-title(id="bookmarklet-header") 
+                        | Thanks for signing up!
+                .modal-body
+                    p
+                        | Instructions for enabling the browser bar, cute little animation, etc.
+                .modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") OK

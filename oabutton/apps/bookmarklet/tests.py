@@ -24,7 +24,7 @@ class APITest(TestCase):
         self.EMAIL = 'new_email@foo.com'
         self.POST_DATA = {u'email': self.EMAIL,
                           'name': 'some name',
-                          'profession': 'STUDENT',
+                          'profession': 'Student',
                           'confirm_public': 'checked',
                           'mailinglist': 'checked'}
 
@@ -39,7 +39,7 @@ class APITest(TestCase):
 
         eq_(self.user.name, 'some name')
         eq_(self.user.email, self.EMAIL)
-        eq_(self.user.profession, 'STUDENT')
+        eq_(self.user.profession, 'Student')
         ok_(self.user.mailinglist)
 
     def test_add_post(self):
@@ -107,7 +107,7 @@ class APITest(TestCase):
         eq_(actual_date.day, 9)
 
         eq_(data['user_name'], 'some name')
-        eq_(data['user_profession'], 'STUDENT')
+        eq_(data['user_profession'], 'Student')
         eq_(data['story'], 'some access requirement')
 
         # Check that we can resolve the original user oid
@@ -131,7 +131,7 @@ class APITest(TestCase):
         user = User.objects.filter(username=self.EMAIL)[0]
         eq_(user.name, 'some name')
         eq_(user.email, self.EMAIL)
-        eq_(user.profession, 'STUDENT')
+        eq_(user.profession, 'Student')
         ok_(user.mailinglist)
 
     def test_search_doi_after_post(self):

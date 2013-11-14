@@ -46,30 +46,39 @@ $(function() {
 
   pmc();
 
-  function parseCrossRef(entry) {
-    var description = [],
-        item = entry["pam:message"]["pam:article"];
+  function parseCrossRef(item) {
+    var description = {};
 
-    if (item["dc:title"]) {
-      description.push(item["dc:title"]);
+    if (item.title) {
+      description['Title'] = item.title;
     }
 
-    if (item["dc:creator"]) {
-      if (!$.isArray(item["dc:creator"])) {
-        item["dc:creator"] = [item["dc:creator"]];
+    if (item.author) {
+      if (!$.isArray(item.author)) {
+        item.author = [item.author];
       }
 
-      description.push(item["dc:creator"].join(", "));
+      var authors = [];
+      $.each(item.author, function(index, author) {
+        var name = [author.given, author.family];
+        authors.push(name.join(" "));
+      });
+
+      description['Authors'] = authors.join(", ");
     }
 
-    if (item["prism:publicationName"]) {
-      description.push(item["prism:publicationName"]);
+    if (item["container-title"]) {
+      description['Journal'] = item["container-title"];
     }
 
-    if (item["prism:publicationDate"]) {
+    if (item.issued && item.issued["date-parts"]) {
       // TODO: zero-pad or reformat the date, using Moment.js?
-      description.push(item["prism:publicationDate"]);
+      description['Date'] = item.issued["date-parts"][0].join("-");
     }
+
+    description = $.map(description, function(value, key) {
+      return key + ": " + value;
+    });
 
     return description.join("\n");
   }
@@ -80,11 +89,13 @@ $(function() {
     if (doi) {
       $.ajax({
           url: 'http://data.crossref.org/' + encodeURIComponent(doi),
+          headers: {
+            Accept: "application/vnd.citationstyles.csl+json"
+          },
           dataType: "json",
           success: function(response) {
-            if (response.feed.entry) {
-              var description = parseCrossRef(response.feed.entry);
-              $('#id_description').val(description);
+            if (response && response.URL) {
+              $('#id_description').val(parseCrossRef(response));
             }
           }
       });
