@@ -203,6 +203,8 @@ h3 {
   margin-top: 2em;
   text-align: center;
 
+  a { text-decoration: none !important; }
+
   button {
     font-size: 20px;
     padding: 4px 10px;
@@ -326,9 +328,19 @@ h3 {
     text-indent: -9999px;
     margin: 0 25px 0 0;
   }
+  .icon:hover { opacity: 0.5; }
   .twitter { background-image: url(../img/webicon-twitter.png); }
   .facebook { background-image: url(../img/webicon-facebook.png); }
   .wordpress { background-image: url(../img/webicon-wordpress.png); }
+}
+
+.license { 
+  font-size:90%; 
+  img {
+    float: left;
+    padding-top: 1.5em;
+    padding-right: 1em;
+  }
 }
 
 /* Responsive styles */
@@ -338,6 +350,10 @@ h3 {
   header .lead { font-size:15px; position:relative; }
 }
 @media screen and (max-width: 520px) {
-  header a { height: auto; background-size:auto 50%; background-position: bottom left; }
+  header a { 
+    height: 110px; position: absolute; 
+    background-image: url(../img/header_needaccess.png);
+  }
   header .lead { visibility: hidden; }
+  #github_ribbon { display: none; }
 }
