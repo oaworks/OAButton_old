@@ -91,14 +91,12 @@ var oabSuccess = (function($) {
       var url = 'http://scholar.google.com/scholar?cluster=' + encodeURIComponent('http://dx.doi.org/' + doi);
 
       var sch_link = document.createElement("a");
+      sch_link.setAttribute("class", "likeabutton btn btn-primary btn-block")
       sch_link.setAttribute("href", url);
       sch_link.setAttribute("target", "_blank");
-      sch_link.innerHTML = "Google Scholar search (DOI)";
+      sch_link.innerHTML = "Search Google Scholar by DOI";
 
-      var li = document.createElement("li");
-      li.appendChild(sch_link);
-
-      $("#oa_links").append(li);
+      $("#oa_links").append(sch_link);
     }
   }
 
@@ -109,14 +107,12 @@ var oabSuccess = (function($) {
       var url = 'http://scholar.google.com/scholar?as_occt=title&as_q=' + encodeURIComponent(title);
 
       var sch_link = document.createElement("a");
+      sch_link.setAttribute("class", "likeabutton btn btn-primary btn-block")
       sch_link.setAttribute("href", url);
       sch_link.setAttribute("target", "_blank");
-      sch_link.innerHTML = "Google Scholar search (title)";
+      sch_link.innerHTML = "Search Google Scholar by title";
 
-      var li = document.createElement("li");
-      li.appendChild(sch_link);
-
-      $("#oa_links").append(li);
+      $("#oa_links").append(sch_link);
     }
   }
 
@@ -124,28 +120,28 @@ var oabSuccess = (function($) {
     var title = metadata["title"];
 
     if (title) {
-      $.ajax({
-        url: "/metadata/coresearch.json/title:(" + encodeURIComponent(title) + ")",
-        dataType: 'json',
-        success: function(response) {
-	  var records = response.ListRecords;
-	  var $list = $('<ul></ul>');
-	  for (var i = 1; i < records.length; i++) {
-	    metadata = records[i]['record']['metadata']['oai_dc:dc'];
-	    $list.append('<li><a target="_blank" href="'
-			 + metadata['dc:identifier']
-			 + '">'
-			 + metadata['dc:creator']
-			 + ' (' + metadata['dc:date'] + '); '
-			 + metadata['dc:title']
-			 + '</a></li>');
-	  }
+        $.ajax({
+            url: "/metadata/coresearch.json/title:(" + encodeURIComponent(title) + ")",
+            dataType: 'json',
+            success: function(response) {
+                var records = response.ListRecords;
+                var $list = $('<ul></ul>');
+                for (var i = 1; i < records.length; i++) {
+                    metadata = records[i]['record']['metadata']['oai_dc:dc'];
+                    $list.append('<li><a target="_blank" href="'
+                        + metadata['dc:identifier']
+                        + '">'
+                        + metadata['dc:creator']
+                        + ' (' + metadata['dc:date'] + '); '
+                        + metadata['dc:title']
+                        + '</a></li>');
+                }
 
-	  $li = $('<li>Matches from the <a href="http://core.kmi.open.ac.uk/">CORE</a> repository:</li>');
-	  $li.append($list);
-	  $("#oa_links").append($li);
-        }
-      });
+                $core_div  = $('<div id="core_results">Matches from the <a href="http://core.kmi.open.ac.uk/">CORE</a> repository:</div>');
+                $core_div.append($list);
+                $("#oa_links").append($core_div);
+            }
+        });
     }
   }
 

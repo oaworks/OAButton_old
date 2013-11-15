@@ -17,3 +17,18 @@ IMG#bookmarklet-badge {
 .raleway-font {
     font-family: "Raleway";
 }
+
+/* restyle anchor links into buttons on bookmarklet */
+.likeabutton {
+    appearance: button;
+    -moz-appearance: button;
+    -webkit-appearance: button;
+    color: white;
+    text-decoration: none; font: menu; color: ButtonText;
+    display: inline-block; padding: 2px 8px;
+}
+
+#core_results {
+    margin-top: 10px;
+    margin-top: 10px;
+}
