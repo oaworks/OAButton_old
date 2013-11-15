@@ -103,7 +103,7 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Victor Ng",
             "link": "#",
-            "thumb": "/static/img/aperson.png",
+            "thumb": "http://www.gravatar.com/avatar/c5ab90719801dfa47055338ba47f5580.png",
             "blurb": "One of our best developers, instrumental in bring it to completion. Elsevier's biggest fan"
             }, {
             "name": "Oleg Lavrovsky",
