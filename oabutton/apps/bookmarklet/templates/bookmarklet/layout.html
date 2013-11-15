@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="Open Access Button">
-    <title>{{'Open Access Button'|force_escape}}</title>
+    <title>Open Access Button</title>
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/social-buttons.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway"></link>
     <link rel="stylesheet" href="/static/css/app.css">
   </head>
   <body style="margin-top: 20px" {% block body_attrs %}{% endblock %}>
@@ -32,15 +33,11 @@
     {% block footer %}
     <div class="container bookmarklet-footer">
         <p>For instructions, more info and your contribution head to <a href="http://www.openaccessbutton.org">www.openaccessbutton.org</a></p>
-        <div class="or-box row-block">
-            <div class="row">
-                <div class="pull-left">
-                    <a href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report">Report a bug</a>
-                </div>
-                <div class="pull-right">
-                    <a href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton">Donate</a>
-                </div>
-            </div>
+        <div>
+            <a class="pull-left" href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report">Report a bug</a>
+        </div>
+        <div>
+            <a class="pull-right" href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton">Donate</a>
         </div>
     </div>
     {% endblock %}

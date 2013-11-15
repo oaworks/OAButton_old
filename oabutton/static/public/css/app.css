@@ -5,3 +5,12 @@ IMG#bookmarklet-logo {
 IMG#bookmarklet-badge {
     display: none;
 }
+
+.bookmarklet-footer {
+    background: "grey";
+    font-family: "Raleway";
+}
+
+.raleway-font {
+    font-family: "Raleway";
+}

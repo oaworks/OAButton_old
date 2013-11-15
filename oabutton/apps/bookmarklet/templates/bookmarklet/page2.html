@@ -1,28 +1,34 @@
 {% extends "bookmarklet/layout.html" %}{% block content %}
-<p>
-Before we try and get you access, why not share your frustration -
-help make this problem visible!
-</p>
+<div class="control-group raleway-font">
+    <p>
+    Before we try and get you access, why not share your frustration -
+    help make this problem visible!
+    </p>
 
-<p>
-<a href="https://twitter.com/OA_Button" class="twitter-follow-button" data-show-count="true" data-lang="en" data-size="large">Follow @OA_Button</a>
-<a href='https://twitter.com/share?url=http://openaccessbutton.org&text=I hit a #paywall trying to access {{ url }}! Help me demand open access at&via=OA_Button&related=OA_Button' class="twitter-share-button" data-lang="en" data-size="large">Tweet</a> 
+    <p>
+    <a href="https://twitter.com/OA_Button" class="twitter-follow-button" data-show-count="true" data-lang="en" data-size="large">Follow @OA_Button</a>
+    </p>
 
-<div class="fb-like" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
-<br /> <!-- Damn you facebook and your weird JS+CSS overrides -->
+    <p>
+    <a href='https://twitter.com/share?url=http://openaccessbutton.org&text=I hit a #paywall trying to access {{ url }}! Help me demand open access at&via=OA_Button&related=OA_Button' class="twitter-share-button" data-lang="en" data-size="large">Tweet</a> 
+    <p>
 
-<div class="fb-share-button" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-type="button_count"></div>
-<br /> <!-- Damn you facebook and your weird JS+CSS overrides -->
+    <p>
+    <div class="fb-like" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+    </p>
 
-<div class="fb-send" data-href="https://www.facebook.com/openaccessbutton" data-colorscheme="light"></div>
-<br /> <!-- Damn you facebook and your weird JS+CSS overrides -->
-</p>
+    <p>
+    <div class="fb-share-button" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-type="button_count"></div>
+    </p>
 
-<p>
-We're also on <a href="https://www.facebook.com/openaccessbutton">Facebook</a> and <a href="https://twitter.com/OA_Button">Twitter</a>! Join us!
-</p>
+    <p>
+    <div class="fb-send" data-href="https://www.facebook.com/openaccessbutton" data-colorscheme="light"></div>
+    </p>
 
-
+    <p>
+    We're also on <a href="https://www.facebook.com/openaccessbutton">Facebook</a> and <a href="https://twitter.com/OA_Button">Twitter</a>! Join us!
+    </p>
+</div>
 
 <form method="POST" action="{% url 'bookmarklet:form3' %}">{% csrf_token %}
 <div class="or-box row-block">
