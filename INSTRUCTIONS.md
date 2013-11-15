@@ -77,6 +77,10 @@ ensure that all contributors are using a consistent set of packages.
  * Check in settings.py that the line `from settings_local import *`
    is not commented out
 
+We are using LESSC to compile stylesheets from LESS to CSS. The compiler is
+run from a Makefile. Install Node.js then `npm install lessc -g`, then run
+`make` from the root folder to update CSS.
+
 ### Running the tests
 
 From the directory with the file manage.py in it
