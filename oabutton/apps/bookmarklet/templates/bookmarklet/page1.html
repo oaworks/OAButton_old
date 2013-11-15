@@ -15,7 +15,14 @@ Tell us why and we'll put you on the map.
 
   {{ bookmarklet.accessed }}
   {{ bookmarklet.user_id }}
-  {{ bookmarklet.url }}
+
+  <div class="control-group">
+    {{ bookmarklet.url|label_with_classes:"control-label"}}
+    <div class="controls">
+        {{ bookmarklet.url }}
+    </div>
+  </div>
+
 
   <div class="control-group">
     {{ bookmarklet.location|label_with_classes:"control-label"}}
