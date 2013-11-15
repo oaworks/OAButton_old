@@ -71,14 +71,13 @@ var oabSuccess = (function($) {
             var pmcid = response.getElementsByTagName('Id')[0].textContent;
             var url = "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC" + pmcid + "/";
             var pmc_link = document.createElement("a");
+            pmc_link.setAttribute("class", "likeabutton btn btn-primary btn-block")
             pmc_link.setAttribute("href", url);
             pmc_link.setAttribute("target", "_blank");
             pmc_link.innerHTML = "View on PubMedCentral";
 
-            var li = document.createElement("li");
-            li.appendChild(pmc_link);
 
-            $("#pmc_links").append(li);
+            $("#pmc_links").append(pmc_link);
           }
       });
     }

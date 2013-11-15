@@ -1,5 +1,4 @@
 $(function() {
-  $('#id_accessed').val(new Date().toISOString());
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -50,5 +49,6 @@ $(function() {
     }
   }
 
+  $('#id_accessed').val(new Date().toISOString());
   $('form').on("submit", onSubmit);
 });
