@@ -147,7 +147,7 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Medsin UK",
             "link": "http://www.medsin.org/",
-            "thumb": "http://www.medsin.org/public/images/medsin-ukmedium.png",
+            "thumb": "/static/img/logo-medsin.jpg",
             "twitter": "MedsinUK",
             "blurb": "The Open Access Button is a Medsin-UK programme"
             }, {
