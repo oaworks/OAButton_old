@@ -109,7 +109,7 @@ block body
                     ul.thumbnails
                         each person in team_data
                             li
-                                a.thumb(href="#{person['link']}", target="_blank")
+                                a.thumb(href="#{person['link']}", target="_blank", style="visibility:hidden")
                                     img(src="#{person['thumb']}")
                                 .caption
                                     i.wedge-up

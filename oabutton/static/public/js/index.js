@@ -98,14 +98,16 @@ $(document).ready(function() {
 
         } // -success
     }); // -ajaxForm
-    //
-    // Scrollspy effects
-    $('body').on('activate.bs.scrollspy', function (e) {
-        console.log(e);
-    });
 
+    // Scrollspy effects (unused)
+    //$('body').on('activate.bs.scrollspy', function (e) {
+        //console.log(e);
+    //});
+
+    // Show the map underlay (later as effect)
     $('#map .underlay').fadeIn();
 
+    // Position the thumbnail hovers
     var midpoint = $('.thumbnails').width() / 2;
     $('.thumbnails li').each(function() {
         if ($(this).position().left >= midpoint) {
@@ -113,14 +115,13 @@ $(document).ready(function() {
         }
     });
 
+    // Tap as hover on touchscreens
     $('.thumbnails a.thumb').bind('touchstart', function(e){
         $(this).parent().addClass('hover');
         e.stopPropagation();
     }).bind('touchend', function(e){
-
-    $(this).parent().parent().find('.hover').removeClass('hover');
+        $(this).parent().parent().find('.hover').removeClass('hover');
         e.stopPropagation();
-    });
-
+    }).css('visibility', 'visible'); // Avoids doubles while loading JS
     oabutton.renderMap();
 }); 
