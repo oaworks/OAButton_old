@@ -100,12 +100,12 @@ block body
                         button.btn.btn-success.suggest(type="button")
                             | Suggestions
 
-    #team
-        a(name='team')
+    #thanks
+        a(name='thanks')
         .container
-            .row
+            .row.team
                 .col-md-12
-                    h3 Meet the team of people and organisations who made this a reality
+                    h3.overline Meet the team of people and organisations who made this a reality
                     ul.thumbnails
                         each person in team_data
                             li
@@ -120,10 +120,7 @@ block body
                                     .links
                                         if person.twitter
                                             a.twitter(href="http://twitter.com/#{person['twitter']}", target="_blank") Twitter
-    #thanks
-        a(name='thanks')
-        .container
-            .row
+            .row.orgs
                 .col-md-12
                     h3 Many thanks to all who helped along the way
                     ul
@@ -131,10 +128,12 @@ block body
                             li
                                 a(href="#{org['link']}", target="_blank")
                                     | {{ org.name }}
-                        p + Everyone who joined the thunderclap or contacted us with messages of support or suggestions!
+                        p 
+                            b + 
+                            | Everyone who joined the thunderclap, sent messages of support and suggestions!
 
 
-    #contact
+    #footer
         a(name='contact')
         .container
             .row
@@ -152,13 +151,13 @@ block body
                     p
                         b ABOUT
                     p
-                        a(href="mailto:oabutton+press@medsin.org")
+                        a(href="mailto:oabutton+press@gmail.com")
                             | Media inquiries
                     p
                         a(href="https://github.com/oabutton")
                             | Get the code
                     p
-                        a(href="oabutton+data@gmail.com")
+                        a(href="mailto:oabutton+data@gmail.com")
                             | Get the data
                 .col-md-6
                     p

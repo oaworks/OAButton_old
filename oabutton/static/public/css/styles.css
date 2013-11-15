@@ -168,26 +168,25 @@ h3 {
   color: #555;
   font-size: 19px;
   text-align: center;
-  border-top: 1px solid #aaa;
   padding-top: 15px;
   margin-top: 0;
   margin-bottom: 1em;
 }
+h3.overline {
+  border-top: 1px solid #aaa;
+}
 #intro,
 #contribute,
-#team,
 #thanks {
   padding: 2em 3em;
 }
 #intro p,
 #contribute p,
-#team p,
 #thanks p {
   line-height: 1.7;
 }
 #intro .row,
 #contribute .row,
-#team .row,
 #thanks .row {
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
@@ -195,21 +194,20 @@ h3 {
 }
 #intro .row.hilite-left,
 #contribute .row.hilite-left,
-#team .row.hilite-left,
 #thanks .row.hilite-left {
   border-left: 7px solid #ef5b23;
 }
 #intro .row.hilite-right,
 #contribute .row.hilite-right,
-#team .row.hilite-right,
 #thanks .row.hilite-right {
   border-right: 7px solid #ef5b23;
 }
-#team {
+/* Container colors */
+#thanks {
   background: #ffd;
 }
 #intro,
-#thanks {
+#footer {
   background: #eee;
 }
 .buttons {
@@ -227,40 +225,40 @@ h3 {
 #contribute {
   background: #fff;
 }
-#team ul {
+#thanks .team ul {
   text-align: left;
   list-style: none;
 }
-#team .thumbnails li {
+#thanks .team .thumbnails li {
   display: inline-block;
   margin: 0 2px;
 }
-#team .thumbnails .wedge-up {
+#thanks .team .thumbnails .wedge-up {
   border-left-color: #ef5b23;
   margin-top: -19px;
 }
-#team .thumbnails .thumb {
+#thanks .team .thumbnails .thumb {
   width: 48px;
   height: 48px;
   overflow: hidden;
   display: inline-block;
 }
-#team .thumbnails .thumb img {
+#thanks .team .thumbnails .thumb img {
   width: 100%;
 }
-#team .thumbnails li:hover .thumb,
-#team .thumbnails li.hover .thumb {
+#thanks .team .thumbnails li:hover .thumb,
+#thanks .team .thumbnails li.hover .thumb {
   opacity: 0.1;
 }
-#team .thumbnails li.right .caption {
+#thanks .team .thumbnails li.right .caption {
   margin-left: -352px;
 }
-#team .thumbnails li.right .wedge-up {
+#thanks .team .thumbnails li.right .wedge-up {
   margin-left: 372px;
   border-left: none;
   border-right: 15px solid #ef5b23;
 }
-#team .thumbnails .caption {
+#thanks .team .thumbnails .caption {
   position: absolute;
   z-index: 99;
   margin: 0;
@@ -272,32 +270,32 @@ h3 {
   background: white;
   font-size: 20px;
 }
-#team .thumbnails .caption .name {
+#thanks .team .thumbnails .caption .name {
   font-size: 23px;
   font-weight: bold;
 }
-#team .thumbnails .caption p {
+#thanks .team .thumbnails .caption p {
   margin-top: 4px;
   font-size: 15px;
   line-height: 1.2;
 }
-#team .thumbnails .caption .large {
+#thanks .team .thumbnails .caption .large {
   height: 144px;
   max-width: 144px;
   float: left;
   margin-right: 5px;
   overflow: hidden;
 }
-#team .thumbnails .caption .large img {
+#thanks .team .thumbnails .caption .large img {
   width: 100%;
 }
-#team .thumbnails .caption .links {
+#thanks .team .thumbnails .caption .links {
   position: absolute;
   left: 144px;
   bottom: 5px;
 }
-#team .thumbnails .caption .web,
-#team .thumbnails .caption .twitter {
+#thanks .team .thumbnails .caption .web,
+#thanks .team .thumbnails .caption .twitter {
   display: inline-block;
   width: auto;
   height: 24px;
@@ -308,33 +306,34 @@ h3 {
   background-repeat: no-repeat;
   background-position: left;
 }
-#team .thumbnails .caption .web {
+#thanks .team .thumbnails .caption .web {
   background-image: url(../img/iconmonstr-globe-3.png);
 }
-#team .thumbnails .caption .twitter {
+#thanks .team .thumbnails .caption .twitter {
   background-image: url(../img/iconmonstr-twitter-4.png);
 }
-#team .thumbnails li .caption {
+#thanks .team .thumbnails li .caption {
   display: none;
 }
-#team .thumbnails li:hover .caption,
-#team .thumbnails li.hover .caption {
+#thanks .team .thumbnails li:hover .caption,
+#thanks .team .thumbnails li.hover .caption {
   display: block;
 }
-#thanks li {
+#thanks .orgs li {
   width: 25%;
   float: left;
 }
-#thanks p {
+#thanks .orgs p {
   display: block;
   clear: both;
+  font-size: 14px;
   padding-top: 1em;
   text-align: center;
 }
-#contact {
+#footer {
   padding-top: 2em;
 }
-#contact .icon {
+#footer .icon {
   height: 32px;
   width: 32px;
   display: inline-block;
@@ -346,16 +345,16 @@ h3 {
   text-indent: -9999px;
   margin: 0 25px 0 0;
 }
-#contact .icon:hover {
+#footer .icon:hover {
   opacity: 0.5;
 }
-#contact .twitter {
+#footer .twitter {
   background-image: url(../img/webicon-twitter.png);
 }
-#contact .facebook {
+#footer .facebook {
   background-image: url(../img/webicon-facebook.png);
 }
-#contact .wordpress {
+#footer .wordpress {
   background-image: url(../img/webicon-wordpress.png);
 }
 .license {
