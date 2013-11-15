@@ -79,12 +79,10 @@ $(document).ready(function() {
                 $('label.confirm-label').animateHighlight("#dd0000", 1000);
             }
         },
-        success:    function(responseJSON, statusText, xhr, formElem) {
-
-            var bookmarklet = $('#bookmarklet .content');
-            var dialog = $('#bookmarklet-modal');
+        success: function(responseJSON, statusText, xhr, formElem) {
 
             // Set URL from service response
+            var bookmarklet = $('#bookmarklet .content');
             $('.btn-primary', bookmarklet).attr('href', 
                 "javascript:document.getElementsByTagName('body')[0]" +
                 ".appendChild(document.createElement('script'))" +
@@ -94,7 +92,9 @@ $(document).ready(function() {
             // Show the new bookmarklet and instructions, roll up form
             $('#bookmarklet').show();
             $('#form-bookmarklet').slideUp();
-            dialog.modal();
+
+            window.location = '#top';
+            $('#help-bookmarklet').fadeIn();
 
         } // -success
     }); // -ajaxForm
