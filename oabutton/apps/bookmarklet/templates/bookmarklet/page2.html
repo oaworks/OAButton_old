@@ -12,15 +12,12 @@
     <p>
     <a href='https://twitter.com/share?url=http://openaccessbutton.org&text=I hit a #paywall trying to access {{ url }}! Help me demand open access at&via=OA_Button&related=OA_Button' class="twitter-share-button" data-lang="en" data-size="large">Tweet</a> 
     <p>
-
     <p>
     <div class="fb-like" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
     </p>
-
     <p>
     <div class="fb-share-button" data-href="https://www.facebook.com/openaccessbutton" data-width="300" data-type="button_count"></div>
     </p>
-
     <p>
     <div class="fb-send" data-href="https://www.facebook.com/openaccessbutton" data-colorscheme="light"></div>
     </p>
@@ -31,10 +28,12 @@
 </div>
 
 <form method="POST" action="{% url 'bookmarklet:form3' %}">{% csrf_token %}
-<div class="or-box row-block">
-    <div class="row">
-        <div class="col-md-12 row-block">
-            <button class="btn btn-primary btn-block">Get me access!</button>
+<div class="control-group raleway-font">
+    <div class="or-box row-block">
+        <div class="row">
+            <div class="col-md-12 row-block">
+                <button class="btn btn-primary btn-block">Get me access!</button>
+            </div>
         </div>
     </div>
 </div>
