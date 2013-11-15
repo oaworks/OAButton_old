@@ -129,9 +129,9 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Cameron Stocks",
             "link": "#",
-            "thumb": "/static/img/aperson.png",
-            "twitter": "",
-            "blurb": "National Director of Medsin, the UK’s student global health network who provided great input"
+            "thumb": "https://pbs.twimg.com/profile_images/3666850209/e8c8b7281daccb2fcccae1f538c6d82a_bigger.jpeg",
+            "twitter": "cam_stocks",
+            "blurb": "National Director of Medsin, the UK’s student global health network, and early contributor to the project"
             }, {
             "name": "Nicole Allen",
             "link": "#",
@@ -145,11 +145,11 @@ teamdata = [{"name": "Joseph McArthur",
             "twitter": "",
             "blurb": "Director of the Right to Research Coalition and of Student Advocacy at SPARC, who provided invaluable input at all stages"
             }, {
-            "name": "Medsin UK",
+            "name": "Medsin",
             "link": "http://www.medsin.org/",
             "thumb": "/static/img/logo-medsin.jpg",
-            "twitter": "MedsinUK",
-            "blurb": "The Open Access Button is a Medsin-UK programme"
+            "twitter": "medsin",
+            "blurb": "The Open Access Button is a Medsin programme"
             }, {
             "name": "Right to Research Coalition",
             "link": "http://www.righttoresearch.org/",
@@ -179,7 +179,7 @@ thanksdata = [{
             "name": "BMJ"
             },{
             "link": "http://www.plos.org/", 
-            "name": "PLoS"
+            "name": "PLOS"
             },{
             "link": "https://twitter.com/Protohedgehog", 
             "name": "Jon Tennant"
