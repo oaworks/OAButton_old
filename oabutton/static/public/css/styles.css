@@ -1,4 +1,5 @@
 @import "../css/MarkerCluster.css";
+
 @import "../css/MarkerCluster.Default.css";
 /* Don't edit this CSS file.  It's generated using lessc */
 /* Swatches */
@@ -393,6 +394,7 @@ h3 {
 }
 .form-bookmarklet {
   /* max-width: 300px; */
+
   padding: 19px 29px 29px;
   margin: 0 auto 20px;
   background-color: #fff;

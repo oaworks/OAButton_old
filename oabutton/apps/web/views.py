@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.conf import settings
 from django.core.context_processors import csrf
-from oabutton.common import SigninForm, teamdata
+from oabutton.common import SigninForm, teamdata, thanksdata
 import json
 
 
@@ -31,6 +31,7 @@ def homepage(req):
               'events': json.dumps(data),
               'hostname': settings.HOSTNAME,
               'signin_form': SigninForm(),
-              'team_data': teamdata})
+              'team_data': teamdata,
+              'thanks_data': thanksdata})
 
     return render_to_response('web/start.jade', c)

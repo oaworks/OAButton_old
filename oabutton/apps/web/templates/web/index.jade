@@ -127,39 +127,10 @@ block body
                 .col-md-12
                     h3 Many thanks to all who helped along the way
                     ul
-                        li
-                            a(href="http://opensciencefederation.com/") 
-                                | Open Science Federation
-                        li
-                            a(href="http://originalcontentlondon.com/")
-                                | Original Content London
-                        li
-                            a(href="https://twitter.com/McDawg")
-                                 | Graham Steel
-                        li
-                            a(href="http://okfn.org/")
-                                | Open Knowledge Foundation
-                        li
-                            a(href="http://rewiredstate.org/")
-                                | Rewired State
-                        li
-                            a(href="http://www.bmj.com/")
-                                | BMJ
-                        li
-                            a(href="http://www.plos.org/")
-                                | PLoS
-                        li
-                            a(href="https://twitter.com/Protohedgehog")
-                                | Jon Tennant
-                        li
-                            a(href="https://twitter.com/petermurrayrust")
-                                | Peter Murray-Rust 
-                        li
-                            a(href="http://sparc.arl.org/")
-                                | SPARC
-                        li
-                            a(href="https://twitter.com/CameronNeylon")
-                                | Cameron Neylon
+                        each org in thanks_data
+                            li
+                                a(href="#{org['link']}", target="_blank")
+                                    | {{ org.name }}
                         p + Everyone who joined the thunderclap or contacted us with messages of support or suggestions!
 
 

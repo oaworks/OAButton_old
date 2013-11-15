@@ -158,3 +158,38 @@ teamdata = [{"name": "Joseph McArthur",
             "blurb": "An invaluable source of support, ideas and money"
             }
             ]
+
+thanksdata = [{
+            "link": "http://opensciencefederation.com/", 
+            "name": "Open Science Federation"
+            },{
+            "link": "http://originalcontentlondon.com/", 
+            "name": "Original Content London"
+            },{
+            "link": "https://twitter.com/McDawg", 
+            "name": "Graham Steel"
+            },{
+            "link": "http://okfn.org/", 
+            "name": "Open Knowledge Foundation"
+            },{
+            "link": "http://rewiredstate.org/", 
+            "name": "Rewired State"
+            },{
+            "link": "http://www.bmj.com/", 
+            "name": "BMJ"
+            },{
+            "link": "http://www.plos.org/", 
+            "name": "PLoS"
+            },{
+            "link": "https://twitter.com/Protohedgehog", 
+            "name": "Jon Tennant"
+            },{
+            "link": "https://twitter.com/petermurrayrust", 
+            "name": "Peter Murray-Rust"
+            },{
+            "link": "http://sparc.arl.org/", 
+            "name": "SPARC"
+            },{
+            "link": "https://twitter.com/CameronNeylon", 
+            "name": "Cameron Neylon"
+            }]
