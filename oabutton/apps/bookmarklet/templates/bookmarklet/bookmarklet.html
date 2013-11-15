@@ -82,6 +82,8 @@
 
   // ascertain if the bookmarklet has already been called
   var exists = document.getElementById("OAButton");
+  var email = detectAuthorEmail();
+  console.log("Got email: " + email);
 
   if(exists == null)
   {
@@ -98,10 +100,9 @@
 		if(doi) {
 		  url += "&doi=" + encodeURIComponent(doi);
 		}
-    var email = detectAuthorEmail();
-    if (email) {
-      url += "&email=" + encodeURIComponent(email);
-    }
+        if (email) {
+            url += "&email=" + encodeURIComponent(email);
+        }
 
 		// build the control div
 		var div = document.createElement("div");
