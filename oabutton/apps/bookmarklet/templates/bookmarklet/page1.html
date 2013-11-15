@@ -2,19 +2,19 @@
 {% load oafilters %}
 {% block content %}
 
-<p>
-You've hit a paywall!?
-<br />
-That sucks.
-<br />
-Tell us why and we'll put you on the map.
-</p>
 
 <form id="event" action="/api/post/" method="post" class="form-horizontal">{% csrf_token %}
-  {{ bookmarklet.non_field_errors }}
 
+  {{ bookmarklet.non_field_errors }}
   {{ bookmarklet.accessed }}
   {{ bookmarklet.user_id }}
+
+  <div class="control-group">
+      <p>You've hit a paywall!?</p>
+      <p>That sucks.</p>
+      <p>Tell us why and we'll put you on the map.</p>
+  </div>
+
 
   <div class="control-group">
     {{ bookmarklet.url|label_with_classes:"control-label"}}
