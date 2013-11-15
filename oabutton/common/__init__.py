@@ -39,7 +39,9 @@ class Bookmarklet(forms.Form):
             widget=forms.TextInput(attrs={'placeholder': "e.g. London, United Kingdom", 
                 'class': "form-control input-block-level"}))
 
-    doi = forms.CharField(required=False, label="DOI", widget=forms.TextInput(attrs={'class': "form-control input-block-level"}))
+    doi = forms.CharField(required=False, label="Digital Object Identifier (DOI)",
+            widget=forms.TextInput(attrs={'class': "form-control input-block-level"},
+                                    ))
 
     url = forms.URLField(required=True, label='Article URL',
             widget=forms.TextInput(attrs={'placeholder':
