@@ -2,10 +2,6 @@
 
 from os.path import dirname, abspath, join
 from mongoengine import connect
-try:
-    from settings_local import *   # NOQA
-except:
-    print "Can't load settings_local - CORE won't work"
 
 ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
@@ -223,3 +219,9 @@ SESSION_ENGINE = 'mongoengine.django.sessions'
 AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 MONGOENGINE_USER_DOCUMENT = 'oabutton.apps.bookmarklet.models.User'
+
+HOSTNAME='http://localhost:8000'
+try:
+    from settings_local import *   # NOQA
+except:
+    print "Can't load settings_local - CORE won't work"
