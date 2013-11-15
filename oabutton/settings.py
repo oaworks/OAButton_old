@@ -215,7 +215,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Bind MongoEngine
 connect('oabutton-server-dev', port=27017)
-HOSTNAME = 'http://localhost:8000'
 
 
 # MongoEngine support requires overloading the session storage and the
