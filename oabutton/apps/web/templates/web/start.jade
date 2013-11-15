@@ -45,6 +45,17 @@ block start
                         | Thanks for signing up!
                 .modal-body
                     p
-                        | Thanks for signing up, don't forget to check you inbox for a verification email! If you don't have a bookmark bar (we're looking at you chrome users) find instructions for activating one here. For a 2 minute walk through on using the button (don't worry it's simple) watch this video.
+                        | Thanks for signing up, don't forget to check your inbox for a verification email! If you do not see a bookmark bar at the top of your browser, you can find instructions for activating yours here: 
+                        a(href="https://support.google.com/chrome/answer/95745") Chrome
+                        |, 
+                        a(href="http://support.mozilla.org/en-US/kb/bookmarks-toolbar-display-favorite-websites") Firefox
+                        |, 
+                        a(href="http://support.apple.com/kb/ph4967") Safari
+                        |, 
+                        a(href="http://www.cultofmac.com/36839/enabling-and-adding-to-the-bookmarks-bar-in-safari-for-ipad-how-to/") iPad
+                        |,
+                        a(href="http://windows.microsoft.com/en-us/windows-vista/show-or-hide-the-favorites-bar-in-internet-explorer-8") Internet Explorer
+                        |. For a 2-minute walkthrough on using the button (don't worry, it's easy!) - 
+                        a(href="#start", data-dismiss="modal", data-toggle="modal", data-target="#video-modal") watch this video.
                 .modal-footer
                     button.btn.btn-default(type="button", data-dismiss="modal") OK
