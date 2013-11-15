@@ -125,6 +125,6 @@ $(document).ready(function() {
     }).css('visibility', 'visible'); // Avoids doubles while loading JS
     oabutton.renderMap();
 
-    // Bottom links should all be new window
-    $('#thanks,#footer').find('a[href^="http"]').attr('target', '_blank');
+    // Page links should all be new window
+    $('a[href^="http"]').attr('target', '_blank');
 }); 

@@ -92,13 +92,15 @@ teamdata = [{"name": "Joseph McArthur",
             "blurb": "Lead Developer who designed and implemented a way for us to link papers behind paywalls to available copies"
             }, {
             "name": "Alf Eaton",
-            "link": "#",
-            "thumb": "/static/img/aperson.png",
+            "link": "http://twitter.com/invisiblecomma",
+            "thumb": "https://lh3.googleusercontent.com/-EHMuXvuZH1k/AAAAAAAAAAI/AAAAAAAAFeE/Z93Ix4IW-BY/s120-c/photo.jpg",
+            "twitter": "invisiblecomma",
             "blurb": "Developer at PeerJ who lended a hand at several points"
             }, {
             "name": "Ayesha Garrett",
-            "link": "#",
-            "thumb": "/static/img/aperson.png",
+            "link": "http://londonlime.net/",
+            "thumb": "http://behance.vo.llnwd.net/profiles17/614780/851b0bf48a4eb7968873cfa622662c58.jpg",
+            "twitter": "londonlime",
             "blurb": "Helped design much of the imaging around the project"
             }, {
             "name": "Victor Ng",
@@ -113,8 +115,9 @@ teamdata = [{"name": "Joseph McArthur",
             "blurb": "Lead designer and web developer, also creator of an awesome spin off, the Open Data Button"
             }, {
             "name": "Tom Pollard",
-            "link": "#",
-            "thumb": "/static/img/aperson.png",
+            "link": "https://twitter.com/tompollard",
+            "thumb": "http://www.ucl.ac.uk/mssl/space-medicine/people/TomPollardPhoto",
+            "twitter": "tompollard",
             "blurb": "Developer. PhD student in University College London. Co-founder of Ubiquity Press"
             }, {
             "name": "Martin Paul Eve",
@@ -128,7 +131,7 @@ teamdata = [{"name": "Joseph McArthur",
             "blurb": "Developer. Computer Science Student. Associate at Cottage Labs"
             }, {
             "name": "Cameron Stocks",
-            "link": "#",
+            "link": "http://twitter.com/cam_stocks",
             "thumb": "https://pbs.twimg.com/profile_images/3666850209/e8c8b7281daccb2fcccae1f538c6d82a_bigger.jpeg",
             "twitter": "cam_stocks",
             "blurb": "National Director of Medsin, the UK’s student global health network, and early contributor to the project"
@@ -136,13 +139,11 @@ teamdata = [{"name": "Joseph McArthur",
             "name": "Nicole Allen",
             "link": "#",
             "thumb": "https://pbs.twimg.com/profile_images/3151008497/5c42187852b2ef7e5492a6f6e792a21b.jpeg",
-            "twitter": "",
             "blurb": "Open Educational Resources Program Director at SPARC who helped with training and project planning"
             }, {
             "name": "Nicholas Shockey",
             "link": "#",
             "thumb": "http://conf11.freeculture.org/files/2011/01/Nick-Shockey1.jpg",
-            "twitter": "",
             "blurb": "Director of the Right to Research Coalition and of Student Advocacy at SPARC, who provided invaluable input at all stages"
             }, {
             "name": "Medsin",
