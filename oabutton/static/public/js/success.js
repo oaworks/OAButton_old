@@ -78,7 +78,7 @@ var oabSuccess = (function($) {
             var li = document.createElement("li");
             li.appendChild(pmc_link);
 
-            $("#oa_links").append(li);
+            $("#pmc_links").append(li);
           }
       });
     }
@@ -96,7 +96,7 @@ var oabSuccess = (function($) {
       sch_link.setAttribute("target", "_blank");
       sch_link.innerHTML = "Search Google Scholar by DOI";
 
-      $("#oa_links").append(sch_link);
+      $("#google_links").append(sch_link);
     }
   }
 
@@ -112,7 +112,7 @@ var oabSuccess = (function($) {
       sch_link.setAttribute("target", "_blank");
       sch_link.innerHTML = "Search Google Scholar by title";
 
-      $("#oa_links").append(sch_link);
+      $("#google_links").append(sch_link);
     }
   }
 
@@ -139,7 +139,7 @@ var oabSuccess = (function($) {
 
                 $core_div  = $('<div id="core_results">Matches from the <a href="http://core.kmi.open.ac.uk/">CORE</a> repository:</div>');
                 $core_div.append($list);
-                $("#oa_links").append($core_div);
+                $("#core_links").append($core_div);
             }
         });
     }
