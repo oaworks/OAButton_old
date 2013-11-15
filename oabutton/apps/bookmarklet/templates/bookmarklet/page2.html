@@ -22,8 +22,20 @@ help make this problem visible!
 We're also on <a href="https://www.facebook.com/openaccessbutton">Facebook</a> and <a href="https://twitter.com/OA_Button">Twitter</a>! Join us!
 </p>
 
+
+
 <form method="POST" action="{% url 'bookmarklet:form3' %}">{% csrf_token %}
-<button class="btn btn-primary pull-right">Get me access!</button>
+<div class="or-box row-block">
+    <div class="row">
+        <div class="col-md-12 row-block">
+            <button class="btn btn-primary btn-block">Get me access!</button>
+        </div>
+    </div>
+</div>
+
+
+
+
 </form>
 {% endblock %}
 {% block scripts %}
