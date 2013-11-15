@@ -7,6 +7,9 @@ IMG#bookmarklet-badge {
 }
 
 .bookmarklet-footer {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 10px;
     background: "grey";
     font-family: "Raleway";
 }
