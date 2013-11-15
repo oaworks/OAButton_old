@@ -109,28 +109,30 @@ block body
                     ul.thumbnails
                         each person in team_data
                             li
-                                a.thumb(href="#{person['link']}", target="_blank", style="visibility:hidden")
+                                a.thumb(href="#{person['link']}", style="visibility:hidden")
                                     img(src="#{person['thumb']}")
                                 .caption
                                     i.wedge-up
                                     .large
                                         img(src="#{person['thumb']}")
-                                    a.name(href="#{person['link']}", target="_blank") {{ person.name }}
+                                    a.name(href="#{person['link']}") {{ person.name }}
                                     p {{ person.blurb }}
                                     .links
                                         if person.twitter
-                                            a.twitter(href="http://twitter.com/#{person['twitter']}", target="_blank") Twitter
+                                            a.twitter(href="http://twitter.com/#{person['twitter']}") Twitter
             .row.orgs
                 .col-md-12
-                    h3 Many thanks to all who helped along the way
+                    h3 Many thanks to all of you who helped along the way
                     ul
                         each org in thanks_data
                             li
-                                a(href="#{org['link']}", target="_blank")
+                                a(href="#{org['link']}")
                                     | {{ org.name }}
                         p 
                             b + 
-                            | Everyone who joined the thunderclap, sent messages of support and suggestions!
+                            | Everyone who joined the 
+                            a(href="https://www.thunderclap.it/en/projects/5675-open-access-button-launch‎") Thunderclap
+                            |, sent messages of support and suggestions!
 
 
     #footer
