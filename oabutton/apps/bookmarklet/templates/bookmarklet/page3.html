@@ -1,12 +1,23 @@
 {% extends "bookmarklet/layout.html" %}{% block content %}
 <div class="raleway-font">
-<h2>Thanks!</h2>
-<p>Below are a number of ways to get access to your paper, unfortunately
-they won't always work but it's worth a shot.
-</p>
-<!-- Email link goes here -->
-<ul id="oa_links">
-</ul>
+    <h2>Thanks!</h2>
+    <p>Below are a number of ways to get access to your paper, unfortunately
+    they won't always work but it's worth a shot.
+    </p>
+
+    <a href=""></a>
+    <div class="row-block">
+        <div class="row">
+            <div class="col-md-12 row-block">
+                Email a request for the paper directly to the author:
+                <button class="btn btn-primary btn-block">Ask [addres@goes.here]</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="oa_links">
+        <h4>Searching for related documents</h4>
+    </div>
 </div>
 {% endblock %}
 {% block scripts %}
