@@ -2,7 +2,6 @@
 {% load oafilters %}
 {% block content %}
 
-
 <form id="event" action="/api/post/" method="post" class="form-horizontal">{% csrf_token %}
 
   {{ bookmarklet.non_field_errors }}
@@ -48,18 +47,13 @@
     {{ bookmarklet.story|label_with_classes:"control-label" }}
     {{ bookmarklet.story }}
   </div>
-  <div class="row-block">
-      <div class="row">
-          <div class="col-md-12 row-block">
-              <button class="btn btn-primary btn-block">Submit</button>
-          </div>
+  <div class="row">
+      <div class="col-md-12 row-block">
+          <button class="btn btn-primary btn-block">Submit</button>
       </div>
   </div>
 
-
-
 </form>
-
 
 {% endblock %}
 
