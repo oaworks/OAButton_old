@@ -29,4 +29,5 @@ def deploy():
     with settings(warn_only=True):
         with cd(code_dir):
             run("git pull")
+            run("pip install -r requirements.txt")
             run("sudo supervisorctl restart oabutton")
