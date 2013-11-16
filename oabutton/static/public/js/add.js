@@ -177,6 +177,9 @@ $(function() {
           $('#id_coords').val([location.lat, location.lng]);
           form.submit();
         }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR, textStatus, errorThrown);
       }
     });
   }
