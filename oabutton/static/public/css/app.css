@@ -36,3 +36,7 @@ IMG#bookmarklet-badge {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+form button {
+    margin-top: 5px;
+}
