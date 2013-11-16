@@ -162,22 +162,21 @@ $(function() {
 
   rememberDetails();
 
-  function geocode() {
+  function geocode(form) {
     return $.ajax({
-      url: 'http://maps.googleapis.com/maps/api/geocode/json',
+      url: 'https://maps.googleapis.com/maps/api/geocode/json',
       data: {
         sensor: 'false',
         address: $('#id_location').val()
       },
       success: function(response) {
-       if (response.results.length == 0) {
-           // Something went wrong with the reponse from google maps -
-           // just hardcode a 0,0 co-ordinate here
-           $('#id_coords').val([0, 0]);
-       } else {
-           var location = response.results[0].geometry.location;
-           $('#id_coords').val([location.lat, location.lng]);
-       }
+        if (response.results.length == 0) {
+          alert("You location could not be identified, please try again!");
+        } else {
+          var location = response.results[0].geometry.location;
+          $('#id_coords').val([location.lat, location.lng]);
+          form.submit();
+        }
       }
     });
   }
@@ -188,9 +187,7 @@ $(function() {
     // Do geocoding only if needed
     if (!$('#id_coords').val()) {
       event.preventDefault();
-      geocode().then(function() {
-        form.submit();
-      });
+      geocode(form);
     }
   }
 
