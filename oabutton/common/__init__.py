@@ -17,8 +17,8 @@ class SigninForm(forms.Form):
                              widget=forms.TextInput(attrs={'placeholder': 'Email address (required)'}))
 
     name = forms.CharField(required=True,
-                           label="Full Name",
-                           widget=forms.TextInput(attrs={'placeholder': 'Full Name (required)'}))
+                           label="Name",
+                           widget=forms.TextInput(attrs={'placeholder': 'Name (required, preferably full name)'}))
 
     profession = forms.ChoiceField(required=True,
                                    label="Profession",
@@ -34,9 +34,9 @@ class Bookmarklet(forms.Form):
     accessed = forms.CharField(widget=forms.HiddenInput, required=False)
     coords = forms.CharField(widget=forms.HiddenInput, required=False)
 
-    location = forms.CharField(required=False, 
-            label="Location", 
-            widget=forms.TextInput(attrs={'placeholder': "e.g. London, United Kingdom", 
+    location = forms.CharField(required=False,
+            label="Location",
+            widget=forms.TextInput(attrs={'placeholder': "e.g. London, United Kingdom",
                 'class': "form-control input-block-level"}))
 
     doi = forms.CharField(required=False, label="Digital Object Identifier (DOI)",
@@ -47,9 +47,9 @@ class Bookmarklet(forms.Form):
             widget=forms.TextInput(attrs={'placeholder':
                 "http://www.publisher.com/journal?id=XXXX", 'class': "form-control input-block-level"}))
 
-    story = forms.CharField(required=False, label="Why do you need access?", 
+    story = forms.CharField(required=False, label="Why do you need access?",
             widget=forms.Textarea(attrs={'rows': "4",
-                'placeholder': "e.g. I'm trying to save lives, dammit!", 
+                'placeholder': "e.g. I'm trying to save lives, dammit!",
                 'class': "form-control input-block-level"}))
 
     description = forms.CharField(required=False, label="Description",
@@ -161,36 +161,36 @@ teamdata = [{"name": "Joseph McArthur",
             ]
 
 thanksdata = [{
-            "link": "http://opensciencefederation.com/", 
+            "link": "http://opensciencefederation.com/",
             "name": "Open Science Federation"
             },{
-            "link": "http://originalcontentlondon.com/", 
+            "link": "http://originalcontentlondon.com/",
             "name": "Original Content London"
             },{
-            "link": "https://twitter.com/McDawg", 
+            "link": "https://twitter.com/McDawg",
             "name": "Graham Steel"
             },{
-            "link": "http://okfn.org/", 
+            "link": "http://okfn.org/",
             "name": "Open Knowledge Foundation"
             },{
-            "link": "http://rewiredstate.org/", 
+            "link": "http://rewiredstate.org/",
             "name": "Rewired State"
             },{
-            "link": "http://www.bmj.com/", 
+            "link": "http://www.bmj.com/",
             "name": "BMJ"
             },{
-            "link": "http://www.plos.org/", 
+            "link": "http://www.plos.org/",
             "name": "PLOS"
             },{
-            "link": "https://twitter.com/Protohedgehog", 
+            "link": "https://twitter.com/Protohedgehog",
             "name": "Jon Tennant"
             },{
-            "link": "https://twitter.com/petermurrayrust", 
+            "link": "https://twitter.com/petermurrayrust",
             "name": "Peter Murray-Rust"
             },{
-            "link": "http://sparc.arl.org/", 
+            "link": "http://sparc.arl.org/",
             "name": "SPARC"
             },{
-            "link": "https://twitter.com/CameronNeylon", 
+            "link": "https://twitter.com/CameronNeylon",
             "name": "Cameron Neylon"
             }]
