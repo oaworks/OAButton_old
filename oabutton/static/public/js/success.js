@@ -90,7 +90,7 @@ var oabSuccess = (function($) {
       var url = 'http://scholar.google.com/scholar?cluster=' + encodeURIComponent('http://dx.doi.org/' + doi);
 
       var sch_link = document.createElement("a");
-      sch_link.setAttribute("class", "likeabutton btn btn-primary btn-block")
+      sch_link.setAttribute("class", "btn btn-primary btn-block")
       sch_link.setAttribute("href", url);
       sch_link.setAttribute("target", "_blank");
       sch_link.innerHTML = "Search Google Scholar by DOI";
@@ -106,7 +106,7 @@ var oabSuccess = (function($) {
       var url = 'http://scholar.google.com/scholar?as_occt=title&as_q=' + encodeURIComponent(title);
 
       var sch_link = document.createElement("a");
-      sch_link.setAttribute("class", "likeabutton btn btn-primary btn-block")
+      sch_link.setAttribute("class", "btn btn-primary btn-block")
       sch_link.setAttribute("href", url);
       sch_link.setAttribute("target", "_blank");
       sch_link.innerHTML = "Search Google Scholar by title";
