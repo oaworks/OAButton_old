@@ -2,7 +2,7 @@ $(function() {
 
   function getLocation() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
+      navigator.geolocation.getCurrentPosition(showPosition, denyAccess);
     }
   }
 
@@ -11,6 +11,11 @@ $(function() {
     rounded_long = Math.round(position.coords.longitude * 10) / 10;
     $('#id_coords').val([rounded_lat, rounded_long]);
     $('#id_location').attr({'placeholder': 'Detected from browser', 'required': false, 'readonly': 'readonly'});
+  }
+
+  function denyAccess(error) { 
+    if (error.code == error.PERMISSION_DENIED)
+        console.log("Geolocation denied");
   }
 
   getLocation();
