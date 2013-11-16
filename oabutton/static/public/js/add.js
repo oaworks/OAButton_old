@@ -3,8 +3,6 @@ $(function() {
   function getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      $('#id_location').attr('required', 'true');
     }
   }
 
