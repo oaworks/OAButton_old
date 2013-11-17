@@ -10,6 +10,7 @@ from oabutton.apps.bookmarklet.models import User
 from oabutton.common import SigninForm, Bookmarklet
 import dateutil
 import json
+import requests
 
 
 def show_map(req):
@@ -177,6 +178,13 @@ def add_post(req):
             return redirect('bookmarklet:form2')
         else:
             return redirect('bookmarklet:form1', user_id=req.session['user_id'])
+
+
+def xref_proxy(req, doi):
+    url = "http://data.crossref.org/%s" % doi
+    headers = {'Accept': "application/vnd.citationstyles.csl+json"}
+    r = requests.get(url, headers=headers)
+    return HttpResponse(r.text, content_type="application/json")
 
 
 def generate_bookmarklet(req, user_id):

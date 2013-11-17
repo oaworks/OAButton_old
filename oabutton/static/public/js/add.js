@@ -85,10 +85,7 @@ $(function() {
 
     if (doi) {
       $.ajax({
-          url: 'http://data.crossref.org/' + encodeURIComponent(doi),
-          headers: {
-            Accept: "application/vnd.citationstyles.csl+json"
-          },
+          url: '/api/xref_proxy/' + encodeURIComponent(doi),
           dataType: "json",
           success: function(response) {
             if (response && response.URL) {
