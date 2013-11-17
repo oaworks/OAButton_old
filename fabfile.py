@@ -29,7 +29,7 @@ def deploy():
     code_dir = '/home/ubuntu/dev/OAButton/'
     with settings(warn_only=True):
         with cd(code_dir):
-            run("git branch develop")
+            run("git checkout develop")
             run("git pull")
-            run("pip install -r requirements.txt")
+            run("/home/ubuntu/.virtualenvs/oabutton/bin/pip install -r requirements.txt")
             run("sudo supervisorctl restart oabutton")
