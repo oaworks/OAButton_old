@@ -6,8 +6,17 @@ from mongoengine import connect
 ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
 
+# Start override vars #
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+HOSTNAME='http://localhost:8000'
+# ENd override vars #
+
+try:
+    from settings_local import *   # NOQA
+except:
+    print "Can't load settings_local - CORE won't work"
+
 
 ADMINS = (
     ('Victor Ng', 'victor@crankycoder.com'),
@@ -220,8 +229,3 @@ AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 MONGOENGINE_USER_DOCUMENT = 'oabutton.apps.bookmarklet.models.User'
 
-HOSTNAME='http://localhost:8000'
-try:
-    from settings_local import *   # NOQA
-except:
-    print "Can't load settings_local - CORE won't work"

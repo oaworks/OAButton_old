@@ -1,2 +1,15 @@
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+
+# API key for CORE searches
 CORE_API_KEY = "you need this"
+
+# Hostname to be used for bookmarklet
 HOSTNAME = "and this"
+
+# Amazon SES Email configuration
+AMAZON_SMTPHOST = "YOUR_HOST"
+SESSMTPUSERNAME = "YOUR_SES_SMTP_USERNAME"
+SESSMTPPASSWORD = "YOUR_SES_SMTP_PASSWORD"
+
+OABUTTON_EMAIL = "oabutton@crankycoder.com"
