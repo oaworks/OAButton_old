@@ -15,8 +15,8 @@ Add your SSH key :
     $ fab -H ubuntu@staging.openaccessbutton.org deploy
 
 """
-import fabric
 from fabric.api import local, settings, cd, run
+
 
 def prepare_deploy():
     local("pip install -r requirements.txt")
@@ -24,10 +24,12 @@ def prepare_deploy():
     local("git add -p && git commit")
     local("git push")
 
+
 def deploy():
     code_dir = '/home/ubuntu/dev/OAButton/'
     with settings(warn_only=True):
         with cd(code_dir):
+            run("git branch develop")
             run("git pull")
             run("pip install -r requirements.txt")
             run("sudo supervisorctl restart oabutton")
