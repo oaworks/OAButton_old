@@ -105,6 +105,9 @@ header .lead span {
   border: 1px solid #ddd;
   border-radius: 10px;
 }
+#form-bookmarklet .checkbox label {
+  font-weight: 600;
+}
 #help-bookmarklet {
   display: none;
   margin-top: 10px;

@@ -20,13 +20,15 @@ block start
                     {{ signin_form.name }}
                 p
                     {{ signin_form.profession }}
-                p
+                .checkbox
                     {{ signin_form.confirm_public}}
                     {{ signin_form.confirm_public|label_with_classes:"confirm-label"}}
-                p
+                .checkbox
                     {{ signin_form.mailinglist}}
                     {{ signin_form.mailinglist|label_with_classes:"mailinglist-label"}}
-                p Your e-mail address will not be publicised and not be shared with third parties!
+                p Your e-mail address 
+                    u will not
+                    |  be publicised or shared with third parties.
                 p
                     div.form-group
                         {{ signin_form.privacy}}
