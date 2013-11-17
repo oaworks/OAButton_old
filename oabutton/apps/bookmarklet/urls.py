@@ -5,6 +5,7 @@ from views import add_post
 from views import generate_bookmarklet
 from views import get_json
 from views import signin
+from views import xref_proxy
 
 urlpatterns = patterns('',
                        # I think these 3 should be broken out to an API URL handler so we
@@ -21,4 +22,7 @@ urlpatterns = patterns('',
                        url(r'^bookmarklet/(?P<user_id>.*).js$',
                            generate_bookmarklet,
                            name="generate_bookmarklet"),
+                       url(r'^xref_proxy/(?P<doi>.*)',
+                           xref_proxy,
+                           name="xref_proxy"),
                        )

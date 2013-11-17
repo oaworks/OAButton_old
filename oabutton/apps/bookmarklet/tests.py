@@ -159,3 +159,14 @@ class APITest(TestCase):
         data_doi_re = re.compile('<body [^>]*data-doi="%s">'
                                  % POST_DATA['doi'])
         assert data_doi_re.search(response.content) is not None
+
+    def test_data_xref_proxy(self):
+        # TODO: Need a proper test for this that doesn't clobber the
+        # network. Inject a fake requests mock object into xref_proxy
+        # prior to execution
+        pass
+        """
+        c = Client()
+        response = c.get('/api/xref_proxy/10.1103/PhysRevD.15.2752')
+        assert json.loads(response.content) != None
+        """
