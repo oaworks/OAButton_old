@@ -61,9 +61,9 @@ class Bookmarklet(forms.Form):
 
 teamdata = [{"name": "Joseph McArthur",
              "link": "http://twitter.com/Mcarthur_Joe",
-             "thumb": "/static/img/joe.jpg",
+             "thumb": "http://oi42.tinypic.com/2ufpm4n.jpg",
              "twitter": "Mcarthur_Joe",
-             "blurb": "Founder, pharmacology student and generally the guy who bugged everyone"
+             "blurb": "Founder, project lead and apparently also a pharmacology student"
              }, {
             "name": "David Carroll",
             "link": "http://twitter.com/davidecarroll",
@@ -137,7 +137,7 @@ teamdata = [{"name": "Joseph McArthur",
             "link": "http://twitter.com/cam_stocks",
             "thumb": "https://pbs.twimg.com/profile_images/3666850209/e8c8b7281daccb2fcccae1f538c6d82a_bigger.jpeg",
             "twitter": "cam_stocks",
-            "blurb": "National Director of Medsin, the UK’s student global health network, and early contributor to the project"
+            "blurb": "National Director of Medsin, the UK’s student global health network, and founder"
             }, {
             "name": "Nicole Allen",
             "link": "#",
