@@ -7,9 +7,10 @@ class SigninForm(forms.Form):
                           ('Doctor', 'Doctor'),
                           ('Patient', 'Patient'),
                           ('Advocate', 'Advocate'),
-                          ('Other', 'Other'),
                           ('Academic', 'Academic'),
                           ('Researcher', 'Researcher'),
+                          ('Librarian', 'Librarian'),
+                          ('Other', 'Other'),
                           ('Undisclosed', 'Prefer not to say'))
 
     email = forms.EmailField(required=True,
