@@ -231,6 +231,8 @@ h3.overline {
 .buttons button {
   font-size: 20px;
   padding: 4px 10px;
+  border-color: #444;
+  color: #000;
   margin: 0 20px;
 }
 #contribute {
