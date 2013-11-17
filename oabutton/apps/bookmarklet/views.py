@@ -89,7 +89,6 @@ def form1(req, user_id):
     Show the bookmarklet form
     """
     form = Bookmarklet(req.GET)
-    form.fields['location'].widget.attrs['required'] = True
 
     if 'doi' in form.data:
         form.fields['doi'].widget.attrs['readonly'] = 'readonly'
