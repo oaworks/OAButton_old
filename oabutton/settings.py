@@ -1,5 +1,6 @@
 # Django settings for oabutton project.
 
+import sys
 from os.path import dirname, abspath, join
 from mongoengine import connect
 
@@ -7,7 +8,7 @@ ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
 
 # Start override vars #
-DEBUG = True
+DEBUG = (sys.argv[1] == 'runserver')
 TEMPLATE_DEBUG = DEBUG
 HOSTNAME='http://localhost:8000'
 # ENd override vars #

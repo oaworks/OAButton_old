@@ -8,3 +8,4 @@ build
 venv
 settings_local.py
 *.sublime-workspace
+compiler.jar

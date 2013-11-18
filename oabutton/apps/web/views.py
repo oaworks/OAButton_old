@@ -27,7 +27,8 @@ def homepage(req):
                      'url': evt.url,
                      })
 
-    c.update({'count': evt_count,
+    c.update({'DEBUG': settings.DEBUG,
+              'count': evt_count,
               'events': json.dumps(data),
               'hostname': settings.HOSTNAME,
               'signin_form': SigninForm(),

@@ -32,15 +32,17 @@ html(lang='en', itemscope, itemtype='http://schema.org/Organization')
   body(data-spy='scroll', data-target='.navbar')
     block body
 
-  script(src='/static/js/lib/jquery.min.js')
-  script(src='/static/js/lib/jquery.color-2.1.2.min.js')
-  script(src='/static/js/lib/jquery.form.js') 
-
-  script(src='/static/js/lib/bootstrap.min.js')
-  script(src='/static/js/lib/bootstrap-dialog.js')
-
-  script(src='/static/js/lib/leaflet.js')
-  script(src='/static/js/lib/leaflet.markercluster.js')    
+  if DEBUG
+    script(src='/static/js/lib/jquery.min.js')
+    script(src='/static/js/lib/jquery.color-2.1.2.min.js')
+    script(src='/static/js/lib/jquery.form.js')
+    script(src='/static/js/lib/jquery.placeholder.js')
+    script(src='/static/js/lib/bootstrap.min.js')
+    script(src='/static/js/lib/bootstrap-dialog.js')
+    script(src='/static/js/lib/leaflet.js')
+    script(src='/static/js/lib/leaflet.markercluster.js')
+  else
+    script(src='/static/js/lib/all.min.js')
 
   // Application scripts
   script(src='/static/js/index.js')
