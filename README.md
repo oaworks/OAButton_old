@@ -7,7 +7,9 @@ A prototype version of the Open Access Button idea explained in [this blog](http
 
 #### Demo
 
-[Have a look at the demo](http://oabutton.herokuapp.com/) - however **please do not share too widely as we're pre-launch!**
+~~[Have a look at the demo](http://oabutton.herokuapp.com/) - however **please do not share too widely as we're pre-launch!**~~
+
+We're live!  http://www.openaccessbutton.org
 
 #### Contributing
 
