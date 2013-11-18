@@ -116,6 +116,9 @@ $(document).ready(function() {
         });
     });
 
+    // Use JQuery Placeholder plugin on older browsers (ex. IE 9)
+    $('#form-bookmarklet input[type="text"]').placeholder();
+
     // Position the thumbnail hovers
     var midpoint = $('.thumbnails').width() / 2;
     $('.thumbnails li').each(function() {
