@@ -101,6 +101,30 @@ header {
   border-radius: 10px;
 }
 
+.slidetop {
+  animation-name: swooshlet;
+  -o-animation-name: swooshlet;
+  -ms-animation-name: swooshlet;
+  -moz-animation-name: swooshlet;
+  -webkit-animation-name: swooshlet;  
+  animation-duration: 2s;
+  -o-animation-duration: 2s;
+  -ms-animation-duration: 2s;
+  -moz-animation-duration: 2s;
+  -webkit-animation-duration: 2s;
+}
+
+@-webkit-keyframes swooshlet {.swoosh-frames;}
+@-moz-keyframes swooshlet {.swoosh-frames;}
+@-ms-keyframes swooshlet {.swoosh-frames;}
+@-o-keyframes swooshlet {.swoosh-frames;}
+@keyframes swooshlet {.swoosh-frames;}
+
+.swoosh-frames () {
+  from { opacity:0; top: 75px; }
+  to   { opacity:1; top: 15px; }
+}
+
 #form-bookmarklet {
   .checkbox label { font-weight: 700; }
 }

@@ -90,7 +90,7 @@ $(document).ready(function() {
             );
 
             // Show the new bookmarklet and instructions, roll up form
-            $('#bookmarklet').show();
+            $('#bookmarklet').show().addClass('slidetop');
             $('#form-bookmarklet').slideUp();
 
             window.location = '#top';
