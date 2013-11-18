@@ -186,6 +186,9 @@ h3 {
 h3.overline {
   border-top: 1px solid #aaa;
 }
+a[data-toggle] {
+  cursor: pointer;
+}
 #intro,
 #contribute,
 #thanks {
