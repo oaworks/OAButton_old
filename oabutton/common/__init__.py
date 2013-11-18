@@ -61,13 +61,13 @@ class Bookmarklet(forms.Form):
 
 teamdata = [{"name": "Joseph McArthur",
              "link": "http://twitter.com/Mcarthur_Joe",
-             "thumb": "http://oi42.tinypic.com/2ufpm4n.jpg",
+             "thumb": "/static/img/photo-joe.jpg",
              "twitter": "Mcarthur_Joe",
              "blurb": "Founder, project lead and apparently also a pharmacology student"
              }, {
             "name": "David Carroll",
             "link": "http://twitter.com/davidecarroll",
-            "thumb": "https://pbs.twimg.com/profile_images/378800000708431454/2af90ed4438f3f1ae314f54948fd7d1d.png",
+            "thumb": "/static/img/photo-david.jpg",
             "twitter": "davidecarroll",
             "blurb": "Founder, medical student and twitter addict"
             }, {
