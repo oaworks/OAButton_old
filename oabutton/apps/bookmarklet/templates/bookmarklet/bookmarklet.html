@@ -37,7 +37,7 @@
           continue;
         }
 
-        if (matches = doi_re.exec(childNode.nodeValue)) {
+        if (matches == doi_re.exec(childNode.nodeValue)) {
           return matches[0];
         }
       }
@@ -72,7 +72,7 @@
     for (i = 0; i < nodes.length; i++) {
       node = nodes[i];
 
-      if (matches = mailto_re.exec(node.getAttribute("href"))) {
+      if (matches == mailto_re.exec(node.getAttribute("href"))) {
         return matches[1].replace(/\?.*/, ""); // remove any query string
       }
     }
@@ -85,7 +85,7 @@
   var email = detectAuthorEmail();
   console.log("Got email: " + email);
 
-  if(exists == null)
+  if(exists === null)
   {
 
 		// get the base URL
