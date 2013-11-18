@@ -73,25 +73,25 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Nicholas Ng",
             "link": "http://twitter.com/nicholascwng",
-            "thumb": "https://secure.gravatar.com/avatar/9637895e310caf25237e89155157b2a7?s=200",
+            "thumb": "https://secure.gravatar.com/avatar/9637895e310caf25237e89155157b2a7?s=144",
             "twitter": "nicholascwng",
             "blurb": "Awesome developer from the BMJ Hackday  who was instrumental in getting us 3rd place"
             }, {
             "name": "Andy Lulham",
             "link": "http://twitter.com/andylolz",
-            "thumb": "https://1.gravatar.com/avatar/bbb9eb1af3b427f8259df33f6e8844aa?s=200",
+            "thumb": "https://1.gravatar.com/avatar/bbb9eb1af3b427f8259df33f6e8844aa?s=144",
             "twitter": "andylolz",
             "blurb": "Lead developer and central to the project from the first second at the BMJ hackday"
             }, {
             "name": "Florian Rathgeber",
             "link": "http://twitter.com/frathgeber",
-            "thumb": "https://lh5.googleusercontent.com/-TQyLDuEMj1E/Umm1CqZohdI/AAAAAAAAZAA/PdCXgUG5d0Y/s200-no",
+            "thumb": "https://lh5.googleusercontent.com/-TQyLDuEMj1E/Umm1CqZohdI/AAAAAAAAZAA/PdCXgUG5d0Y/s144-no",
             "twitter": "frathgeber",
             "blurb": "Joined the project at the BMJ hackday and helped throughout providing solutions to our many problems"
             }, {
             "name": "Jez Cope",
             "link": "#",
-            "thumb": "https://2.gravatar.com/avatar/6c1c67fa04add9cada803f13ae2ff050?d=https%3A%2F%2Fidenticons.github.com%2Fd21376bdaa2b8b7a308f9a28315bbd98.png&r=x&s=440",
+            "thumb": "https://2.gravatar.com/avatar/6c1c67fa04add9cada803f13ae2ff050?s=144",
             "blurb": "Lead Developer who designed and implemented a way for us to link papers behind paywalls to available copies"
             }, {
             "name": "Alf Eaton",
@@ -108,7 +108,7 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Victor Ng",
             "link": "#",
-            "thumb": "http://www.gravatar.com/avatar/c5ab90719801dfa47055338ba47f5580.png",
+            "thumb": "http://www.gravatar.com/avatar/c5ab90719801dfa47055338ba47f5580.png?s=144",
             "blurb": "One of our best developers, instrumental in bring it to completion. Elsevier's biggest fan"
             }, {
             "name": "Oleg Lavrovsky",
@@ -125,7 +125,7 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Martin Paul Eve",
             "link": "#",
-            "thumb": "https://0.gravatar.com/avatar/3645eb2857da226a58ca23a582a0b859?d=https%3A%2F%2Fidenticons.github.com%2Fea2c5f96ab2f153cc5389f62891168d2.png&r=x&s=440",
+            "thumb": "https://0.gravatar.com/avatar/3645eb2857da226a58ca23a582a0b859?s=144",
             "blurb": "Developer. Lecturer in English Literature. Director of Open Library of Humanities"
             }, {
             "name": "Emanuil Tolev",
