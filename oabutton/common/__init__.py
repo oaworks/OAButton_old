@@ -140,8 +140,9 @@ teamdata = [{"name": "Joseph McArthur",
             "blurb": "National Director of Medsin, the UK’s student global health network, and founder"
             }, {
             "name": "Nicole Allen",
-            "link": "#",
+            "link": "https://twitter.com/txtbks",
             "thumb": "https://pbs.twimg.com/profile_images/3151008497/5c42187852b2ef7e5492a6f6e792a21b.jpeg",
+            "twitter": "txtbks",
             "blurb": "Open Educational Resources Program Director at SPARC who helped with training and project planning"
             }, {
             "name": "Nicholas Shockey",
@@ -196,4 +197,7 @@ thanksdata = [{
             },{
             "link": "https://twitter.com/CameronNeylon",
             "name": "Cameron Neylon"
+            },{
+            "link": "https://twitter.com/evomri",
+            "name": "Daniel Mietchen"
             }]
