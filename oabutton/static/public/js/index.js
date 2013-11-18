@@ -107,6 +107,15 @@ $(document).ready(function() {
     // Show the map underlay (later as effect)
     $('#map .underlay').fadeIn();
 
+    // Stop video on close dialog
+    $('#video-modal').on('hidden.bs.modal', function () { 
+        $('iframe').each(function() { 
+            this.contentWindow.postMessage(
+                '{"event":"command","func":"pauseVideo","args":""}', '*'
+            ); 
+        });
+    });
+
     // Position the thumbnail hovers
     var midpoint = $('.thumbnails').width() / 2;
     $('.thumbnails li').each(function() {
