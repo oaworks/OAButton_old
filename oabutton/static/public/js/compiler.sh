@@ -7,6 +7,7 @@ java -jar ../compiler.jar \
 --js jquery.min.js \
 --js jquery.color-2.1.2.min.js \
 --js jquery.form.js \
+--js jquery.placeholder.js \
 --js bootstrap.min.js \
 --js bootstrap-dialog.js \
 --js leaflet.js \

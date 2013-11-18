@@ -8,7 +8,7 @@ ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
 
 # Start override vars #
-DEBUG = (sys.argv[1] == 'runserver')
+DEBUG = False #(sys.argv[1] == 'runserver')
 TEMPLATE_DEBUG = DEBUG
 HOSTNAME='http://localhost:8000'
 # ENd override vars #
