@@ -4,6 +4,7 @@ from django.core.context_processors import csrf
 from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import redirect
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from models import Event
 from oabutton.apps.bookmarklet.models import User
@@ -104,7 +105,8 @@ def form1(req, user_id):
 
     c.update(csrf(req))
     c.update({'bookmarklet': form, 'user_id': user_id})
-    return render_to_response('bookmarklet/page1.html', c)
+    return render_to_response('bookmarklet/page1.html', c,
+                              context_instance=RequestContext(req))
 
 
 def form2(req):
@@ -119,7 +121,8 @@ def form2(req):
     c = {}
     c.update(csrf(req))
     c.update({'scholar_url': scholar_url, 'doi': doi, 'url': event.url})
-    return render_to_response('bookmarklet/page2.html', c)
+    return render_to_response('bookmarklet/page2.html', c,
+                              context_instance=RequestContext(req))
 
 
 def form3(req):
@@ -138,7 +141,8 @@ def form3(req):
     c = {}
     c.update(csrf(req))
     c.update({'scholar_url': scholar_url, 'doi': doi, 'url': event.url})
-    return render_to_response('bookmarklet/page3.html', c)
+    return render_to_response('bookmarklet/page3.html', c,
+                              context_instance=RequestContext(req))
 
 
 def add_post(req):
