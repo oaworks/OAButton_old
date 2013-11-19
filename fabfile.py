@@ -16,6 +16,7 @@ Add your SSH key :
 
 """
 from fabric.api import local, settings, cd, run
+from os.path import join
 
 
 def prepare_deploy():
@@ -32,4 +33,7 @@ def deploy():
             run("git checkout develop")
             run("git pull")
             run("/home/ubuntu/.virtualenvs/oabutton/bin/pip install -r requirements.txt")
+            version_path = join(code_dir, 'oabutton', 'static',
+                    'public', 'version.txt')
+            run("git rev-parse HEAD --abbrev-ref > %s" % version_path)
             run("sudo supervisorctl restart oabutton")
