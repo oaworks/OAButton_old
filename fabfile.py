@@ -35,5 +35,5 @@ def deploy():
             run("/home/ubuntu/.virtualenvs/oabutton/bin/pip install -r requirements.txt")
             version_path = join(code_dir, 'oabutton', 'static',
                     'public', 'version.txt')
-            run("git rev-parse HEAD --abbrev-ref > %s" % version_path)
+            run("git rev-parse --short HEAD > %s" % version_path)
             run("sudo supervisorctl restart oabutton")

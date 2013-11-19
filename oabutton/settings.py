@@ -5,7 +5,15 @@ from os.path import dirname, abspath, join
 from mongoengine import connect
 
 ROOT_PATH = dirname(dirname(abspath(__file__)))
-STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
+STATIC_PUBLIC = join(ROOT_PATH, 'oabutton', 'static', 'public')
+
+# Get the deployed version from VERSION_FILE or fall back to unknown
+VERSION_FILE = join(STATIC_PUBLIC, 'version.txt')
+try:
+    with open(VERSION_FILE) as f:
+        VERSION = f.read().strip()
+except IOError:
+    VERSION = "unknown"
 
 # Start override vars #
 DEBUG = False #(sys.argv[1] == 'runserver')
@@ -133,7 +141,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages"
+    "django.contrib.messages.context_processors.messages",
+    "oabutton.context_processors.version"
 )
 
 TEMPLATE_DIRS = (

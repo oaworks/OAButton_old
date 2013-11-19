@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/static/css/app.css">
   </head>
   <body style="margin-top: 20px" {% block body_attrs %}{% endblock %}>
+    <div class="version">Bookmarklet version {{ VERSION }}</div>
     <div id="fb-root"></div>
     <!-- Main body-->
     <div class="container">
@@ -39,7 +40,7 @@
         <hr />
         <div class="row">
             <div>
-                <a class="pull-left" href="mailto:oabutton+bugs@gmail.com?subject=OAButton%20Bug%20Report">Report a bug</a>
+              <a class="pull-left" href="mailto:oabutton+bugs@gmail.com?subject=OAButton Bug Report (version {{ VERSION }})">Report a bug</a>
             </div>
             <div>
                 <a class="pull-right" href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton" target="_blank">Donate</a>
