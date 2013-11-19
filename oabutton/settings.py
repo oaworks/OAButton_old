@@ -217,6 +217,10 @@ LOGGING = {
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# Send cookies only over HTTPS connections
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 # Bind MongoEngine
 connect('oabutton-server-dev', port=27017)
 
