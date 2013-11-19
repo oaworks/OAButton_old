@@ -10,8 +10,8 @@ STATIC_PUBLIC = join(ROOT_PATH, 'oabutton/static/public')
 # Start override vars #
 DEBUG = False #(sys.argv[1] == 'runserver')
 TEMPLATE_DEBUG = DEBUG
-HOSTNAME='http://localhost:8000'
-# ENd override vars #
+HOSTNAME = 'http://localhost:8000'
+# End override vars
 
 try:
     from settings_local import *   # NOQA
@@ -217,9 +217,10 @@ LOGGING = {
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Send cookies only over HTTPS connections
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+if not DEBUG:
+    # Send cookies only over HTTPS connections for production setup
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 # Bind MongoEngine
 connect('oabutton-server-dev', port=27017)
@@ -231,4 +232,3 @@ SESSION_ENGINE = 'mongoengine.django.sessions'
 AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 MONGOENGINE_USER_DOCUMENT = 'oabutton.apps.bookmarklet.models.User'
-
