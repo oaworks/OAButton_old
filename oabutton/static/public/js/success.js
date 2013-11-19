@@ -34,7 +34,7 @@ var oabSuccess = (function($) {
 
     if (doi) {
       $.ajax({
-          url: 'http://data.crossref.org/' + encodeURIComponent(doi),
+          url: '/api/xref_proxy_simple/' + encodeURIComponent(doi),
           dataType: "json",
           success: function(response) {
             if (response.feed.entry) {

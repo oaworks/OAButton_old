@@ -185,6 +185,12 @@ def xref_proxy(req, doi):
     r = requests.get(url, headers=headers)
     return HttpResponse(r.text, content_type="application/json")
 
+def xref_proxy_simple(req, doi):
+    url = "http://data.crossref.org/%s" % doi
+    headers = {'Accept': "application/json"}
+    r = requests.get(url, headers=headers)
+    return HttpResponse(r.text, content_type="application/json")
+
 
 def generate_bookmarklet(req, user_id):
     return render_to_response('bookmarklet/bookmarklet.html',

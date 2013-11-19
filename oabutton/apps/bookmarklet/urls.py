@@ -6,6 +6,7 @@ from views import generate_bookmarklet
 from views import get_json
 from views import signin
 from views import xref_proxy
+from views import xref_proxy_simple
 
 urlpatterns = patterns('',
                        # I think these 3 should be broken out to an API URL handler so we
@@ -25,4 +26,8 @@ urlpatterns = patterns('',
                        url(r'^xref_proxy/(?P<doi>.*)',
                            xref_proxy,
                            name="xref_proxy"),
+                       url(r'^xref_proxy_simple/(?P<doi>.*)',
+                           xref_proxy_simple,
+                           name="xref_proxy_simple"),
+
                        )
