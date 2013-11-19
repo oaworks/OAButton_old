@@ -17,6 +17,9 @@ import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "oabutton.settings")
 
+# Enable Django secure mode (see http://security.stackexchange.com/a/8970)
+os.environ["HTTPS"] = "on"
+
 from django.core.wsgi import get_wsgi_application
 
 # This application object is used by any WSGI server configured to use this
