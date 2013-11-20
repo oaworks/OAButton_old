@@ -232,7 +232,7 @@ if not DEBUG:
 
 # Expire cookies in 24 hours
 SESSION_COOKIE_AGE = 86400
-SESSION_SAVE_EVERY_REQUEST = True
+SESSION_SAVE_EVERY_REQUEST = False
 
 # Use persistent sessions in the database
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
