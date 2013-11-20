@@ -123,7 +123,10 @@ def add_post(req):
         form = Bookmarklet(req.POST)  # A form bound to the POST data
         if form.is_valid():  # All validation rules pass
             evt_dict = dict(form.cleaned_data)
-            lat, lng = evt_dict['coords'].split(',')
+            try:
+                lat, lng = evt_dict['coords'].split(',')
+            except:
+                lat, lng = 0, 0
             evt_dict['coords'] = {'lat': float(lat), 'lng': float(lng)}
             if evt_dict['accessed'] != '':
                 evt_dict['accessed'] = dateutil.parser.parse(evt_dict['accessed'])

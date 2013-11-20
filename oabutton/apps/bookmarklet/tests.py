@@ -73,6 +73,36 @@ class APITest(TestCase):
         for k, v in expected.items():
             eq_(getattr(evt, k), v)
 
+    def test_add_post_no_latlong(self):
+        '''
+        We need to make sure all fields of the OAEvent object are
+        serialized back to MongoDB
+        '''
+        POST_DATA = {u'story': [u'some access requirement'],
+                     u'doi': [u'10.1016/j.urology.2010.05.009.'],
+                     u'url': [u'http://www.ncbi.nlm.nih.gov/pubmed/20709373'],
+                     u'coords': [u''],
+                     u'location': [u'Somewhere'],
+                     u'accessed': [u'Mon, 09 Sep 2013 14:54:42 GMT'],
+                     u'description': [u'some description'],
+                     u'slug': self.user.slug, }
+
+        c = Client()
+        response = c.post('/api/post/', POST_DATA)
+
+        assert response.status_code == 302
+
+        evt = OAEvent.objects.get(id=c.session['data']['event_id'])
+
+        expected = {'doi': u'10.1016/j.urology.2010.05.009.',
+                    'url': u'http://www.ncbi.nlm.nih.gov/pubmed/20709373',
+                    'coords': {u'lat': 0.0, u'lng': 0},
+                    'location': 'Somewhere',
+                    'accessed': dateutil.parser.parse(POST_DATA['accessed'][0]),
+                    'user_email': self.EMAIL}
+        for k, v in expected.items():
+            eq_(getattr(evt, k), v)
+
     def test_event_json(self):
         """
         verify that the JSON emitted is compatible with the javascript
