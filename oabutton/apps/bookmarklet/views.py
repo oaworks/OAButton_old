@@ -66,7 +66,8 @@ def form1(req, slug):
     form.fields['slug'].widget.attrs['value'] = slug
 
     c = {}
-    req.session['slug'] = slug
+    s = req.session
+    s['slug'] = slug
 
     c.update(csrf(req))
     c.update({'bookmarklet': form, 'slug': slug})
@@ -78,7 +79,8 @@ def form2(req):
     """
     Show the bookmarklet form. We just need the CSRF token here.
     """
-    data = req.session['data']
+    s = req.session
+    data = s['data']
     scholar_url = data['scholar_url']
     doi = data['doi']
     event = OAEvent.objects.get(id=data['event_id'])
@@ -95,10 +97,11 @@ def form3(req):
     Show the bookmarklet form
     """
 
+    s = req.session
     if req.method != 'POST':
-        return redirect('bookmarklet:form1', slug=req.session['slug'])
+        return redirect('bookmarklet:form1', slug=s['slug'])
 
-    data = req.session['data']
+    data = s['data']
     scholar_url = data['scholar_url']
     doi = data['doi']
     event = OAEvent.objects.get(id=data['event_id'])
@@ -114,6 +117,7 @@ def add_post(req):
     c = {}
     c.update(csrf(req))
 
+    s = req.session
     if req.method == 'POST':
         # If the form has been submitted...
         form = Bookmarklet(req.POST)  # A form bound to the POST data
@@ -143,13 +147,13 @@ def add_post(req):
                 doi = evt_dict['doi']
                 scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % doi
 
-            req.session['data'] = {'event_id': event.id,
+            s['data'] = {'event_id': event.id,
                                    'scholar_url': scholar_url,
                                    'doi': doi}
 
             return redirect('bookmarklet:form2')
         else:
-            return redirect('bookmarklet:form1', slug=req.session['slug'])
+            return redirect('bookmarklet:form1', slug=s['slug'])
 
 
 def xref_proxy(req, doi):
