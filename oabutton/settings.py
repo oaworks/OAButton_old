@@ -2,7 +2,6 @@
 
 import sys
 from os.path import dirname, abspath, join
-from mongoengine import connect
 
 ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton', 'static', 'public')
@@ -19,6 +18,7 @@ except IOError:
 DEBUG = False #(sys.argv[1] == 'runserver')
 TEMPLATE_DEBUG = DEBUG
 HOSTNAME = 'http://localhost:8000'
+DB_USER = 'postgres'
 # End override vars
 
 try:
@@ -34,12 +34,12 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {'default': {
-             'ENGINE': 'django.db.backends.sqlite3',
-             'NAME': 'oabutton.sqlite3',      # Path to database file.
-             'USER': '',                      # Not used with sqlite3.
+             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+             'NAME': 'oabutton',      # Path to database file.
+             'USER': DB_USER,    # Not used with sqlite3.
              'PASSWORD': '',                  # Not used with sqlite3.
              # Set to empty string for localhost. Not used with sqlite3.
-             'HOST': '',
+             'HOST': 'localhost',
              # Set to empty string for default. Not used with sqlite3.
              'PORT': '',
              }}
@@ -153,7 +153,6 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'django.contrib.auth',
-    'mongoengine.django.mongo_auth',
 
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -231,13 +230,8 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 
-# Bind MongoEngine
-connect('oabutton-server-dev', port=27017)
+# Expire cookies in 24 hours
+SESSION_COOKIE_AGE = 86400
 
-
-# MongoEngine support requires overloading the session storage and the
-# authentication backends
-SESSION_ENGINE = 'mongoengine.django.sessions'
-AUTHENTICATION_BACKENDS = ('mongoengine.django.auth.MongoEngineBackend',)
-AUTH_USER_MODEL = 'mongo_auth.MongoUser'
-MONGOENGINE_USER_DOCUMENT = 'oabutton.apps.bookmarklet.models.User'
+# Use persistent sessions in the database
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'

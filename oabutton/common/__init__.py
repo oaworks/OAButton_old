@@ -31,7 +31,7 @@ class SigninForm(forms.Form):
 
 
 class Bookmarklet(forms.Form):
-    user_id = forms.CharField(widget=forms.HiddenInput, required=True)
+    slug = forms.CharField(widget=forms.HiddenInput, required=True)
     accessed = forms.CharField(widget=forms.HiddenInput, required=False)
     coords = forms.CharField(widget=forms.HiddenInput, required=False)
 

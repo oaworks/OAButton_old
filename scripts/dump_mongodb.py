@@ -1,9 +1,5 @@
 """
-Run this from : 
-
-    python manage.py shell
-
-
+This will dump the database into JSON text files
 """
 
 from pymongo import MongoClient

@@ -15,4 +15,6 @@ urlpatterns = patterns('',
 
                        url(r'^metadata/', include(
                            'oabutton.apps.metadata.urls')),
+
+                       url(r'^admin/', include(admin.site.urls)),
                        )

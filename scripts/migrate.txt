@@ -1,0 +1,6 @@
+Migration plan :
+
+1. Dump the database.
+2. syncdb to create all the django database tables in Postgresql
+3. Run migration script to load JSON data
+4. Install cronjob to sweep sessions ( django-admin.py clearsessions )

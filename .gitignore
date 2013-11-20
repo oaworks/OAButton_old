@@ -6,6 +6,7 @@ build
 .vagrant
 *.sw?
 venv
+version.txt
 settings_local.py
 *.sublime-workspace
 compiler.jar
