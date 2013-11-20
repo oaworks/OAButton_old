@@ -1,0 +1,14 @@
+{% extends "bookmarklet/layout.html" %}
+{% load oafilters %}
+{% block content %}
+
+<form id="event" action="/api/post/" method="post" class="form-horizontal">{% csrf_token %}
+
+    <p>Something went wrong.  You'll need to create a new bookmarklet.</p>
+
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

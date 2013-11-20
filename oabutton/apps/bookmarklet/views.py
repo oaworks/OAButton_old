@@ -54,6 +54,9 @@ def form1(req, slug):
     """
     Show the bookmarklet form
     """
+    if OAUser.objects.filter(slug=slug).count() == 0:
+        return render_to_response('bookmarklet/no_user.html')
+
     form = Bookmarklet(req.GET)
 
     if 'doi' in form.data:
