@@ -94,8 +94,8 @@
 		loader.parentNode.removeChild(loader);
 
 		// build the iframe URL
-        // Custom URL for user: [{{user_id}}]
-		var url = base + "/api/form/page1/{{ user_id }}/?url=" + encodeURIComponent(window.location);
+        // Custom URL for user: [{{slub}}]
+		var url = base + "/api/form/page1/{{ slug }}/?url=" + encodeURIComponent(window.location);
 		var doi = detectDOI();
 		if(doi) {
 		  url += "&doi=" + encodeURIComponent(doi);

@@ -9,15 +9,18 @@ from django.test import TestCase
 from django.test.client import Client
 from mock import MagicMock, patch
 from nose.tools import eq_, ok_
-from oabutton.apps.bookmarklet.models import Event
+from oabutton.apps.bookmarklet.models import OAEvent
 import re
 
-# This sets up a mock for the Event class
+# TODO: tests should probably use real database data as the views
+# actually load from disk and render to JSON. Remove these mocks.
+
+# This sets up a mock for the OAEvent class
 all_objs = MagicMock()
 all_objs.to_json.return_value = [MagicMock(), MagicMock()]
-MockEvent = MagicMock(wraps=Event)
-MockEvent.objects.count.return_value = 2
-MockEvent.objects.all.return_value = all_objs
+MockOAEvent = MagicMock(wraps=OAEvent)
+MockOAEvent.objects.count.return_value = 2
+MockOAEvent.objects.all.return_value = all_objs
 
 
 class SimpleTest(TestCase):
@@ -34,7 +37,7 @@ class SimpleTest(TestCase):
         #bookmarklet_url = response.content.find("('src', 'http://localhost:8000/static/js/bookmarklet.js')")
         #ok_(bookmarklet_url != -1)
 
-    @patch('oabutton.apps.bookmarklet.models.Event', MockEvent)
+    @patch('oabutton.apps.bookmarklet.models.OAEvent', MockOAEvent)
     def test_count_denied_pursuits(self):
         response = self.client.get('/')
         eq_(response.context['count'], 2)

@@ -6,17 +6,17 @@ import json
 
 
 def homepage(req):
-    # Need to lazy import the Event model so that tests work with
+    # Need to lazy import the OAEvent model so that tests work with
     # mocks
     c = {}
     c.update(csrf(req))
 
-    from oabutton.apps.bookmarklet.models import Event
+    from oabutton.apps.bookmarklet.models import OAEvent
 
-    evt_count = Event.objects.count()
+    evt_count = OAEvent.objects.count()
     data = []
 
-    for evt in Event.objects.all():
+    for evt in OAEvent.objects.all():
         data.append({'doi': evt.doi,
                      'coords': dict(evt.coords),
                      'accessed': evt.accessed.strftime("%b %d, %Y"),

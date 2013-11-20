@@ -5,5 +5,8 @@ install: pip install -r requirements.txt --use-mirrors
 script:
   #- "flake8"
   - "python manage.py test web bookmarklet metadata"
+before_script:
+before_script:
+  - psql -c 'create database oabutton;' -U postgres
 services: 
-  - mongodb
+  - postgresql

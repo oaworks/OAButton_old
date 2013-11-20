@@ -1,6 +1,8 @@
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+DB_USER = 'postgres'
+
 # API key for CORE searches
 CORE_API_KEY = "you need this"
 
