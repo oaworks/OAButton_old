@@ -39,7 +39,7 @@ DATABASES = {'default': {
              'USER': DB_USER,    # Not used with sqlite3.
              'PASSWORD': '',                  # Not used with sqlite3.
              # Set to empty string for localhost. Not used with sqlite3.
-             'HOST': 'localhost',
+             'HOST': '',
              # Set to empty string for default. Not used with sqlite3.
              'PORT': '',
              }}
