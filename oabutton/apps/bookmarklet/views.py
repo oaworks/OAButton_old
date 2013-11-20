@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_http_methods
 from models import Event
 from oabutton.apps.bookmarklet.models import User
 from oabutton.common import SigninForm, Bookmarklet
@@ -32,6 +33,7 @@ def get_json(req):
 
 
 @csrf_protect
+@require_http_methods(["POST"])
 def signin(request):
     """
     One time signin to create a bookmarklet using HTTP POST.
@@ -40,27 +42,26 @@ def signin(request):
 
     Create a new user and return the URL to the user bookmarklet
     """
-    if request.method == 'POST':
-        # If the form has been submitted...
-        form = SigninForm(request.POST)  # A form bound to the POST data
-        if form.is_valid():  # All validation rules pass
-            # TODO: do stuff here
-            manager = get_user_model()._default_manager
-            data = dict(form.cleaned_data)
-            data['username'] = data['email']
+    # If the form has been submitted...
+    form = SigninForm(request.POST)  # A form bound to the POST data
+    if form.is_valid():  # All validation rules pass
+        # TODO: do stuff here
+        manager = get_user_model()._default_manager
+        data = dict(form.cleaned_data)
+        data['username'] = data['email']
 
-            try:
-                user = User.objects.get(username=data['email'])
-                user.mailinglist = data['mailinglist']
-                user.name = data['name']
-                user.profession = data['profession']
-                user.usernmae = data['username']
-                user.save()
-            except User.DoesNotExist:
-                # Default the username to be email address
-                user = manager.create_user(**data)
+        try:
+            user = User.objects.get(username=data['email'])
+            user.mailinglist = data['mailinglist']
+            user.name = data['name']
+            user.profession = data['profession']
+            user.usernmae = data['username']
+            user.save()
+        except User.DoesNotExist:
+            # Default the username to be email address
+            user = manager.create_user(**data)
 
-            return HttpResponse(json.dumps({'url': user.get_bookmarklet_url()}), content_type="application/json")
+        return HttpResponse(json.dumps({'url': user.get_bookmarklet_url()}), content_type="application/json")
     return HttpResponseServerError(json.dumps({'errors': form._errors}), content_type="application/json")
 
 
