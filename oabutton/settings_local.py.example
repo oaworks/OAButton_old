@@ -10,8 +10,10 @@ CORE_API_KEY = "you need this"
 HOSTNAME = "and this"
 
 # Amazon SES Email configuration
-AMAZON_SMTPHOST = "YOUR_HOST"
-SESSMTPUSERNAME = "YOUR_SES_SMTP_USERNAME"
-SESSMTPPASSWORD = "YOUR_SES_SMTP_PASSWORD"
+EMAIL_HOST = "blah"
+EMAIL_HOST_USER = "blah"
+EMAIL_HOST_PASSWORD = "blah"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 OABUTTON_EMAIL = "oabutton@crankycoder.com"
