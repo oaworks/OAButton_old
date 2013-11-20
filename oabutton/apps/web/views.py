@@ -1,4 +1,5 @@
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.conf import settings
 from django.core.context_processors import csrf
 from oabutton.common import SigninForm, teamdata, thanksdata
@@ -35,4 +36,5 @@ def homepage(req):
               'team_data': teamdata,
               'thanks_data': thanksdata})
 
-    return render_to_response('web/start.jade', c)
+    return render_to_response('web/start.jade', c,
+                              context_instance=RequestContext(req))
