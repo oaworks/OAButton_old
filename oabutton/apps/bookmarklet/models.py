@@ -18,7 +18,7 @@ class OAEvent(models.Model):
 
     accessed = models.DateTimeField()
     doi = models.TextField()
-    url = models.URLField()
+    url = models.URLField(max_length=400)
     story = models.TextField(null=True, blank=True)
     description = models.TextField()
 

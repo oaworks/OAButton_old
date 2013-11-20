@@ -3,7 +3,7 @@ from django.db import transaction
 import dateutil.parser
 import json
 
-def go():
+def go_users():
     print "Migrating Users"
     with open('/tmp/users.json', 'r') as user_file:
         for i, line in enumerate(user_file):
@@ -20,7 +20,11 @@ def go():
             except Exception, e:
                 print "Can't migrate user.  Data: [%s] error: %s" % (jdata, e)
                 transaction.rollback()
+def go():
+    go_users()
+    go_events()
 
+def go_events():
     with open('/tmp/events.json', 'r') as event_file:
         for i, line in enumerate(event_file):
             print "Migrating event %d" % i
