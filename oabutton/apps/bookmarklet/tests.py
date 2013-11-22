@@ -200,6 +200,9 @@ class APITest(TestCase):
         response = c.post('/api/post/%s/' % key, POST_DATA)
         assert response.status_code == 302
 
+        response = c.get(reverse('bookmarklet:form2', kwargs={'key': key, 'slug': slug}))
+        assert response.status_code == 200
+
         response = c.post(reverse('bookmarklet:form3', kwargs={'key': key, 'slug': slug}), POST_DATA)
         # Check that the DOI is passed through correctly
         data_doi_re = re.compile('<body [^>]*data-doi="%s">'

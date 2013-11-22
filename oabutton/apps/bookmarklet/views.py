@@ -104,7 +104,11 @@ def form2(req, key, slug):
     event = OAEvent.objects.get(id=data['event_id'])
 
     c = {}
-    c.update({'scholar_url': scholar_url, 'doi': doi, 'url': event.url, 'key': key})
+    c.update({'scholar_url': scholar_url,
+              'doi': doi,
+              'url': event.url,
+              'key': key,
+              'slug': slug})
     return render_to_response('bookmarklet/page2.html', c)
 
 
