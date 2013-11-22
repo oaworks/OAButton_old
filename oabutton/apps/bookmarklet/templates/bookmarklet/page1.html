@@ -2,7 +2,7 @@
 {% load oafilters %}
 {% block content %}
 
-<form id="event" action="/api/post/" method="post" class="form-horizontal">{% csrf_token %}
+<form id="event" action="/api/post/{{key}}/" method="post" class="form-horizontal">
 
   {{ bookmarklet.non_field_errors }}
   {{ bookmarklet.accessed }}

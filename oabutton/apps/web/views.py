@@ -1,6 +1,5 @@
 from django.shortcuts import render_to_response
 from django.conf import settings
-from django.core.context_processors import csrf
 from oabutton.common import SigninForm, teamdata, thanksdata
 import json
 
@@ -9,7 +8,6 @@ def homepage(req):
     # Need to lazy import the OAEvent model so that tests work with
     # mocks
     c = {}
-    c.update(csrf(req))
 
     from oabutton.apps.bookmarklet.models import OAEvent
 

@@ -42,3 +42,9 @@ class OAUser(models.Model):
         # generate a boilerplate URL for each user
         from django.conf import settings
         return "%s/api/bookmarklet/%s.js" % (settings.HOSTNAME, self.slug)
+
+class OASession(models.Model):
+    key = models.CharField(max_length=40)
+    data = models.TextField()
+    expire = models.FloatField()
+

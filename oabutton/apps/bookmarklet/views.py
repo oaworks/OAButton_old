@@ -1,13 +1,12 @@
-from django.core.context_processors import csrf
 from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_http_methods
-from models import OAEvent, OAUser
+from models import OAEvent, OAUser, OASession
 from oabutton.common import SigninForm, Bookmarklet
 import dateutil.parser
+import time
 import json
 import requests
 import uuid
@@ -23,7 +22,6 @@ def show_map(req):
     return render_to_response(req, 'bookmarklet/site/map.html', context)
 
 
-@csrf_protect
 @require_http_methods(["POST"])
 def signin(request):
     """
@@ -39,11 +37,11 @@ def signin(request):
         data = dict(form.cleaned_data)
 
         user = OAUser.objects.create(name=data['name'],
-                email=data['email'],
-                profession=data['profession'],
-                slug = uuid.uuid4().hex,
-                mailinglist = data['mailinglist'],
-                )
+                                     email=data['email'],
+                                     profession=data['profession'],
+                                     slug=uuid.uuid4().hex,
+                                     mailinglist=data['mailinglist'],
+                                     )
         user.save()
 
         return HttpResponse(json.dumps({'url': user.get_bookmarklet_url()}), content_type="application/json")
@@ -54,6 +52,10 @@ def form1(req, slug):
     """
     Show the bookmarklet form
     """
+    # For some reason, we get a trailing slash sometimes.  No idea
+    # why.
+    while slug.endswith('/'):
+        slug = slug[:-1]
     if OAUser.objects.filter(slug=slug).count() == 0:
         return render_to_response('bookmarklet/no_user.html')
 
@@ -69,62 +71,75 @@ def form1(req, slug):
     form.fields['slug'].widget.attrs['value'] = slug
 
     c = {}
-    s = req.session
-    s['slug'] = slug
 
-    c.update(csrf(req))
-    c.update({'bookmarklet': form, 'slug': slug})
+    key = uuid.uuid4().hex
+    s = OASession.objects.create(key=key, expire=time.time())
+    s.save()
+
+    c.update({'bookmarklet': form, 'slug': slug, 'key': key})
     return render_to_response('bookmarklet/page1.html', c,
                               context_instance=RequestContext(req))
 
 
-def form2(req):
+def good_session(key):
+    if OASession.objects.filter(key=key).count() == 0:
+        return None
+    s = OASession.objects.get(key=key)
+    if s.expire + 600 > time.time():
+        return s
+    return None
+
+
+def form2(req, key, slug):
     """
-    Show the bookmarklet form. We just need the CSRF token here.
+    Show the bookmarklet form.
     """
-    s = req.session
-    data = s['data']
+    s = good_session(key)
+    if not s:
+        return redirect('bookmarklet:form1', slug=slug)
+
+    data = json.loads(s.data)
     scholar_url = data['scholar_url']
     doi = data['doi']
     event = OAEvent.objects.get(id=data['event_id'])
 
     c = {}
-    c.update(csrf(req))
-    c.update({'scholar_url': scholar_url, 'doi': doi, 'url': event.url})
-    return render_to_response('bookmarklet/page2.html', c,
-                              context_instance=RequestContext(req))
+    c.update({'scholar_url': scholar_url, 'doi': doi, 'url': event.url, 'key': key})
+    return render_to_response('bookmarklet/page2.html', c)
 
 
-def form3(req):
+def form3(req, key, slug):
     """
     Show the bookmarklet form
     """
+    s = good_session(key)
+    if not s:
+        return redirect('bookmarklet:form1', slug=slug)
 
-    s = req.session
     if req.method != 'POST':
-        return redirect('bookmarklet:form1', slug=s['slug'])
+        return redirect('bookmarklet:form1', slug=slug)
 
-    data = s['data']
+    data = json.loads(s.data)
     scholar_url = data['scholar_url']
     doi = data['doi']
     event = OAEvent.objects.get(id=data['event_id'])
 
     c = {}
-    c.update(csrf(req))
     c.update({'scholar_url': scholar_url, 'doi': doi, 'url': event.url})
     return render_to_response('bookmarklet/page3.html', c,
                               context_instance=RequestContext(req))
 
 
-def add_post(req):
-    c = {}
-    c.update(csrf(req))
-
-    s = req.session
+def add_post(req, key):
     if req.method == 'POST':
         # If the form has been submitted...
         form = Bookmarklet(req.POST)  # A form bound to the POST data
+
+        s = OASession.objects.get(key=key)
+        slug = req.POST.get('slug', '')
+
         if form.is_valid():  # All validation rules pass
+
             evt_dict = dict(form.cleaned_data)
             try:
                 lat, lng = evt_dict['coords'].split(',')
@@ -153,13 +168,15 @@ def add_post(req):
                 doi = evt_dict['doi']
                 scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % doi
 
-            s['data'] = {'event_id': event.id,
-                                   'scholar_url': scholar_url,
-                                   'doi': doi}
+            s.data = json.dumps({'event_id': event.id,
+                                 'scholar_url': scholar_url,
+                                 'doi': doi})
 
-            return redirect('bookmarklet:form2')
+            s.save()
+            return redirect('bookmarklet:form2', key=key, slug=user.slug)
         else:
-            return redirect('bookmarklet:form1', slug=s['slug'])
+            return redirect('bookmarklet:form1', slug=slug)
+    return redirect('homepage')
 
 
 def xref_proxy(req, doi):
@@ -167,6 +184,7 @@ def xref_proxy(req, doi):
     headers = {'Accept': "application/vnd.citationstyles.csl+json"}
     r = requests.get(url, headers=headers)
     return HttpResponse(r.text, content_type="application/json")
+
 
 def xref_proxy_simple(req, doi):
     url = "http://data.crossref.org/%s" % doi
