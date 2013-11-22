@@ -2,9 +2,11 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
 from oabutton.common import SigninForm, teamdata, thanksdata
+from django.views.decorators.csrf import csrf_exempt
 import json
 
 
+@csrf_exempt
 def homepage(req):
     # Need to lazy import the OAEvent model so that tests work with
     # mocks

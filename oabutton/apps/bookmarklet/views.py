@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
 from models import OAEvent, OAUser, OASession
 from oabutton.common import SigninForm, Bookmarklet
 import dateutil.parser
@@ -10,8 +11,10 @@ import time
 import json
 import requests
 import uuid
+import datetime
 
 
+@csrf_exempt
 def show_map(req):
     # TODO: we need to make this smarter.  Coallescing the lat/long
     # data on a nightly basis and folding that down into clustered
@@ -22,6 +25,7 @@ def show_map(req):
     return render_to_response(req, 'bookmarklet/site/map.html', context)
 
 
+@csrf_exempt
 @require_http_methods(["POST"])
 def signin(request):
     """
@@ -48,6 +52,7 @@ def signin(request):
     return HttpResponseServerError(json.dumps({'errors': form._errors}), content_type="application/json")
 
 
+@csrf_exempt
 def form1(req, slug):
     """
     Show the bookmarklet form
@@ -90,6 +95,7 @@ def good_session(key):
     return None
 
 
+@csrf_exempt
 def form2(req, key, slug):
     """
     Show the bookmarklet form.
@@ -112,6 +118,7 @@ def form2(req, key, slug):
     return render_to_response('bookmarklet/page2.html', c)
 
 
+@csrf_exempt
 def form3(req, key, slug):
     """
     Show the bookmarklet form
@@ -134,6 +141,7 @@ def form3(req, key, slug):
                               context_instance=RequestContext(req))
 
 
+@csrf_exempt
 def add_post(req, key):
     if req.method == 'POST':
         # If the form has been submitted...
@@ -143,17 +151,20 @@ def add_post(req, key):
         slug = req.POST.get('slug', '')
 
         if form.is_valid():  # All validation rules pass
-
             evt_dict = dict(form.cleaned_data)
             try:
                 lat, lng = evt_dict['coords'].split(',')
             except:
                 lat, lng = 0, 0
             evt_dict['coords'] = {'lat': float(lat), 'lng': float(lng)}
+
             if evt_dict['accessed'] != '':
                 evt_dict['accessed'] = dateutil.parser.parse(evt_dict['accessed'])
+            else:
+                evt_dict['accessed'] = datetime.datetime.now()
 
             user = OAUser.objects.get(slug=evt_dict['slug'])
+
             evt_dict['user_email'] = user.email
             evt_dict['user_name'] = user.name
             evt_dict['user_profession'] = user.profession
@@ -183,6 +194,7 @@ def add_post(req, key):
     return redirect('homepage')
 
 
+@csrf_exempt
 def xref_proxy(req, doi):
     url = "http://data.crossref.org/%s" % doi
     headers = {'Accept': "application/vnd.citationstyles.csl+json"}
@@ -190,6 +202,7 @@ def xref_proxy(req, doi):
     return HttpResponse(r.text, content_type="application/json")
 
 
+@csrf_exempt
 def xref_proxy_simple(req, doi):
     url = "http://data.crossref.org/%s" % doi
     headers = {'Accept': "application/json"}
@@ -197,6 +210,7 @@ def xref_proxy_simple(req, doi):
     return HttpResponse(r.text, content_type="application/json")
 
 
+@csrf_exempt
 def generate_bookmarklet(req, slug):
     return render_to_response('bookmarklet/bookmarklet.html',
                               {'slug': slug},
