@@ -1,6 +1,5 @@
 # Django settings for oabutton project.
 
-import sys
 from os.path import dirname, abspath, join
 
 ROOT_PATH = dirname(dirname(abspath(__file__)))
@@ -15,10 +14,11 @@ except IOError:
     VERSION = "unknown"
 
 # Start override vars #
-DEBUG = False #(sys.argv[1] == 'runserver')
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 HOSTNAME = 'http://localhost:8000'
 DB_USER = 'postgres'
+DB_HOST = 'localhost'
 # End override vars
 
 try:
@@ -39,7 +39,7 @@ DATABASES = {'default': {
              'USER': DB_USER,    # Not used with sqlite3.
              'PASSWORD': '',                  # Not used with sqlite3.
              # Set to empty string for localhost. Not used with sqlite3.
-             'HOST': '',
+             'HOST': DB_HOST,
              # Set to empty string for default. Not used with sqlite3.
              'PORT': '',
              }}
@@ -121,7 +121,6 @@ COMPRESS_PRECOMPILERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
