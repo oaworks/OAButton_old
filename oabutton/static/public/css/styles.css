@@ -1,5 +1,4 @@
 @import "../css/MarkerCluster.css";
-
 @import "../css/MarkerCluster.Default.css";
 /* Don't edit this CSS file.  It's generated using lessc */
 /* Swatches */
@@ -194,7 +193,7 @@ header .lead span {
 /* Activity map */
 #world,
 #map {
-  height: 500px;
+  height: 640px;
   width: 100%;
   margin-top: -20px;
 }
@@ -203,16 +202,17 @@ header .lead span {
   position: absolute;
   left: 0px;
   bottom: 0px;
-  width: 84%;
-  margin: 0 8%;
+  width: 100%;
   padding: 1em 0;
   z-index: 99;
   background: #ffc425;
+  opacity: .75;
 }
 #world .underlay .lead {
   background: #fff;
   text-align: center;
   margin-bottom: 10px;
+  opacity: .875;
 }
 #world .underlay p {
   padding: 0 1em;
@@ -471,7 +471,6 @@ a[data-toggle] {
 }
 .form-bookmarklet {
   /* max-width: 300px; */
-
   padding: 19px 29px 29px;
   margin: 0 auto 20px;
   background-color: #fff;
