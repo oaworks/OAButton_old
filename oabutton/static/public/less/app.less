@@ -126,6 +126,8 @@ header {
 }
 
 #form-bookmarklet {
+  margin-bottom: 0;
+  padding-bottom: 0;
   .checkbox label { font-weight: 700; }
 }
 
@@ -154,31 +156,27 @@ header {
 
 /* Activity map */
 
-#world, #map { 
-  height: 640px;
+#map { 
+  height: 500px; 
   width: 100%; 
-  margin-top: -20px;
 }
 #world {
   .underlay {
-    display: none;
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
     width: 100%;
+    margin: 0;
     padding: 1em 0;
     z-index: 99;
     background: @oayellow;
-    opacity: .75;
-
     .lead {
       background: #fff;
       text-align: center;
       margin-bottom: 10px;
-      opacity: .875;
     }
-
-    p { padding: 0 1em; font-size: 110%; }
+    p { 
+      font-size: 110%;
+      padding: 0 12%; 
+      margin: 0; 
+    }
   }
 }
 
