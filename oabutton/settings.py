@@ -19,6 +19,19 @@ TEMPLATE_DEBUG = DEBUG
 HOSTNAME = 'http://localhost:8000'
 DB_USER = 'postgres'
 DB_HOST = 'localhost'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'oabutton',      # Path to database file.
+        'USER': DB_USER,    # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': DB_HOST,
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
+    }
+}
 # End override vars
 
 try:
@@ -32,17 +45,6 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
-DATABASES = {'default': {
-             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-             'NAME': 'oabutton',      # Path to database file.
-             'USER': DB_USER,    # Not used with sqlite3.
-             'PASSWORD': '',                  # Not used with sqlite3.
-             # Set to empty string for localhost. Not used with sqlite3.
-             'HOST': DB_HOST,
-             # Set to empty string for default. Not used with sqlite3.
-             'PORT': '',
-             }}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
