@@ -106,6 +106,10 @@ header .lead span {
   border: 1px solid #ddd;
   border-radius: 10px;
 }
+#bookmarklet .btn {
+  background-color: #ef5b23;
+  border-color: #ffc425;
+}
 .slidetop {
   animation-name: swooshlet;
   -o-animation-name: swooshlet;
@@ -174,6 +178,9 @@ header .lead span {
 }
 #form-bookmarklet .checkbox label {
   font-weight: 700;
+}
+#form-bookmarklet .btn-primary {
+  background-color: #008471;
 }
 #help-bookmarklet {
   display: none;
@@ -298,6 +305,7 @@ a[data-toggle] {
   border-color: #444;
   color: #000;
   margin: 0 20px;
+  box-shadow: 3px 3px 10px #a5bfba;
 }
 #contribute {
   background: #fff;
@@ -454,6 +462,9 @@ a[data-toggle] {
     font-size: 15px;
     position: relative;
   }
+  #map {
+    height: 400px;
+  }
 }
 @media screen and (max-width: 520px) {
   header a {
@@ -466,6 +477,9 @@ a[data-toggle] {
   }
   #github_ribbon {
     display: none;
+  }
+  #map {
+    height: 300px;
   }
 }
 .form-bookmarklet {
