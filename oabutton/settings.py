@@ -1,6 +1,7 @@
 # Django settings for oabutton project.
 
 from os.path import dirname, abspath, join
+import time
 
 ROOT_PATH = dirname(dirname(abspath(__file__)))
 STATIC_PUBLIC = join(ROOT_PATH, 'oabutton', 'static', 'public')
@@ -11,7 +12,7 @@ try:
     with open(VERSION_FILE) as f:
         VERSION = f.read().strip()
 except IOError:
-    VERSION = "unknown"
+    VERSION = time.time()
 
 # Start override vars #
 DEBUG = True
@@ -114,6 +115,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'oabutton.middleware.StaticCacheBuster',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
