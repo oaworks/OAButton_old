@@ -68,7 +68,7 @@ $(document).ready(function() {
                                     }).appendTo(bubble);
                                 }
 
-                                var marker = new L.marker([evt.coords.lat, evt.coords.lng], { icon: oaIcon });
+                                var marker = new L.marker([evt.coords.lat, evt.coords.lng], { title: evt.url + " blocked", icon: oaIcon });
                                 marker.bindPopup(bubble.html());
 
                                 markers.addLayer(marker);
