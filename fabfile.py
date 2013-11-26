@@ -28,12 +28,17 @@ def prepare_deploy():
 
 def deploy():
     code_dir = '/home/ubuntu/dev/OAButton/'
+    BIN_DIR = "/home/ubuntu/.virtualenvs/oabutton/bin"
+    PIP_BIN = join(BIN_DIR, 'pip')
+    PYTHON_BIN = join(BIN_DIR, 'python')
     with settings(warn_only=True):
         with cd(code_dir):
             run("git checkout develop")
             run("git pull")
-            run("/home/ubuntu/.virtualenvs/oabutton/bin/pip install -r requirements.txt")
+            run("%s install -r requirements.txt" % PIP_BIN)
             version_path = join(code_dir, 'oabutton', 'static',
                     'public', 'version.txt')
             run("git rev-parse --short HEAD > %s" % version_path)
+            run("%s manage.py syncdb" % PYTHON_BIN)
+            run("%s manage.py migrate bookmarklet" % PYTHON_BIN)
             run("sudo supervisorctl restart oabutton")
