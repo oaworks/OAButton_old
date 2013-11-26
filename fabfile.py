@@ -33,11 +33,14 @@ def deploy():
     PYTHON_BIN = join(BIN_DIR, 'python')
     with settings(warn_only=True):
         with cd(code_dir):
-            run("git checkout develop")
+            run("git checkout master")
             run("git pull")
             run("%s install -r requirements.txt" % PIP_BIN)
-            version_path = join(code_dir, 'oabutton', 'static',
-                    'public', 'version.txt')
+            version_path = join(code_dir,
+                                'oabutton',
+                                'static',
+                                'public',
+                                'version.txt')
             run("git rev-parse --short HEAD > %s" % version_path)
             # We don't need syncdb anymore as south is enabled now
             #run("%s manage.py syncdb" % PYTHON_BIN)
