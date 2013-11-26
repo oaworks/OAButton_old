@@ -19,6 +19,12 @@ TEMPLATE_DEBUG = DEBUG
 HOSTNAME = 'http://localhost:8000'
 DB_USER = 'postgres'
 DB_HOST = 'localhost'
+# End override vars
+
+try:
+    from settings_local import *   # NOQA
+except:
+    print "Can't load settings_local - CORE won't work"
 
 DATABASES = {
     'default': {
@@ -32,13 +38,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-# End override vars
-
-try:
-    from settings_local import *   # NOQA
-except:
-    print "Can't load settings_local - CORE won't work"
-
 
 ADMINS = (
     ('Victor Ng', 'victor@crankycoder.com'),
