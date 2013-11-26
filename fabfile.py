@@ -39,6 +39,7 @@ def deploy():
             version_path = join(code_dir, 'oabutton', 'static',
                     'public', 'version.txt')
             run("git rev-parse --short HEAD > %s" % version_path)
-            run("%s manage.py syncdb" % PYTHON_BIN)
+            # We don't need syncdb anymore as south is enabled now
+            #run("%s manage.py syncdb" % PYTHON_BIN)
             run("%s manage.py migrate bookmarklet" % PYTHON_BIN)
             run("sudo supervisorctl restart oabutton")
