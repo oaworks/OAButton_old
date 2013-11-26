@@ -27,7 +27,8 @@ $(document).ready(function() {
                         for (var i = 0; i < events.length; i++) {
                             var evt = events[i];
                             if(evt.coords.lat && evt.coords.lng) {
-                                bubble_content = '<h4>' + evt.user_name;
+                                var marker_title = evt.url + " blocked";
+                                var bubble_content = '<h4>' + evt.user_name;
                                 if (evt.user_profession != '') {
                                     bubble_content += ' <em>(' + evt.user_profession + ')</em>';
                                 }
@@ -39,7 +40,7 @@ $(document).ready(function() {
                                 bubble_content += ' | ';
                                 bubble_content += evt.accessed || '';
 
-                                var marker = new L.marker([evt.coords.lat, evt.coords.lng], { title: bubble_content, icon: oaIcon });
+                                var marker = new L.marker([evt.coords.lat, evt.coords.lng], { title: marker_title, icon: oaIcon });
                                 marker.bindPopup(bubble_content);
 
                                 markers.addLayer(marker);
