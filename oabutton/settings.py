@@ -26,23 +26,24 @@ try:
 except:
     print "Can't load settings_local - CORE won't work"
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'oabutton',      # Path to database file.
+        'USER': DB_USER,    # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': DB_HOST,
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
+    }
+}
 
 ADMINS = (
     ('Victor Ng', 'victor@crankycoder.com'),
 )
 
 MANAGERS = ADMINS
-
-DATABASES = {'default': {
-             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-             'NAME': 'oabutton',      # Path to database file.
-             'USER': DB_USER,    # Not used with sqlite3.
-             'PASSWORD': '',                  # Not used with sqlite3.
-             # Set to empty string for localhost. Not used with sqlite3.
-             'HOST': DB_HOST,
-             # Set to empty string for default. Not used with sqlite3.
-             'PORT': '',
-             }}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -80,18 +81,10 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = ''
 
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = STATIC_PUBLIC
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
+# These are the only two thigns you need for static file loading
+# in a dev enviroment
 STATIC_URL = '/static/'
-
-# Additional locations of static files
-STATICFILES_DIRS = ()
+STATICFILES_DIRS = (STATIC_PUBLIC,)
 
 # List of finder classes that know how to find static files in
 # various locations.
