@@ -15,7 +15,7 @@ Add your SSH key :
     $ fab -H ubuntu@staging.openaccessbutton.org deploy
 
 """
-from fabric.api import local, settings, cd, run
+from fabric.api import local, settings, cd, run, env
 from os.path import join
 
 
@@ -33,7 +33,7 @@ def deploy():
     PYTHON_BIN = join(BIN_DIR, 'python')
     with settings(warn_only=True):
         with cd(code_dir):
-            run("git checkout master")
+            run("git checkout %s" % env.release_tag)
             run("git pull")
             run("%s install -r requirements.txt" % PIP_BIN)
             version_path = join(code_dir,
