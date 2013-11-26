@@ -99,7 +99,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -113,10 +112,6 @@ TEMPLATE_LOADERS = (
     )),
 )
 
-# Production LESS compression via django-compressor
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
-)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -160,8 +155,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'compressor',
-
     # The Django admin assumes you're running on a RDBMS and isn't
     # suitable for a pure MongoDB
     # Do *not* enable it.
@@ -174,6 +167,8 @@ INSTALLED_APPS = (
     'oabutton.apps.web',
 
     'oabutton.apps.metadata',
+
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
