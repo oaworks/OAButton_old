@@ -5,12 +5,13 @@ when you run "manage.py test".
 Replace this with more appropriate tests for your application.
 """
 
+from django.conf import settings
 from django.test import TestCase
 from django.test.client import Client
 from mock import MagicMock, patch
 from nose.tools import eq_, ok_
 from oabutton.apps.bookmarklet.models import OAEvent
-import re
+import BeautifulSoup
 
 # TODO: tests should probably use real database data as the views
 # actually load from disk and render to JSON. Remove these mocks.
@@ -28,19 +29,31 @@ class SimpleTest(TestCase):
     def setUp(self):
         self.client = Client()
 
-    def test_bookmarklet(self):
-        response = self.client.get('/')
-        eq_(response.context['hostname'], 'http://localhost:8000')
-        # Do a dumb scan to see that oabutton.com is in the JS url
-        # TODO: bring back this test when the Jade templates have been
-        # finalized
-        #bookmarklet_url = response.content.find("('src', 'http://localhost:8000/static/js/bookmarklet.js')")
-        #ok_(bookmarklet_url != -1)
-
     @patch('oabutton.apps.bookmarklet.models.OAEvent', MockOAEvent)
     def test_count_denied_pursuits(self):
         response = self.client.get('/')
         eq_(response.context['count'], 2)
 
-        content = re.sub(r'\s+', ' ', response.content)
-        ok_(content.find(r"""<span id="counter">2 </span><span>Paywalls Hit </span>""") != -1)
+        soup = BeautifulSoup.BeautifulSoup(response.content)
+        node = soup.find('span', attrs={'id': 'counter'})
+        eq_(node.text, '2')
+        eq_(node.nextSibling.text, u'Paywalls Hit')
+
+    @patch('oabutton.apps.bookmarklet.models.OAEvent', MockOAEvent)
+    def test_versioned_static_content(self):
+        response = self.client.get('/')
+        soup = BeautifulSoup.BeautifulSoup(response.content)
+        scripts = [s for s in soup.findAll('script') if s.has_key('src')]  # NOQA
+        scripts = [s for s in scripts if s['src'].startswith("/static")]
+        sheets = soup.findAll('link', attrs={'rel': 'stylesheet'})
+
+        ok_(len(scripts) > 0)
+        ok_(len(sheets) > 0)
+
+        v = settings.VERSION
+        for s in scripts:
+            version_check = s['src'].endswith(".js?version=%s" % v)
+            ok_(version_check)
+
+        for s in sheets:
+            ok_(s['href'].endswith(".css?version=%s" % v))
