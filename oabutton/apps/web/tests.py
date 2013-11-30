@@ -43,8 +43,8 @@ class SimpleTest(TestCase):
     def test_versioned_static_content(self):
         response = self.client.get('/')
         soup = BeautifulSoup.BeautifulSoup(response.content)
-        scripts = [s for s in soup.findAll('script') if s.has_key('src')]  # NOQA
-        scripts = [s for s in scripts if s['src'].startswith("/static")]
+        scripts = [s for s in soup.findAll('script')
+                   if s.get('src', '').startswith("/static")]
         sheets = soup.findAll('link', attrs={'rel': 'stylesheet'})
 
         ok_(len(scripts) > 0)
