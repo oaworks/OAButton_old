@@ -27,20 +27,49 @@ $(document).ready(function() {
                         for (var i = 0; i < events.length; i++) {
                             var evt = events[i];
                             if(evt.coords.lat && evt.coords.lng) {
-                                bubble_content = '<h4>' + evt.user_name;
-                                if (evt.user_profession != '') {
-                                    bubble_content += ' <em>(' + evt.user_profession + ')</em>';
-                                }
-                                bubble_content += '</h4>';
-                                bubble_content += '<p>' + evt.story + '</p>';
-                                bubble_content += '<a target="_blank" href="http://dx.doi.org/' + evt.doi + '">doi</a>';
-                                bubble_content += ' | ';
-                                bubble_content += '<a target="_blank" href="' + evt.url + '">url</a>';
-                                bubble_content += ' | ';
-                                bubble_content += evt.accessed || '';
+                                // TODO: use a template for the bubble content
+                                var bubble = $('<h4/>', { text: evt.user_name });
 
-                                var marker = new L.marker([evt.coords.lat, evt.coords.lng], { title: bubble_content, icon: oaIcon });
-                                marker.bindPopup(bubble_content);
+                                if (evt.user_profession) {
+                                    bubble.append(' '); // should be using CSS for spacing
+
+                                    $('<em/>', {
+                                        text: '(' + evt.user_profession + ')'
+                                    }).appendTo(bubble);
+                                }
+
+                                $('<p/>', {
+                                    text: evt.story
+                                }).appendTo(bubble);
+
+                                if (evt.doi) {
+                                    $('<a/>', {
+                                        target: '_blank',
+                                        href: 'http://dx.doi.org/' + encodeURIComponent(evt.doi),
+                                        text: 'doi'
+                                    }).appendTo(bubble);
+                                }
+
+                                if (evt.doi && evt.url) {
+                                    bubble.append(' | ');
+                                }
+
+                                if (evt.url) {
+                                    $('<a/>', {
+                                        target: '_blank',
+                                        href: evt.url,
+                                        text: 'url'
+                                    }).appendTo(bubble);
+                                }
+
+                                if (evt.accessed) {
+                                    $('<span/>', {
+                                        text: ' | ' + evt.accessed
+                                    }).appendTo(bubble);
+                                }
+
+                                var marker = new L.marker([evt.coords.lat, evt.coords.lng], { title: evt.url + " blocked", icon: oaIcon });
+                                marker.bindPopup(bubble.html());
 
                                 markers.addLayer(marker);
                             }

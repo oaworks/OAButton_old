@@ -49,6 +49,12 @@ If you have installed MongoDB via your Debian/Ubuntu package mangager, do
 sudo service mongodb start
 ```
 
+### Create the postgres role and database
+```
+createuser -s -r postgres
+psql -c 'create database oabutton;' -U postgres
+```
+
 ### Synchronise the database
 
 This will set up the database ready to use. You only have to do this once:
