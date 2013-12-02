@@ -21,7 +21,7 @@ test( "parseCrossRef", function() {
 
 test( "addScholarDOILink", function() {
   var $fixture = $('#qunit-fixture');
-  $fixture.append('<ul id="oa_links"></ul>');
+  $fixture.append('<ul id="google_links"></ul>');
 
   oabSuccess.addScholarDOILink(this.metadata);
 
@@ -33,7 +33,7 @@ test( "addScholarDOILink", function() {
 
 test( "addScholarTitleLink", function() {
   var $fixture = $('#qunit-fixture');
-  $fixture.append('<ul id="oa_links"></ul>');
+  $fixture.append('<ul id="google_links"></ul>');
 
   oabSuccess.addScholarTitleLink(this.metadata);
 
@@ -47,7 +47,7 @@ asyncTest( "discoverCORELinks", function() {
   expect(3);
 
   var $fixture = $('#qunit-fixture');
-  $fixture.append('<ul id="oa_links"></ul>');
+  $fixture.append('<ul id="core_links"></ul>');
 
   $.mockjax({
     url: "/metadata/coresearch.json/*",
@@ -57,7 +57,7 @@ asyncTest( "discoverCORELinks", function() {
   oabSuccess.discoverCORELinks(this.metadata);
 
   setTimeout(function() {
-    var link = $("a", $fixture);
+    var link = $("li a", $fixture);
     equal(link.length, 3, "Three links added");
 
     link = $("a:contains('Jaccoud\u2019s Arthritis')", $fixture);
