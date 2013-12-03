@@ -140,18 +140,24 @@ var oabSuccess = (function($) {
 	  if (total_hits > 0) {
             var $list = $('<ul></ul>');
             for (var i = 1; i < records.length; i++) {
-              metadata = records[i]['record']['metadata']['oai_dc:dc'];
+              record = records[i]['record']['metadata']['oai_dc:dc'];
               $list.append('<li><a target="_blank" href="'
-                           + metadata['dc:identifier']
+                           + record['dc:identifier']
                            + '">'
-                           + formatAuthorList(parseAuthorList(metadata['dc:creator']))
-                           + ' (' + metadata['dc:date'] + '); '
-                           + metadata['dc:title']
+                           + formatAuthorList(parseAuthorList(record['dc:creator']))
+                           + ' (' + record['dc:date'] + '); '
+                           + record['dc:title']
                            + '</a></li>');
             }
 
+	    $list.append($('<li><a target="_blank" href="http://core.kmi.open.ac.uk/search/'
+			   + encodeURIComponent('title:(' + metadata['title'] + ')')
+			   + '">See all results'
+			   + '</a></li>'));
+
             $core_div  = $('<div id="core_results">' + total_hits + ' matches from the <a href="http://core.kmi.open.ac.uk/">CORE</a> repository:</div>');
             $core_div.append($list);
+
             $("#core_links").append($core_div);
 	  } else { // no hits
 	    var $core_div = $('<div id="core_results">No matches from the <a href="http://core.kmi.open.ac.uk/">CORE</a> repository.</div>');

@@ -83,7 +83,7 @@ test( "addScholarTitleLink", function() {
 });
 
 asyncTest( "discoverCORELinks", function() {
-  expect(4);
+  expect(6);
 
   var $fixture = $('#qunit-fixture');
   $fixture.append('<ul id="core_links"></ul>');
@@ -94,18 +94,25 @@ asyncTest( "discoverCORELinks", function() {
   });
 
   oabSuccess.discoverCORELinks(this.metadata);
+  metadata = this.metadata;
 
   setTimeout(function() {
-    var link = $("li a", $fixture);
-    equal(link.length, 3, "Three links added");
+    var $link = $("li a", $fixture);
+    equal($link.length, 4, "Four links added"); // 3 + 1 "full search" link
 
     var $core_div = $('#core_links', $fixture);
     ok(/5015 matches/.test($core_div.text()), "Number of hits shown");
 
-    link = $("a:contains('Jaccoud\u2019s Arthritis')", $fixture);
-    equal(link.length, 1, "Link with 'Jaccoud\u2019s Arthritis' added");
-    equal(link.attr('href'), "http:\/\/www.jkscience.org\/archive\/111\/18-RL-JACORD%20ARTHRITIS.pdf",
-	  "Link points to correct PDF");
+    $link = $("a:contains('Jaccoud\u2019s Arthritis')", $fixture);
+    equal($link.length, 1, "Link with 'Jaccoud\u2019s Arthritis' added");
+    equal($link.attr('href'), "http:\/\/www.jkscience.org\/archive\/111\/18-RL-JACORD%20ARTHRITIS.pdf",
+    	  "Link points to correct PDF");
+
+    $link = $("a:contains('See all results')", $fixture);
+    equal($link.length, 1, "'See all results' link");
+    equal($link.attr('href'),
+    	  "http://core.kmi.open.ac.uk/search/" + encodeURIComponent("title:(" + metadata.title + ")"),
+    	  "Link points to correct PDF");
 
     start();
   }, 500);
