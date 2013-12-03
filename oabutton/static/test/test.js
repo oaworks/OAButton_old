@@ -22,6 +22,42 @@ test( "parseCrossRef", function() {
   deepEqual(result, this.metadata, "Parses data correctly");
 });
 
+test( "formatAuthorList", function() {
+  one_author = ["A. N. Other"];
+  two_authors = ["A. N. Other", "J. Smith"];
+  three_authors = ["A. N. Other", "J. Smith", "F. Jones"];
+
+  equal(oabSuccess.formatAuthorList(one_author),
+	"A. N. Other", "Single author");
+  equal(oabSuccess.formatAuthorList(two_authors),
+	"A. N. Other & J. Smith", "Two authors");
+  equal(oabSuccess.formatAuthorList(three_authors),
+	"A. N. Other et. al.", "Three or more authors");
+});
+
+test( "parseAuthorList", function() {
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other"),
+	["A. N. Other"], "Single author");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other and J. Smith"),
+	["A. N. Other", "J. Smith"],
+	"Two authors with 'and'");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other, J. Smith"),
+	["A. N. Other", "J. Smith"],
+	"Two authors with comma");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other & J. Smith"),
+	["A. N. Other", "J. Smith"],
+	"Two authors with ampersand");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other, F. Jones and J. Smith"),
+	["A. N. Other", "F. Jones", "J. Smith"],
+	"Three authors with comma and 'and'");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other and F. Jones and J. Smith"),
+	["A. N. Other", "F. Jones", "J. Smith"],
+	"Three authors with 'and'");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other, F. Jones, J. Smith"),
+	["A. N. Other", "F. Jones", "J. Smith"],
+	"Three authors with commas");
+});
+
 test( "addScholarDOILink", function() {
   var $fixture = $('#qunit-fixture');
   $fixture.append('<ul id="google_links"></ul>');

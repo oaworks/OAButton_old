@@ -14,7 +14,7 @@ var oabSuccess = (function($) {
         item["dc:creator"] = [item["dc:creator"]];
       }
 
-      metadata["authors"] = item["dc:creator"].join(", ");
+      metadata["authors"] = formatAuthorList(item["dc:creator"]);
     }
 
     if (item["prism:publicationName"]) {
@@ -27,6 +27,17 @@ var oabSuccess = (function($) {
     }
 
     return metadata;
+  }
+
+  function formatAuthorList(author_list) {
+    if (author_list.length <= 2)
+      return author_list.join(" & ");
+    else
+      return author_list[0] + " et. al.";
+  }
+
+  function parseAuthorList(author_list) {
+    return author_list.split(/\s*[,&]\s*|\s+and\s+/);
   }
 
   function lookupCrossRef() {
@@ -133,7 +144,7 @@ var oabSuccess = (function($) {
               $list.append('<li><a target="_blank" href="'
                            + metadata['dc:identifier']
                            + '">'
-                           + metadata['dc:creator']
+                           + formatAuthorList(parseAuthorList(metadata['dc:creator']))
                            + ' (' + metadata['dc:date'] + '); '
                            + metadata['dc:title']
                            + '</a></li>');
@@ -153,6 +164,8 @@ var oabSuccess = (function($) {
 
   return {
     parseCrossRef: parseCrossRef,
+    formatAuthorList: formatAuthorList,
+    parseAuthorList: parseAuthorList,
     lookupCrossRef: lookupCrossRef,
     addScholarDOILink: addScholarDOILink,
     addScholarTitleLink: addScholarTitleLink,
