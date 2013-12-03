@@ -1,0 +1,10 @@
+-r core.txt
+
+mock==1.0.1
+nose==1.3.0
+BeautifulSoup==3.2.1
+httpretty==0.7.0
+
+# flake8==2.0
+
+# urllib3==1.7.1
