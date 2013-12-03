@@ -9,6 +9,9 @@ module("success.js", {
       date: "2013-4-9",
     };
   },
+  teardown: function() {
+    $.mockjaxClear();
+  },
 });
 
 test( "parseCrossRef", function() {
@@ -44,7 +47,7 @@ test( "addScholarTitleLink", function() {
 });
 
 asyncTest( "discoverCORELinks", function() {
-  expect(3);
+  expect(4);
 
   var $fixture = $('#qunit-fixture');
   $fixture.append('<ul id="core_links"></ul>');
@@ -60,6 +63,9 @@ asyncTest( "discoverCORELinks", function() {
     var link = $("li a", $fixture);
     equal(link.length, 3, "Three links added");
 
+    var $core_div = $('#core_links', $fixture);
+    ok(/5015 matches/.test($core_div.text()), "Number of hits shown");
+
     link = $("a:contains('Jaccoud\u2019s Arthritis')", $fixture);
     equal(link.length, 1, "Link with 'Jaccoud\u2019s Arthritis' added");
     equal(link.attr('href'), "http:\/\/www.jkscience.org\/archive\/111\/18-RL-JACORD%20ARTHRITIS.pdf",
@@ -68,3 +74,28 @@ asyncTest( "discoverCORELinks", function() {
     start();
   }, 500);
 });
+
+asyncTest( "discoverCORELinks empty result set", function() {
+  expect(2);
+
+  var $fixture = $('#qunit-fixture');
+  $fixture.append('<ul id="core_links"></ul>');
+
+  $.mockjax({
+    url: "/metadata/coresearch.json/*",
+    responseText: {"ListRecords":[{"total_hits":0}]}
+  });
+
+  oabSuccess.discoverCORELinks(this.metadata);
+
+  setTimeout(function() {
+    var $link = $("li a", $fixture);
+    equal($link.length, 0, "No links added");
+
+    var $core_div = $('#core_links', $fixture);
+    ok(/No matches/.test($core_div.text()), "Useful error shown");
+
+    start();
+  }, 500);
+});
+
