@@ -135,9 +135,9 @@ var oabSuccess = (function($) {
         dataType: 'json',
         success: function(response) {
           var records = response.ListRecords;
-	  var total_hits = records[0].total_hits;
+          var total_hits = records[0].total_hits;
 
-	  if (total_hits > 0) {
+          if (total_hits > 0) {
             var $list = $('<ul></ul>');
             for (var i = 1; i < records.length; i++) {
               record = records[i]['record']['metadata']['oai_dc:dc'];
@@ -150,19 +150,19 @@ var oabSuccess = (function($) {
                            + '</a></li>');
             }
 
-	    $list.append($('<li><a target="_blank" href="http://core.kmi.open.ac.uk/search/'
-			   + encodeURIComponent('title:(' + metadata['title'] + ')')
-			   + '">See all results'
-			   + '</a></li>'));
+            $list.append($('<li><a target="_blank" href="http://core.kmi.open.ac.uk/search/'
+                           + encodeURIComponent('title:(' + metadata['title'] + ')')
+                           + '">See all results'
+                           + '</a></li>'));
 
             $core_div  = $('<div id="core_results">' + total_hits + ' matches from the <a href="http://core.kmi.open.ac.uk/">CORE</a> repository:</div>');
             $core_div.append($list);
 
             $("#core_links").append($core_div);
-	  } else { // no hits
-	    var $core_div = $('<div id="core_results">No matches from the <a href="http://core.kmi.open.ac.uk/">CORE</a> repository.</div>');
-	    $("#core_links").append($core_div);
-	  }
+          } else { // no hits
+            var $core_div = $('<div id="core_results">No matches from the <a href="http://core.kmi.open.ac.uk/">CORE</a> repository.</div>');
+            $("#core_links").append($core_div);
+          }
         }
       });
     }

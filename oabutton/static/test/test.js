@@ -28,34 +28,34 @@ test( "formatAuthorList", function() {
   three_authors = ["A. N. Other", "J. Smith", "F. Jones"];
 
   equal(oabSuccess.formatAuthorList(one_author),
-	"A. N. Other", "Single author");
+        "A. N. Other", "Single author");
   equal(oabSuccess.formatAuthorList(two_authors),
-	"A. N. Other & J. Smith", "Two authors");
+        "A. N. Other & J. Smith", "Two authors");
   equal(oabSuccess.formatAuthorList(three_authors),
-	"A. N. Other et. al.", "Three or more authors");
+        "A. N. Other et. al.", "Three or more authors");
 });
 
 test( "parseAuthorList", function() {
   deepEqual(oabSuccess.parseAuthorList("A. N. Other"),
-	["A. N. Other"], "Single author");
+        ["A. N. Other"], "Single author");
   deepEqual(oabSuccess.parseAuthorList("A. N. Other and J. Smith"),
-	["A. N. Other", "J. Smith"],
-	"Two authors with 'and'");
+        ["A. N. Other", "J. Smith"],
+        "Two authors with 'and'");
   deepEqual(oabSuccess.parseAuthorList("A. N. Other, J. Smith"),
-	["A. N. Other", "J. Smith"],
-	"Two authors with comma");
+        ["A. N. Other", "J. Smith"],
+        "Two authors with comma");
   deepEqual(oabSuccess.parseAuthorList("A. N. Other & J. Smith"),
-	["A. N. Other", "J. Smith"],
-	"Two authors with ampersand");
+        ["A. N. Other", "J. Smith"],
+        "Two authors with ampersand");
   deepEqual(oabSuccess.parseAuthorList("A. N. Other, F. Jones and J. Smith"),
-	["A. N. Other", "F. Jones", "J. Smith"],
-	"Three authors with comma and 'and'");
+        ["A. N. Other", "F. Jones", "J. Smith"],
+        "Three authors with comma and 'and'");
   deepEqual(oabSuccess.parseAuthorList("A. N. Other and F. Jones and J. Smith"),
-	["A. N. Other", "F. Jones", "J. Smith"],
-	"Three authors with 'and'");
+        ["A. N. Other", "F. Jones", "J. Smith"],
+        "Three authors with 'and'");
   deepEqual(oabSuccess.parseAuthorList("A. N. Other, F. Jones, J. Smith"),
-	["A. N. Other", "F. Jones", "J. Smith"],
-	"Three authors with commas");
+        ["A. N. Other", "F. Jones", "J. Smith"],
+        "Three authors with commas");
 });
 
 test( "addScholarDOILink", function() {
@@ -106,13 +106,13 @@ asyncTest( "discoverCORELinks", function() {
     $link = $("a:contains('Jaccoud\u2019s Arthritis')", $fixture);
     equal($link.length, 1, "Link with 'Jaccoud\u2019s Arthritis' added");
     equal($link.attr('href'), "http:\/\/www.jkscience.org\/archive\/111\/18-RL-JACORD%20ARTHRITIS.pdf",
-    	  "Link points to correct PDF");
+          "Link points to correct PDF");
 
     $link = $("a:contains('See all results')", $fixture);
     equal($link.length, 1, "'See all results' link");
     equal($link.attr('href'),
-    	  "http://core.kmi.open.ac.uk/search/" + encodeURIComponent("title:(" + metadata.title + ")"),
-    	  "Link points to correct PDF");
+          "http://core.kmi.open.ac.uk/search/" + encodeURIComponent("title:(" + metadata.title + ")"),
+          "Link points to correct PDF");
 
     start();
   }, 500);
