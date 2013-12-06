@@ -9,6 +9,9 @@ module("success.js", {
       date: "2013-4-9",
     };
   },
+  teardown: function() {
+    $.mockjaxClear();
+  },
 });
 
 test( "parseCrossRef", function() {
@@ -17,6 +20,42 @@ test( "parseCrossRef", function() {
   var result = oabSuccess.parseCrossRef(entry, this.doi);
 
   deepEqual(result, this.metadata, "Parses data correctly");
+});
+
+test( "formatAuthorList", function() {
+  one_author = ["A. N. Other"];
+  two_authors = ["A. N. Other", "J. Smith"];
+  three_authors = ["A. N. Other", "J. Smith", "F. Jones"];
+
+  equal(oabSuccess.formatAuthorList(one_author),
+        "A. N. Other", "Single author");
+  equal(oabSuccess.formatAuthorList(two_authors),
+        "A. N. Other & J. Smith", "Two authors");
+  equal(oabSuccess.formatAuthorList(three_authors),
+        "A. N. Other et. al.", "Three or more authors");
+});
+
+test( "parseAuthorList", function() {
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other"),
+        ["A. N. Other"], "Single author");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other and J. Smith"),
+        ["A. N. Other", "J. Smith"],
+        "Two authors with 'and'");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other, J. Smith"),
+        ["A. N. Other", "J. Smith"],
+        "Two authors with comma");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other & J. Smith"),
+        ["A. N. Other", "J. Smith"],
+        "Two authors with ampersand");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other, F. Jones and J. Smith"),
+        ["A. N. Other", "F. Jones", "J. Smith"],
+        "Three authors with comma and 'and'");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other and F. Jones and J. Smith"),
+        ["A. N. Other", "F. Jones", "J. Smith"],
+        "Three authors with 'and'");
+  deepEqual(oabSuccess.parseAuthorList("A. N. Other, F. Jones, J. Smith"),
+        ["A. N. Other", "F. Jones", "J. Smith"],
+        "Three authors with commas");
 });
 
 test( "addScholarDOILink", function() {
@@ -44,7 +83,7 @@ test( "addScholarTitleLink", function() {
 });
 
 asyncTest( "discoverCORELinks", function() {
-  expect(3);
+  expect(6);
 
   var $fixture = $('#qunit-fixture');
   $fixture.append('<ul id="core_links"></ul>');
@@ -55,16 +94,51 @@ asyncTest( "discoverCORELinks", function() {
   });
 
   oabSuccess.discoverCORELinks(this.metadata);
+  metadata = this.metadata;
 
   setTimeout(function() {
-    var link = $("li a", $fixture);
-    equal(link.length, 3, "Three links added");
+    var $link = $("li a", $fixture);
+    equal($link.length, 4, "Four links added"); // 3 + 1 "full search" link
 
-    link = $("a:contains('Jaccoud\u2019s Arthritis')", $fixture);
-    equal(link.length, 1, "Link with 'Jaccoud\u2019s Arthritis' added");
-    equal(link.attr('href'), "http:\/\/www.jkscience.org\/archive\/111\/18-RL-JACORD%20ARTHRITIS.pdf",
-	  "Link points to correct PDF");
+    var $core_div = $('#core_links', $fixture);
+    ok(/5015 matches/.test($core_div.text()), "Number of hits shown");
+
+    $link = $("a:contains('Jaccoud\u2019s Arthritis')", $fixture);
+    equal($link.length, 1, "Link with 'Jaccoud\u2019s Arthritis' added");
+    equal($link.attr('href'), "http:\/\/www.jkscience.org\/archive\/111\/18-RL-JACORD%20ARTHRITIS.pdf",
+          "Link points to correct PDF");
+
+    $link = $("a:contains('See all results')", $fixture);
+    equal($link.length, 1, "'See all results' link");
+    equal($link.attr('href'),
+          "http://core.kmi.open.ac.uk/search/" + encodeURIComponent("title:(" + metadata.title + ")"),
+          "Link points to correct PDF");
 
     start();
   }, 500);
 });
+
+asyncTest( "discoverCORELinks empty result set", function() {
+  expect(2);
+
+  var $fixture = $('#qunit-fixture');
+  $fixture.append('<ul id="core_links"></ul>');
+
+  $.mockjax({
+    url: "/metadata/coresearch.json/*",
+    responseText: {"ListRecords":[{"total_hits":0}]}
+  });
+
+  oabSuccess.discoverCORELinks(this.metadata);
+
+  setTimeout(function() {
+    var $link = $("li a", $fixture);
+    equal($link.length, 0, "No links added");
+
+    var $core_div = $('#core_links', $fixture);
+    ok(/No matches/.test($core_div.text()), "Useful error shown");
+
+    start();
+  }, 500);
+});
+
