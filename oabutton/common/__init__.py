@@ -36,7 +36,7 @@ class Bookmarklet(forms.Form):
     coords = forms.CharField(widget=forms.HiddenInput, required=False)
 
     location = forms.CharField(required=False,
-            label="Location",
+            label="Your location",
             widget=forms.TextInput(attrs={
                 'placeholder': "e.g. London, United Kingdom",
                 'class': "form-control input-block-level",
