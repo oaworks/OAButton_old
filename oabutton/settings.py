@@ -105,7 +105,6 @@ STATICFILES_FINDERS = (
 # security key thing
 import hashlib
 import random
-SECRET_KEY = hashlib.sha256("%x" % random.getrandbits(60*8)).hexdigest()
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
