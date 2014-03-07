@@ -1,6 +1,7 @@
 import subprocess
 import re
 import tempfile
+import urlparse
 
 
 js_template = r"""
@@ -27,7 +28,10 @@ page.open(url, function (status) {
 """
 
 
-def grab_emails(url):
+def scrape_email(url, filter_domain=True):
+    parsed_url = urlparse.urlparse(url)
+    domain = parsed_url.netloc.replace("www.", '')
+
     script = js_template.replace("%URL%", url)
     with tempfile.NamedTemporaryFile(suffix='.js', delete=True) as tmpfile:
         tmpfile.write(script)
@@ -35,6 +39,9 @@ def grab_emails(url):
         command = 'phantomjs %s' % tmpfile.name
         child = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdoutdata, stderrdata = child.communicate()
-        possible_emails = set([f[0] for f in re.findall(r"(\w+@\w+(\.\w+))", stdoutdata)])
+        if filter_domain:
+            possible_emails = set([f[0] for f in re.findall(r"(\w+@\w+(\.\w+))", stdoutdata) if not f[0].endswith(domain)])
+        else:
+            possible_emails = set([f[0] for f in re.findall(r"(\w+@\w+(\.\w+))", stdoutdata)])
         return possible_emails
     return set()
