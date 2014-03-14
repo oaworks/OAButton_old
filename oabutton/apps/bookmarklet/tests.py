@@ -44,6 +44,14 @@ class APITest(TestCase):
         eq_(self.user.profession, 'Student')
         ok_(self.user.mailinglist)
 
+        # Check that a confirmation email went out
+        self.assertEqual(len(mail.outbox), 1)
+        msg = mail.outbox[0]
+        assert msg.to == [self.user.email]
+        url = self.user.get_confirm_path()
+        assert url in msg.body
+        mail.outbox = []
+
     def test_add_post(self):
         '''
         We need to make sure all fields of the OAEvent object are
@@ -231,7 +239,6 @@ class APITest(TestCase):
     def test_confirmation_email_fail(self):
         self.user.send_confirmation_email()
         self.assertEqual(len(mail.outbox), 1)
-        msg = mail.outbox[0]
 
         url = self.user.get_confirm_path()
         url = url.replace("_", "_1234")

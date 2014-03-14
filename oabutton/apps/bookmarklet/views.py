@@ -49,7 +49,7 @@ def signin(request):
                                      )
         user.save()
 
-        # TODO: add email verification here
+        user.send_confirmation_email()
 
         return HttpResponse(json.dumps({'url': user.get_bookmarklet_url()}), content_type="application/json")
     return HttpResponseServerError(json.dumps({'errors': form._errors}), content_type="application/json")
