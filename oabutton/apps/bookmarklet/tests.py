@@ -6,6 +6,7 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.core.urlresolvers import reverse
+from django.core import mail
 from django.test import TestCase
 from django.test.client import Client
 from nose.tools import eq_, ok_
@@ -42,6 +43,14 @@ class APITest(TestCase):
         eq_(self.user.email, self.EMAIL)
         eq_(self.user.profession, 'Student')
         ok_(self.user.mailinglist)
+
+        # Check that a confirmation email went out
+        self.assertEqual(len(mail.outbox), 1)
+        msg = mail.outbox[0]
+        assert msg.to == [self.user.email]
+        url = self.user.get_confirm_path()
+        assert url in msg.body
+        mail.outbox = []
 
     def test_add_post(self):
         '''
@@ -208,3 +217,36 @@ class APITest(TestCase):
         data_doi_re = re.compile('<body [^>]*data-doi="%s">'
                                  % POST_DATA['doi'])
         assert data_doi_re.search(response.content) is not None
+
+    def test_confirmation_email(self):
+        self.user.send_confirmation_email()
+        self.assertEqual(len(mail.outbox), 1)
+        msg = mail.outbox[0]
+
+        url = self.user.get_confirm_path()
+
+        assert msg.to == [self.user.email]
+        assert url in msg.body
+
+        # click the verification link
+        c = Client()
+        response = c.get(url)
+        eq_(response.status_code, 200)
+        # Reload the user as it's been changed
+        self.user = OAUser.objects.get(email=self.EMAIL)
+        assert self.user.email_confirmed
+
+    def test_confirmation_email_fail(self):
+        self.user.send_confirmation_email()
+        self.assertEqual(len(mail.outbox), 1)
+
+        url = self.user.get_confirm_path()
+        url = url.replace("_", "_1234")
+
+        # click the wrong verification link
+        c = Client()
+        response = c.get(url)
+        eq_(response.status_code, 200)
+        # Reload the user as it's been changed
+        self.user = OAUser.objects.get(email=self.EMAIL)
+        assert self.user.email_confirmed is False
