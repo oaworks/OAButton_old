@@ -6,6 +6,7 @@ from views import generate_bookmarklet
 from views import signin
 from views import xref_proxy
 from views import xref_proxy_simple
+from views import email_confirm
 
 
 urlpatterns = patterns('',
@@ -17,6 +18,10 @@ urlpatterns = patterns('',
                        url(r'^form/page1/(?P<slug>.*)/$', form1, name="form1"),
                        url(r'^form/page2/(?P<key>.*)/_slug_(?P<slug>.*)/$', form2, name="form2"),
                        url(r'^form/page3/(?P<key>.*)/_slug_(?P<slug>.*)/$', form3, name="form3"),
+
+                       url(r'^confirmation/(?P<slug>.*)_(?P<salt>.*)/$',
+                           email_confirm,
+                           name='email_confirm'),
 
                        url(r'^bookmarklet/(?P<slug>.*).js$',
                            generate_bookmarklet,

@@ -19,6 +19,7 @@ def show_map(req):
     # TODO: we need to make this smarter.  Coallescing the lat/long
     # data on a nightly basis and folding that down into clustered
     # points would mean we throw less data down to the browser
+    # See bug https://github.com/OAButton/OAButton/issues/216
     json_data = OAEvent.objects.all().to_json()
     count = OAEvent.objects.count()
     context = {'title': 'Map', 'events': json_data, 'count': count}
@@ -47,6 +48,8 @@ def signin(request):
                                      mailinglist=data['mailinglist'],
                                      )
         user.save()
+
+        # TODO: add email verification here
 
         return HttpResponse(json.dumps({'url': user.get_bookmarklet_url()}), content_type="application/json")
     return HttpResponseServerError(json.dumps({'errors': form._errors}), content_type="application/json")
@@ -215,3 +218,16 @@ def generate_bookmarklet(req, slug):
     return render_to_response('bookmarklet/bookmarklet.html',
                               {'slug': slug},
                               content_type="application/javascript")
+
+
+@csrf_exempt
+def email_confirm(req, slug, salt):
+    users = OAUser.objects.filter(slug=slug, salt=salt)
+    if users:
+        u = users[0]
+        u.email_confirmed = True
+        u.save()
+        return render_to_response('bookmarklet/confirmation_ok.jade', {'email': u.email})
+    else:
+        result = render_to_response('bookmarklet/confirmation_fail.jade', {})
+        return result
