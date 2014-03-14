@@ -9,6 +9,8 @@
    recommended)
  * [PhantomJS](http://phantomjs.org/) (required to run automated
    Javascript tests)
+ * [PhantomJS] is now required to dump email addresses from remote
+   servers
 
 ### Installing
 
