@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 from django.db import models
 from django.core.urlresolvers import reverse
 import binascii
@@ -23,7 +22,7 @@ class OAEvent(models.Model):
 
     accessed = models.DateTimeField()
     doi = models.TextField()
-    url = models.URLField(max_length=2000)
+    url = models.URLField(max_length=2000, db_index=True)
     story = models.TextField(null=True, blank=True)
     description = models.TextField()
 
@@ -75,3 +74,10 @@ class OASession(models.Model):
     key = models.CharField(max_length=40)
     data = models.TextField()
     expire = models.FloatField()
+
+
+class OABlockedURL(models.Model):
+    slug = models.CharField(max_length=40, db_index=True)
+    author_email = models.EmailField()
+    blocked_url = models.URLField(max_length=2000, db_index=True)
+    open_url = models.URLField(max_length=2000, db_index=True)
