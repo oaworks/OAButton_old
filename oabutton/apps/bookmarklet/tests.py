@@ -10,10 +10,13 @@ from django.core import mail
 from django.test import TestCase
 from django.test.client import Client
 from nose.tools import eq_, ok_
-from oabutton.apps.bookmarklet.models import OAEvent, OAUser, OASession
 import dateutil.parser
 import json
 import re
+
+from oabutton.apps.bookmarklet.email_tools import send_author_notification
+from oabutton.apps.bookmarklet.models import OAEvent, OAUser, OASession
+from oabutton.apps.bookmarklet.models import OABlockedURL
 
 
 class APITest(TestCase):
@@ -250,3 +253,24 @@ class APITest(TestCase):
         # Reload the user as it's been changed
         self.user = OAUser.objects.get(email=self.EMAIL)
         assert self.user.email_confirmed is False
+
+    def test_notify_author(self):
+        """
+        On creating an OAEvent record, we need to scan to see if this
+        is a new URL.
+
+        If it is, scan for an email address, and try to notify the
+        author of the paywall block.
+        """
+        author_email, blocked_url = 'test@test.com', 'http://test.com/some/url/'
+        send_author_notification(author_email, blocked_url)
+        blocked = list(OABlockedURL.objects.all())
+        slug = blocked[0].slug
+        url = reverse('bookmarklet:open_document', kwargs={'slug': slug})
+
+        # Check that a confirmation email went out
+        self.assertEqual(len(mail.outbox), 1)
+        msg = mail.outbox[0]
+        assert msg.to == [author_email]
+        assert url in msg.body
+        mail.outbox = []
