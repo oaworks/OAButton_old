@@ -7,11 +7,10 @@ from views import signin
 from views import xref_proxy
 from views import xref_proxy_simple
 from views import email_confirm
+from views import open_document
 
 
 urlpatterns = patterns('',
-                       # I think these 3 should be broken out to an API URL handler so we
-                       # can evolve it
                        url(r'^signin/$', signin, name="signin"),
 
                        url(r'^post/(?P<key>.*)/$', add_post, name="add_post"),
@@ -33,4 +32,9 @@ urlpatterns = patterns('',
                            xref_proxy_simple,
                            name="xref_proxy_simple"),
 
+
+                       # Submit an open version of a document
+                       url(r'^api/v1/open_document/(?P<slug>.*)',
+                           open_document,
+                           name="open_document"),
                        )

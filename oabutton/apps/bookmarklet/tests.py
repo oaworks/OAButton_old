@@ -274,3 +274,57 @@ class APITest(TestCase):
         assert msg.to == [author_email]
         assert url in msg.body
         mail.outbox = []
+
+    def test_add_oa_document(self):
+        '''
+        Add a link to an open access version of the document
+        '''
+        # First send the author an email notification
+        author_email, blocked_url = 'test@test.com', 'http://test.com/some/url/'
+        open_url = 'http://some.open.com/some/url/'
+        send_author_notification(author_email, blocked_url)
+
+        blocked = list(OABlockedURL.objects.all())
+        obj = blocked[0]
+        slug = obj.slug
+        c = Client()
+        response = c.get(reverse('bookmarklet:open_document', kwargs={'slug': slug}))
+        eq_(response.status_code, 200)
+
+        assert author_email in response.content
+        assert blocked_url in response.content
+
+        post_data = {'author_email': author_email,
+                     'blocked_url': blocked_url,
+                     'open_url': open_url,
+                     'slug': slug}
+
+        response = c.post(reverse('bookmarklet:open_document', kwargs={'slug': slug}), post_data)
+        eq_(response.status_code, 200)
+        obj = OABlockedURL.objects.get(id=obj.id)
+        eq_(obj.open_url, open_url)
+
+    def test_add_oa_document_errors(self):
+        # First send the author an email notification
+        author_email, blocked_url = 'test@test.com', 'http://test.com/some/url/'
+        open_url = 'http://some.open.com/some/url/'
+        send_author_notification(author_email, blocked_url)
+
+        blocked = list(OABlockedURL.objects.all())
+        obj = blocked[0]
+        slug = obj.slug
+        c = Client()
+        response = c.get(reverse('bookmarklet:open_document', kwargs={'slug': slug}))
+        eq_(response.status_code, 200)
+
+        assert author_email in response.content
+        assert blocked_url in response.content
+
+        post_data = {'author_email': author_email,
+                     'open_url': open_url,
+                     'slug': slug}
+
+        response = c.post(reverse('bookmarklet:open_document', kwargs={'slug': slug}), post_data)
+        eq_(response.status_code, 200)
+        content = response.content
+        assert 'This field is required' in content
