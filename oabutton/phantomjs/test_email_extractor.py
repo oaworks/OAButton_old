@@ -19,3 +19,8 @@ class TestEmails(object):
         if set([]) == emails:
             raise SkipTest("Emails aren't available on nature.com")
         raise AssertionError("Expected no emails")
+
+    def test_thirdbit(self):
+        url = "http://third-bit.com/oab/"
+        emails = scrape_email(url)
+        assert set(['gvwilson@third-bit.com']) == emails
