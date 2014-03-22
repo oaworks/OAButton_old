@@ -31,6 +31,7 @@ page.open(url, function (status) {
 # This list of domains will be filtered out when checking for author
 # email addresses
 DOMAIN_BLACKLIST = ['elsevier.com',
+                    'nature.com',
                     'sciencemag.com',
                     'springer.com', ]
 
@@ -55,7 +56,8 @@ def scrape_email(url):
         status_code = split_msg[0]
         if status_code != 'success':
             error = split_msg[1:]
-            raise RuntimeError("Networking Error", status_code=status_code, error=error)
+            msg = "Networking Error status_code=[%s] error=[%s]" % (status_code, error)
+            raise RuntimeError, msg
 
         if filter_domain:
             possible_emails = set([f[0] for f in re.findall(r'([a-z0-9_\-]+@[a-z0-9_\-]+(\.[a-z0-9_\-]+))', stdoutdata) if not f[0].endswith(domain)])
