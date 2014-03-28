@@ -33,8 +33,8 @@ def deploy():
     PYTHON_BIN = join(BIN_DIR, 'python')
     with settings(warn_only=True):
         with cd(code_dir):
-            run("git checkout %s" % env.release_tag)
             run("git pull")
+            run("git checkout %s" % env.release_tag)
             run("%s install -r requirements.txt" % PIP_BIN)
             version_path = join(code_dir,
                                 'oabutton',

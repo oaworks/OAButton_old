@@ -5,6 +5,7 @@ install: pip install -r requirements.txt --use-mirrors
 script:
   #- "flake8"
   - "python manage.py test web bookmarklet metadata"
+  - "phantomjs scripts/qunit-runner.js oabutton/static/test/test.html"
 before_script:
 before_script:
   - psql -c 'create database oabutton;' -U postgres

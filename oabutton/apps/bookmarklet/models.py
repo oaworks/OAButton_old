@@ -1,4 +1,9 @@
+from datetime import datetime, timedelta
 from django.db import models
+from django.core.urlresolvers import reverse
+import binascii
+import os
+from oabutton.apps.template_email import TemplateEmail
 
 
 class OAEvent(models.Model):
@@ -32,19 +37,41 @@ class OAEvent(models.Model):
 class OAUser(models.Model):
     name = models.CharField(max_length=200, null=False)
     email = models.EmailField(db_index=True, null=False)
+    email_confirmed = models.BooleanField(default=False)
 
     profession = models.CharField(max_length=200)
     mailinglist = models.BooleanField()
 
     slug = models.CharField(unique=True, max_length=40)
 
+    salt = models.CharField(max_length=12, null=True)
+
+    def get_confirm_path(self):
+        return reverse('bookmarklet:email_confirm',
+                       kwargs={'slug': self.slug,
+                               'salt': self.salt})
+
+    def send_confirmation_email(self):
+        from django.conf import settings
+        self.salt = binascii.b2a_hex(os.urandom(15))[:12]
+        self.save()
+
+        context = {'name': self.name,
+                   'hostname': settings.HOSTNAME,
+                   'confirm_url': self.get_confirm_path()}
+
+        email = TemplateEmail(template='bookmarklet/email_confirmation.html',
+                              context=context,
+                              to=[self.email])
+        email.send()
+
     def get_bookmarklet_url(self):
         # generate a boilerplate URL for each user
         from django.conf import settings
         return "%s/api/bookmarklet/%s.js" % (settings.HOSTNAME, self.slug)
 
+
 class OASession(models.Model):
     key = models.CharField(max_length=40)
     data = models.TextField()
     expire = models.FloatField()
-

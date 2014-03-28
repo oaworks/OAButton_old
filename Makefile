@@ -1,4 +1,4 @@
-.PHONY: test lessc
+.PHONY: test test_js test_py lessc
 
 all: build
 
@@ -8,5 +8,13 @@ lessc:
 	lessc oabutton/static/public/less/styles.less oabutton/static/public/css/styles.css
 
 
-test:
+test: test_js test_py nose_tests
+
+test_py:
 	python manage.py test web bookmarklet metadata
+
+test_js:
+	phantomjs scripts/qunit-runner.js oabutton/static/test/test.html
+
+nose_tests:
+	nosetests oabutton/phantomjs

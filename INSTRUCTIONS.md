@@ -7,6 +7,10 @@
  * [mongodb](http://docs.mongodb.org/manual/installation/)
  * [virtualenv](https://pypi.python.org/pypi/virtualenv) (optional but
    recommended)
+ * [PhantomJS](http://phantomjs.org/) (required to run automated
+   Javascript tests)
+ * [PhantomJS] is now required to dump email addresses from remote
+   servers
 
 ### Installing
 
@@ -49,6 +53,12 @@ If you have installed MongoDB via your Debian/Ubuntu package mangager, do
 sudo service mongodb start
 ```
 
+### Create the postgres role and database
+```
+createuser -s -r postgres
+psql -c 'create database oabutton;' -U postgres
+```
+
 ### Synchronise the database
 
 This will set up the database ready to use. You only have to do this once:
@@ -83,9 +93,20 @@ run from a Makefile. Install Node.js then `npm install lessc -g`, then run
 
 ### Running the tests
 
-From the directory with the file manage.py in it
+From the directory with the file manage.py in it, run the Python tests
+with:
 ```
 python manage.py test bookmarklet web
+```
+
+Run the JavaScript tests with:
+```
+phantomjs scripts/qunit-runner.js oabutton/static/test/test.html
+```
+
+If you have `make` installed, you can also just run:
+```
+make test
 ```
 
 ### Heroku deployment
