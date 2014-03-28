@@ -19,6 +19,7 @@ TEMPLATE_DEBUG = DEBUG
 HOSTNAME = 'http://localhost:8000'
 DB_USER = 'postgres'
 DB_HOST = 'localhost'
+SECRET_KEY = 'some_secrete_clobbered_by_settings_local'
 # End override vars
 
 try:
