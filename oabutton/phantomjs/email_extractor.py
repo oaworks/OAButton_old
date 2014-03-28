@@ -22,15 +22,31 @@ page.open(url, function (status) {
     }, function(result){
 
     });
+    console.log(status);
     console.log(page.content);
     phantom.exit();
 });
 """
 
+# This list of domains will be filtered out when checking for author
+# email addresses
+DOMAIN_BLACKLIST = ['elsevier.com',
+                    'nature.com',
+                    'sciencemag.com',
+                    'springer.com', ]
 
-def scrape_email(url, filter_domain=True):
+
+def scrape_email(url, domain=None):
+    """
+    The domain is only required for test cases
+    Normally, it's parsed from a network URL
+    """
     parsed_url = urlparse.urlparse(url)
-    domain = parsed_url.netloc.replace("www.", '')
+
+    if domain is None:
+        domain = parsed_url.netloc.replace("www.", '')
+
+    filter_domain = domain in DOMAIN_BLACKLIST
 
     script = js_template.replace("%URL%", url)
     with tempfile.NamedTemporaryFile(suffix='.js', delete=True) as tmpfile:
@@ -39,9 +55,23 @@ def scrape_email(url, filter_domain=True):
         command = 'phantomjs %s' % tmpfile.name
         child = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdoutdata, stderrdata = child.communicate()
+
+        # PhantomJS sticks in an error statuscode at the top for
+        # anything other than 200 success
+        split_msg = stdoutdata.split('\n')
+        status_code = split_msg[0]
+        if status_code != 'success':
+            # See if 'success' is in the first 10 lines
+            if 'success' not in [m.strip() for m in split_msg[:10]]:
+                error = split_msg[1:]
+                msg = "Networking Error status_code=[%s] error=[%s]" % (status_code, error)
+                raise RuntimeError, msg
+
+        possible_emails = [f[0] for f in re.findall(r'([a-z0-9_\-\+]+@[a-z0-9_\-]+(\.[a-z0-9_\-]+))',
+                stdoutdata)]
         if filter_domain:
-            possible_emails = set([f[0] for f in re.findall(r"(\w+@\w+(\.\w+))", stdoutdata) if not f[0].endswith(domain)])
-        else:
-            possible_emails = set([f[0] for f in re.findall(r"(\w+@\w+(\.\w+))", stdoutdata)])
+            possible_emails = [f for f in possible_emails if not f.endswith(domain)]
+        possible_emails = set(possible_emails)
+
         return possible_emails
     return set()

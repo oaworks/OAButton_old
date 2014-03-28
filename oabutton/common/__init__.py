@@ -46,7 +46,7 @@ class Bookmarklet(forms.Form):
             widget=forms.TextInput(attrs={'class': "form-control input-block-level"},
                                     ))
 
-    url = forms.URLField(required=True, label='Article URL',
+    url = forms.CharField(required=True, label='Article URL',
             widget=forms.TextInput(attrs={'placeholder':
                 "http://www.publisher.com/journal?id=XXXX", 'class': "form-control input-block-level"}))
 

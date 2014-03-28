@@ -170,6 +170,7 @@ INSTALLED_APPS = (
     'oabutton.apps.metadata',
 
     'oabutton.apps.template_email',
+    'oabutton.phantomjs',
 
     'south',
 )

@@ -1,0 +1,86 @@
+extends web/layout
+
+block body
+    #top
+        a(name='top')
+
+
+    .navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+        .container
+            .navbar-header
+                button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href='#') Open Access Button
+            .navbar-collapse.collapse
+                ul.nav.navbar-nav
+                    li
+                        a(href='#top') Get the button
+                    li
+                        a(href='#world') See the map
+                    li
+                        a(href='#contribute') Contribute
+                    li
+                        a(href='#thanks') Meet the team
+                    li
+                        a(href='#contact') Contact and follow
+
+
+
+    #start
+        .container.center
+            block start
+    
+    #intro
+        a(name='intro')
+        .container
+            h2 Thanks!  Lets add a link to an open access version of your document to our repository!
+            .row.hilite-left
+                .col-md-12
+                    p
+                        | Invalid request
+
+    #footer
+        a(name='contact')
+        .container
+            .row
+                .col-md-3.col-sm-3
+                    p
+                        b INFO
+                    p
+                        a(href="http://blog.openaccessbutton.org")
+                            | Project blog
+                    p
+                        a(href="https://groups.google.com/d/forum/open-access-button-general")
+                            | Join the community
+                    p 
+                        a(href="http://oabutton.wordpress.com/2013/11/17/disclaimer/")
+                            | Terms of use
+                .col-md-3.col-sm-3
+                    p
+                        b ABOUT
+                    p
+                        a(href="mailto:oabutton+press@gmail.com")
+                            | Media inquiries
+                    p
+                        a(href="https://github.com/oabutton")
+                            | Get the code
+                    p
+                        a(href="mailto:oabutton+data@gmail.com")
+                            | Get the data
+                .col-md-6.col-sm-6
+                    p
+                        a.icon.twitter(href="https://twitter.com/oa_button") Twitter
+                        a.icon.facebook(href="https://www.facebook.com/openaccessbutton") Facebook
+                        a.icon.wordpress(href="http://oabutton.wordpress.com/") Wordpress
+
+                    p.license
+                        a(rel="license", href="http://creativecommons.org/licenses/by/3.0/")
+                            img(alt="Creative Commons License", style="border-width:0", src="http://i.creativecommons.org/l/by/3.0/88x31.png")
+                        br
+                        | The 
+                        span(xmlns:dct="http://purl.org/dc/terms/", property="dct:title") Open Access Button 
+                        | is licensed under a 
+                        a(rel="license", href="http://creativecommons.org/licenses/by/3.0/") Creative Commons Attribution 3.0 Unported License
+                        |. Open Access Button version {{ VERSION }}.
