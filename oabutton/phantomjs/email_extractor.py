@@ -36,9 +36,15 @@ DOMAIN_BLACKLIST = ['elsevier.com',
                     'springer.com', ]
 
 
-def scrape_email(url):
+def scrape_email(url, domain=None):
+    """
+    The domain is only required for test cases
+    Normally, it's parsed from a network URL
+    """
     parsed_url = urlparse.urlparse(url)
-    domain = parsed_url.netloc.replace("www.", '')
+
+    if domain is None:
+        domain = parsed_url.netloc.replace("www.", '')
 
     filter_domain = domain in DOMAIN_BLACKLIST
 
@@ -52,12 +58,14 @@ def scrape_email(url):
 
         # PhantomJS sticks in an error statuscode at the top for
         # anything other than 200 success
-        split_msg = stdoutdata.split()
+        split_msg = stdoutdata.split('\n')
         status_code = split_msg[0]
         if status_code != 'success':
-            error = split_msg[1:]
-            msg = "Networking Error status_code=[%s] error=[%s]" % (status_code, error)
-            raise RuntimeError, msg
+            # See if 'success' is in the first 10 lines
+            if 'success' not in [m.strip() for m in split_msg[:10]]:
+                error = split_msg[1:]
+                msg = "Networking Error status_code=[%s] error=[%s]" % (status_code, error)
+                raise RuntimeError, msg
 
         if filter_domain:
             possible_emails = set([f[0] for f in re.findall(r'([a-z0-9_\-]+@[a-z0-9_\-]+(\.[a-z0-9_\-]+))', stdoutdata) if not f[0].endswith(domain)])
