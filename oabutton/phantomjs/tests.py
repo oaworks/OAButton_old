@@ -28,3 +28,7 @@ class TestEmails(TestCase):
     def test_thirdbit(self):
         emails = scrape_email(self.get_url('third-bit.html'), 'www.third-bit.com')
         assert set(['gvwilson@third-bit.com']) == emails
+
+    def test_plus_addresses(self):
+        emails = scrape_email(self.get_url('plus.html'), 'www.third-bit.com')
+        assert set(['gvwilson+oabutton@third-bit.com']) == emails
