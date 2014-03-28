@@ -12,6 +12,12 @@ def send_author_notification(author_email, blocked_url):
     """
     md5hash = hashlib.md5(author_email + blocked_url + time.asctime())
     slug = md5hash.hexdigest()
+    blocked_filter = OABlockedURL.objects.filter(blocked_url=blocked_url,
+                                                 author_email=author_email)
+    if blocked_filter.count() != 0:
+        # Skip any email notifications if this author has already been
+        # notified about this URL
+        return
     record = OABlockedURL.objects.create(slug=slug,
                                          author_email=author_email,
                                          blocked_url=blocked_url)
