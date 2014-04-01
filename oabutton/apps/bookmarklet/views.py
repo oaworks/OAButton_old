@@ -236,6 +236,10 @@ def email_confirm(req, slug, salt):
 
 @csrf_exempt
 def open_document(req, slug):
+    """
+    TODO: figure out how to resolve multiple submissions in the case
+    that an open_url is already registered
+    """
     if req.method == 'POST':
         form = OpenAccessForm(req.POST)  # A form bound to the POST data
         if form.is_valid():  # All validation rules pass
@@ -245,6 +249,7 @@ def open_document(req, slug):
                 obj = blocked_urls[0]
                 obj.open_url = data['open_url']
                 obj.save()
+                obj.check_oa_url()
                 return render_to_response('bookmarklet/open_document_success.jade')
             else:
                 # the slug doesn't exist, inform the user

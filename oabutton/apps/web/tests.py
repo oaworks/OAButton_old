@@ -13,9 +13,6 @@ from nose.tools import eq_, ok_
 from oabutton.apps.bookmarklet.models import OAEvent
 import BeautifulSoup
 
-# TODO: tests should probably use real database data as the views
-# actually load from disk and render to JSON. Remove these mocks.
-
 # This sets up a mock for the OAEvent class
 all_objs = MagicMock()
 all_objs.to_json.return_value = [MagicMock(), MagicMock()]

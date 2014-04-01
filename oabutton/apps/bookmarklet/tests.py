@@ -14,6 +14,8 @@ import dateutil.parser
 import json
 import re
 
+import mock
+
 from oabutton.apps.bookmarklet.email_tools import send_author_notification
 from oabutton.apps.bookmarklet.models import OAEvent, OAUser, OASession
 from oabutton.apps.bookmarklet.models import OABlockedURL
@@ -23,6 +25,10 @@ from os.path import split, join
 
 FIXTURE_PATH = join(split(__file__)[0], 'fixtures')
 MOCK_URL = "file://" + join(FIXTURE_PATH, 'foo.html')
+
+
+class MockGET200(object):
+    status_code = 200
 
 
 class APITest(TestCase):
@@ -285,6 +291,7 @@ class APITest(TestCase):
         send_author_notification(author_email, blocked_url)
         self.assertEqual(len(mail.outbox), 0)
 
+    @mock.patch('requests.get', mock.Mock(side_effect=[MockGET200()]))
     def test_add_oa_document(self):
         '''
         Add a link to an open access version of the document

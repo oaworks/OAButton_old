@@ -5,6 +5,7 @@ from oabutton.apps.template_email import TemplateEmail
 import binascii
 import datetime
 import os
+import requests
 
 
 class OAEvent(models.Model):
@@ -85,3 +86,26 @@ class OABlockedURL(models.Model):
     open_url = models.URLField(max_length=2000, db_index=True)
 
     created = models.DateTimeField(auto_now=True, default=datetime.datetime.now)
+
+    def check_oa_url(self):
+        """
+        Check that the Open Access URL is at least readable (HTTP
+        200).
+
+        Any HTTP error or status != 200 will clear the open_url
+        setting.
+        """
+        if self.open_url:
+            try:
+                r = requests.get(self.open_url)
+                if r.status_code == 200:
+                    return True, None
+                else:
+                    self.open_url = ""
+                    self.save()
+                    return False, requests.exceptions.HTTPError(status=r.status_code)
+            except Exception, e:
+                self.open_url = ""
+                self.save()
+                return False, e
+        return False, RuntimeError("No Open URL is set")

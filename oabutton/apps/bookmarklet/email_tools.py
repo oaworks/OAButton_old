@@ -32,3 +32,10 @@ def send_author_notification(author_email, blocked_url):
                           context=context,
                           to=[author_email])
     email.send()
+
+
+def check_paper(url, slug, created):
+    """
+    This method checks that the
+    """
+    pass
