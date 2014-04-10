@@ -1,0 +1,30 @@
+{% load email %}
+{% subject %}Thank you for signing up!{% endsubject %}
+{% body %}
+Hello, {{ name }}.
+
+Thank you for signing up with the Open Access Button.
+
+Please click on {{hostname}}{{ confirm_url }}
+to confirm your email address.
+
+To find out more information, please visit https://www.openaccessbutton.org/
+
+Sincerely,
+The Open Access Button Team
+{% endbody %}
+
+{% bodyhtml %}
+Hello, <em>{{ name }}</em>.
+
+Thank you for signing up with the Open Access Button.
+
+Please click on <a
+    href="{{hostname}}{{ confirm_url }}">{{hostname}}{{ confirm_url }}</a> to confirm your email address.
+
+To find out more information, please visit
+<a href="https://www.openaccessbutton.org/">http://www.openaccessbutton.org/</a>.
+
+Sincerely,
+The Open Access Button Team
+{% endbodyhtml %}

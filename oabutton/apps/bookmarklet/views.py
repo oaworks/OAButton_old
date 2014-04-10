@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from models import OAEvent, OAUser, OASession
+from models import OAEvent, OAUser, OASession, OABlockedURL
 from oabutton.common import SigninForm, Bookmarklet
 import dateutil.parser
 import time
@@ -12,6 +12,7 @@ import json
 import requests
 import uuid
 import datetime
+from oabutton.apps.bookmarklet.forms import OpenAccessForm
 
 
 @csrf_exempt
@@ -19,6 +20,7 @@ def show_map(req):
     # TODO: we need to make this smarter.  Coallescing the lat/long
     # data on a nightly basis and folding that down into clustered
     # points would mean we throw less data down to the browser
+    # See bug https://github.com/OAButton/OAButton/issues/216
     json_data = OAEvent.objects.all().to_json()
     count = OAEvent.objects.count()
     context = {'title': 'Map', 'events': json_data, 'count': count}
@@ -47,6 +49,8 @@ def signin(request):
                                      mailinglist=data['mailinglist'],
                                      )
         user.save()
+
+        user.send_confirmation_email()
 
         return HttpResponse(json.dumps({'url': user.get_bookmarklet_url()}), content_type="application/json")
     return HttpResponseServerError(json.dumps({'errors': form._errors}), content_type="application/json")
@@ -215,3 +219,51 @@ def generate_bookmarklet(req, slug):
     return render_to_response('bookmarklet/bookmarklet.html',
                               {'slug': slug},
                               content_type="application/javascript")
+
+
+@csrf_exempt
+def email_confirm(req, slug, salt):
+    users = OAUser.objects.filter(slug=slug, salt=salt)
+    if users:
+        u = users[0]
+        u.email_confirmed = True
+        u.save()
+        return render_to_response('bookmarklet/confirmation_ok.jade', {'email': u.email})
+    else:
+        result = render_to_response('bookmarklet/confirmation_fail.jade', {})
+        return result
+
+
+@csrf_exempt
+def open_document(req, slug):
+    if req.method == 'POST':
+        form = OpenAccessForm(req.POST)  # A form bound to the POST data
+        if form.is_valid():  # All validation rules pass
+            data = form.cleaned_data
+            blocked_urls = OABlockedURL.objects.filter(slug=data['slug'])
+            if blocked_urls:
+                obj = blocked_urls[0]
+                obj.open_url = data['open_url']
+                obj.save()
+                return render_to_response('bookmarklet/open_document_success.jade')
+            else:
+                # the slug doesn't exist, inform the user
+                return render_to_response('bookmarklet/open_document_no_slug.jade')
+        else:
+            # Render the form with errors showing up
+            c = {'form': form}
+            return render_to_response('bookmarklet/open_document.jade', c)
+    else:
+        # Render the form on GET
+        blocked_urls = OABlockedURL.objects.filter(slug=slug)
+        if blocked_urls:
+            obj = blocked_urls[0]
+            blocked_url = obj.blocked_url
+            author_email = obj.author_email
+            c = {'blocked_url': blocked_url,
+                 'author_email': author_email,
+                 'slug': slug}
+            form = OpenAccessForm(c)
+            c['form'] = form
+            return render_to_response('bookmarklet/open_document.jade', c)
+        return redirect('homepage')

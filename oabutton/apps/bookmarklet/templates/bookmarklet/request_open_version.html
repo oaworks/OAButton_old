@@ -1,0 +1,35 @@
+{% load email %}
+{% subject %}Request for Open Access version of article{% endsubject %}
+{% body %}
+Someone using the Open Access Button has recently hit a paywall on the
+article at {{ blocked_url }} that you are listed as a corresponding
+author on.
+
+You can submit a link to a freely available version of your article by
+using:
+
+{{ oa_free_url }}
+
+The system will automatically inform all people who have requested
+your article that a freely available copy is available.
+
+Best Wishes,
+The Open Access Button
+{% endbody %}
+
+{% bodyhtml %}
+Someone using the Open Access Button has recently hit a paywall on the
+article at <a href="{{ blocked_url }}">{{ blocked_url }}</a> that you
+are listed as a corresponding author on.
+
+You can submit a link to a freely available version of your article by
+using:
+
+<a href="{{ oa_free_url }}">{{ oa_free_url }}</a>
+
+The system will automatically inform all people who have requested
+your article that a freely available copy is available.
+
+Best Wishes,
+The Open Access Button
+{% endbodyhtml %}

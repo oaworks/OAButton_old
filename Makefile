@@ -8,10 +8,10 @@ lessc:
 	lessc oabutton/static/public/less/styles.less oabutton/static/public/css/styles.css
 
 
-test: test_js test_py
+test: test_js test_py nose_tests
 
 test_py:
-	python manage.py test web bookmarklet metadata
+	python manage.py test web bookmarklet metadata phantomjs
 
 test_js:
 	phantomjs scripts/qunit-runner.js oabutton/static/test/test.html

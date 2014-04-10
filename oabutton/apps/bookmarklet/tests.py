@@ -6,13 +6,23 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.core.urlresolvers import reverse
+from django.core import mail
 from django.test import TestCase
 from django.test.client import Client
 from nose.tools import eq_, ok_
-from oabutton.apps.bookmarklet.models import OAEvent, OAUser, OASession
 import dateutil.parser
 import json
 import re
+
+from oabutton.apps.bookmarklet.email_tools import send_author_notification
+from oabutton.apps.bookmarklet.models import OAEvent, OAUser, OASession
+from oabutton.apps.bookmarklet.models import OABlockedURL
+
+from os.path import split, join
+
+
+FIXTURE_PATH = join(split(__file__)[0], 'fixtures')
+MOCK_URL = "file://" + join(FIXTURE_PATH, 'foo.html')
 
 
 class APITest(TestCase):
@@ -43,14 +53,22 @@ class APITest(TestCase):
         eq_(self.user.profession, 'Student')
         ok_(self.user.mailinglist)
 
+        # Check that a confirmation email went out
+        self.assertEqual(len(mail.outbox), 1)
+        msg = mail.outbox[0]
+        assert msg.to == [self.user.email]
+        url = self.user.get_confirm_path()
+        assert url in msg.body
+        mail.outbox = []
+
     def test_add_post(self):
         '''
         We need to make sure all fields of the OAEvent object are
-        serialized back to MongoDB
+        serialized back to db
         '''
         POST_DATA = {u'story': [u'some access requirement'],
                      u'doi': [u'10.1016/j.urology.2010.05.009.'],
-                     u'url': [u'http://www.ncbi.nlm.nih.gov/pubmed/20709373'],
+                     u'url': [MOCK_URL],
                      u'coords': [u'44,-79.5'],
                      u'location': [u'Somewhere'],
                      u'accessed': [u'Mon, 09 Sep 2013 14:54:42 GMT'],
@@ -68,7 +86,7 @@ class APITest(TestCase):
         evt = OAEvent.objects.get(id=data['event_id'])
 
         expected = {'doi': u'10.1016/j.urology.2010.05.009.',
-                    'url': u'http://www.ncbi.nlm.nih.gov/pubmed/20709373',
+                    'url': MOCK_URL,
                     'coords': {u'lat': 44.0, u'lng': -79.5},
                     'location': 'Somewhere',
                     'accessed': dateutil.parser.parse(POST_DATA['accessed'][0]),
@@ -79,11 +97,11 @@ class APITest(TestCase):
     def test_add_post_no_latlong(self):
         '''
         We need to make sure all fields of the OAEvent object are
-        serialized back to MongoDB
+        serialized back to db
         '''
         POST_DATA = {u'story': [u'some access requirement'],
                      u'doi': [u'10.1016/j.urology.2010.05.009.'],
-                     u'url': [u'http://www.ncbi.nlm.nih.gov/pubmed/20709373'],
+                     u'url': [MOCK_URL],
                      u'coords': [u''],
                      u'location': [u'Somewhere'],
                      u'accessed': [u'Mon, 09 Sep 2013 14:54:42 GMT'],
@@ -102,7 +120,7 @@ class APITest(TestCase):
         evt = OAEvent.objects.get(id=data['event_id'])
 
         expected = {'doi': u'10.1016/j.urology.2010.05.009.',
-                    'url': u'http://www.ncbi.nlm.nih.gov/pubmed/20709373',
+                    'url': MOCK_URL,
                     'coords': {u'lat': 0.0, u'lng': 0},
                     'location': 'Somewhere',
                     'accessed': dateutil.parser.parse(POST_DATA['accessed'][0]),
@@ -119,7 +137,7 @@ class APITest(TestCase):
 
         POST_DATA = {u'story': [u'some access requirement'],
                      u'doi': [u'10.1016/j.urology.2010.05.009.'],
-                     u'url': [u'http://www.ncbi.nlm.nih.gov/pubmed/20709373'],
+                     u'url': [MOCK_URL],
                      u'coords': [u'44,-79.5'],
                      u'location': [u''],
                      u'accessed': [u'Mon, 09 Sep 2013 14:54:42 GMT'],
@@ -138,7 +156,7 @@ class APITest(TestCase):
         evt = OAEvent.objects.get(id=data['event_id'])
         eq_(evt.coords, {'lat': 44.0, 'lng': -79.5})
         eq_(evt.doi, '10.1016/j.urology.2010.05.009.')
-        eq_(evt.url, 'http://www.ncbi.nlm.nih.gov/pubmed/20709373')
+        eq_(evt.url, MOCK_URL)
 
         actual_date = evt.accessed
         eq_(actual_date.year, 2013)
@@ -186,7 +204,7 @@ class APITest(TestCase):
                      'coords': '33.2,21.9',
                      'accessed': 'Mon, 09 Sep 2013 14:54:42 GMT',
                      'doi': 'some.doi',
-                     'url': 'http://some.url/some_path',
+                     'url': MOCK_URL,
                      'story': 'some_story',
                      'email': 'foo@blah.com',
                      'slug': self.user.slug,
@@ -208,3 +226,115 @@ class APITest(TestCase):
         data_doi_re = re.compile('<body [^>]*data-doi="%s">'
                                  % POST_DATA['doi'])
         assert data_doi_re.search(response.content) is not None
+
+    def test_confirmation_email(self):
+        self.user.send_confirmation_email()
+        self.assertEqual(len(mail.outbox), 1)
+        msg = mail.outbox[0]
+
+        url = self.user.get_confirm_path()
+
+        assert msg.to == [self.user.email]
+        assert url in msg.body
+
+        # click the verification link
+        c = Client()
+        response = c.get(url)
+        eq_(response.status_code, 200)
+        # Reload the user as it's been changed
+        self.user = OAUser.objects.get(email=self.EMAIL)
+        assert self.user.email_confirmed
+
+    def test_confirmation_email_fail(self):
+        self.user.send_confirmation_email()
+        self.assertEqual(len(mail.outbox), 1)
+
+        url = self.user.get_confirm_path()
+        url = url.replace("_", "_1234")
+
+        # click the wrong verification link
+        c = Client()
+        response = c.get(url)
+        eq_(response.status_code, 200)
+        # Reload the user as it's been changed
+        self.user = OAUser.objects.get(email=self.EMAIL)
+        assert self.user.email_confirmed is False
+
+    def test_notify_author(self):
+        """
+        On creating an OAEvent record, we need to scan to see if this
+        is a new URL.
+
+        If it is, scan for an email address, and try to notify the
+        author of the paywall block.
+        """
+        author_email, blocked_url = 'test@test.com', MOCK_URL
+        send_author_notification(author_email, blocked_url)
+        blocked = list(OABlockedURL.objects.all())
+        slug = blocked[0].slug
+        url = reverse('bookmarklet:open_document', kwargs={'slug': slug})
+
+        # Check that a confirmation email went out
+        self.assertEqual(len(mail.outbox), 1)
+        msg = mail.outbox[0]
+        assert msg.to == [author_email]
+        assert url in msg.body
+        mail.outbox = []
+
+        # Check that we never notify the author twice
+        send_author_notification(author_email, blocked_url)
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_add_oa_document(self):
+        '''
+        Add a link to an open access version of the document
+        '''
+        # First send the author an email notification
+        author_email, blocked_url = 'test@test.com', 'http://test.com/some/url/'
+        open_url = 'http://some.open.com/some/url/'
+        send_author_notification(author_email, blocked_url)
+
+        blocked = list(OABlockedURL.objects.all())
+        obj = blocked[0]
+        slug = obj.slug
+        c = Client()
+        response = c.get(reverse('bookmarklet:open_document', kwargs={'slug': slug}))
+        eq_(response.status_code, 200)
+
+        assert author_email in response.content
+        assert blocked_url in response.content
+
+        post_data = {'author_email': author_email,
+                     'blocked_url': blocked_url,
+                     'open_url': open_url,
+                     'slug': slug}
+
+        response = c.post(reverse('bookmarklet:open_document', kwargs={'slug': slug}), post_data)
+        eq_(response.status_code, 200)
+        obj = OABlockedURL.objects.get(id=obj.id)
+        eq_(obj.open_url, open_url)
+
+    def test_add_oa_document_errors(self):
+        # First send the author an email notification
+        author_email, blocked_url = 'test@test.com', MOCK_URL
+        open_url = 'http://some.open.com/some/url/'
+        send_author_notification(author_email, blocked_url)
+
+        blocked = list(OABlockedURL.objects.all())
+        obj = blocked[0]
+        slug = obj.slug
+        c = Client()
+        response = c.get(reverse('bookmarklet:open_document', kwargs={'slug': slug}))
+        eq_(response.status_code, 200)
+
+        assert author_email in response.content
+        assert blocked_url in response.content
+
+        post_data = {'author_email': author_email,
+                     'open_url': open_url,
+                     'slug': slug}
+
+        response = c.post(reverse('bookmarklet:open_document', kwargs={'slug': slug}), post_data)
+        eq_(response.status_code, 200)
+        content = response.content
+        assert 'This field is required' in content
