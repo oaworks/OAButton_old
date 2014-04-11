@@ -20,12 +20,8 @@ from oabutton.apps.bookmarklet.email_tools import send_author_notification
 from oabutton.apps.bookmarklet.models import OAEvent, OAUser, OASession
 from oabutton.apps.bookmarklet.models import OABlockedURL
 
-from os.path import split, join
 
-
-# TODO: replace this and use mock to do the right thing with http urls
-FIXTURE_PATH = join(split(__file__)[0], 'fixtures')
-MOCK_URL = "file://" + join(FIXTURE_PATH, 'foo.html')
+MOCK_URL = "http://this.is.mocked.by.mock/foo/"
 
 
 class MockGET(object):
@@ -191,7 +187,7 @@ class APITest(TestCase):
         response = c.post('/api/signin/', self.POST_DATA)
 
         eq_(response.status_code, 200)
-        # Extract the slug frmo the javascript URL
+        # Extract the slug from the javascript URL
         new_slug = json.loads(response.content)['url'][-35:-3]
 
         # check that we have all the signin fields
