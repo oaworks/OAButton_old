@@ -23,12 +23,14 @@ from oabutton.apps.bookmarklet.models import OABlockedURL
 from os.path import split, join
 
 
+# TODO: replace this and use mock to do the right thing with http urls
 FIXTURE_PATH = join(split(__file__)[0], 'fixtures')
 MOCK_URL = "file://" + join(FIXTURE_PATH, 'foo.html')
 
 
-class MockGET200(object):
-    status_code = 200
+class MockGET(object):
+    def __init__(self, status_code):
+        self.status_code = status_code
 
 
 class APITest(TestCase):
@@ -291,8 +293,39 @@ class APITest(TestCase):
         send_author_notification(author_email, blocked_url)
         self.assertEqual(len(mail.outbox), 0)
 
-    @mock.patch('requests.get', mock.Mock(side_effect=[MockGET200()]))
-    def test_add_oa_document(self):
+    @mock.patch('requests.get', mock.Mock(side_effect=[MockGET(404)]))
+    def test_add_oa_document_404(self):
+        '''
+        Add a link to an open access version of the document
+        '''
+        # First send the author an email notification
+        author_email, blocked_url = 'test@test.com', 'http://test.com/some/url/'
+        open_url = 'http://some.open.com/some/url/'
+        send_author_notification(author_email, blocked_url)
+
+        blocked = list(OABlockedURL.objects.all())
+        obj = blocked[0]
+        slug = obj.slug
+        c = Client()
+        response = c.get(reverse('bookmarklet:open_document', kwargs={'slug': slug}))
+        eq_(response.status_code, 200)
+
+        assert author_email in response.content
+        assert blocked_url in response.content
+
+        post_data = {'author_email': author_email,
+                     'blocked_url': blocked_url,
+                     'open_url': open_url,
+                     'slug': slug}
+
+        response = c.post(reverse('bookmarklet:open_document', kwargs={'slug': slug}), post_data)
+        eq_(response.status_code, 200)
+        obj = OABlockedURL.objects.get(id=obj.id)
+        eq_(obj.open_url, "")
+        self.assertTrue("The link you submitted was not reachable" in response.content)
+
+    @mock.patch('requests.get', mock.Mock(side_effect=[MockGET(200)]))
+    def test_add_oa_document_200(self):
         '''
         Add a link to an open access version of the document
         '''
@@ -320,6 +353,8 @@ class APITest(TestCase):
         eq_(response.status_code, 200)
         obj = OABlockedURL.objects.get(id=obj.id)
         eq_(obj.open_url, open_url)
+
+        self.assertTrue("Your link has been added" in response.content)
 
     def test_add_oa_document_errors(self):
         # First send the author an email notification

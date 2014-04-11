@@ -249,8 +249,13 @@ def open_document(req, slug):
                 obj = blocked_urls[0]
                 obj.open_url = data['open_url']
                 obj.save()
-                obj.check_oa_url()
-                return render_to_response('bookmarklet/open_document_success.jade')
+                ok, error = obj.check_oa_url()
+
+                if ok:
+                    return render_to_response('bookmarklet/open_document_success.jade')
+                else:
+                    return render_to_response('bookmarklet/open_document_unreachable.jade',
+                                              {'error': str(error)})
             else:
                 # the slug doesn't exist, inform the user
                 return render_to_response('bookmarklet/open_document_no_slug.jade')
