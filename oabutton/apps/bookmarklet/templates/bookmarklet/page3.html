@@ -1,6 +1,13 @@
 {% extends "bookmarklet/layout.html" %}{% block content %}
 <div class="raleway-font">
     <h2>Thanks!</h2>
+
+    {% if open_url %}
+    We've found an open access version of your link.
+    <p>
+    You can go here : {{ open_url }}
+    {% endif %}
+
     <p>Below are a number of ways to get access to your paper, unfortunately
     they won't always work but it's worth a shot.
     </p>

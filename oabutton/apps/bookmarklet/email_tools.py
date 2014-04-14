@@ -36,6 +36,8 @@ def send_author_notification(author_email, blocked_url):
 
 def check_paper(url, slug, created):
     """
-    This method checks that the
+    This method checks that the url is readable.
+
+    For now, just ping it with a requests call.
     """
-    pass
+    raise NotImplementedError

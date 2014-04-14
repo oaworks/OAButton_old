@@ -19,6 +19,7 @@ import mock
 from oabutton.apps.bookmarklet.email_tools import send_author_notification
 from oabutton.apps.bookmarklet.models import OAEvent, OAUser, OASession
 from oabutton.apps.bookmarklet.models import OABlockedURL
+from oabutton.apps.bookmarklet.models import best_open_url
 
 
 MOCK_URL = "http://this.is.mocked.by.mock/foo/"
@@ -376,3 +377,28 @@ class APITest(TestCase):
         eq_(response.status_code, 200)
         content = response.content
         assert 'This field is required' in content
+
+    def test_most_common_blocked_url_results(self):
+        """
+        Create a bunch of blocked URL objects for the same url with
+        different open_url results.
+
+        Return the most common open_url.
+        """
+        self.assertEquals(None, best_open_url(MOCK_URL))
+        OABlockedURL.objects.create(slug='foo',
+                                    author_email='foo@bar.com',
+                                    blocked_url=MOCK_URL,
+                                    open_url='http://this.is.good/')
+
+        OABlockedURL.objects.create(slug='foo',
+                                    author_email='foo@bar.com',
+                                    blocked_url=MOCK_URL,
+                                    open_url='http://this.is.bad/')
+
+        OABlockedURL.objects.create(slug='foo',
+                                    author_email='foo@bar.com',
+                                    blocked_url=MOCK_URL,
+                                    open_url='http://this.is.good/')
+        self.assertEquals(OABlockedURL.objects.count(), 3)
+        self.assertEquals("http://this.is.good/", best_open_url(MOCK_URL))

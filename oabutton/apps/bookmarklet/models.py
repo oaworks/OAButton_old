@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse
+from django.db import connection
 from django.db import models
 from oabutton.apps.template_email import TemplateEmail
 
@@ -109,3 +110,19 @@ class OABlockedURL(models.Model):
                 self.save()
                 return False, e
         return False, RuntimeError("No Open URL is set")
+
+
+def best_open_url(blocked_url):
+    cursor = connection.cursor()
+    try:
+        rset = cursor.execute("""
+        select count(open_url) open_count, open_url from
+        bookmarklet_oablockedurl where blocked_url = %s group by open_url order by open_count desc
+        """, [blocked_url])
+        if cursor.rowcount:
+            row = cursor.fetchone()
+            return row[1]
+        else:
+            return None
+    finally:
+        cursor.close()
