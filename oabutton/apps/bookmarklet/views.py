@@ -14,6 +14,7 @@ import uuid
 import datetime
 from oabutton.apps.bookmarklet.forms import OpenAccessForm
 from oabutton.apps.bookmarklet.models import best_open_url
+from oabutton.phantomjs.email_extractor import scrape_email
 
 
 @csrf_exempt
@@ -144,6 +145,10 @@ def form3(req, key, slug):
     c.update({'scholar_url': scholar_url, 'doi': doi, 'url': event.url})
 
     c.update({'open_url': best_open_url(event.url)})
+
+    possible_emails = tuple(scrape_email(event.url))
+    c.update({"possible_emails": possible_emails})
+
     return render_to_response('bookmarklet/page3.html', c,
                               context_instance=RequestContext(req))
 

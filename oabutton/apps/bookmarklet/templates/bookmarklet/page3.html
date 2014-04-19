@@ -8,6 +8,7 @@
     You can go here : {{ open_url }}
     {% endif %}
 
+
     <p>Below are a number of ways to get access to your paper, unfortunately
     they won't always work but it's worth a shot.
     </p>
@@ -22,21 +23,25 @@
 
     <hr />
 
-    {% comment %}
-
-    // Disabling this for now as we don't have a robust email scraping
-    // service
-    <div id="email-request" class="row-block">
-        <h4>Email a request for the paper directly to the author</h4>
-        <div class="row">
-            <div class="col-md-12 row-block">
-                <button class="btn btn-primary btn-block">Ask [addres@goes.here]</button>
+    {% if possible_emails %}
+        <div id="email-request" class="row-block">
+            <h4>Email a request for the paper directly to the author</h4>
+            <p>
+                We've detected the following email addresses - if these
+                appear to be the author, please click the button to
+                request an open access version.
+            </p>
+            {% for contact_email in possible_emails %}
+            <div class="row">
+                <div class="col-md-12 row-block">
+                    <button class="btn btn-primary btn-block">Ask {{ contact_email }}</button>
+                </div>
             </div>
+            <br />
+            {% endfor %}
         </div>
-    </div>
-    <hr />
-
-    {% endcomment %}
+        <hr />
+    {% endif %}
 
     <div>
         <h4>Searching for related documents</h4>
