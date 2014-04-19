@@ -32,3 +32,7 @@ class TestEmails(TestCase):
     def test_plus_addresses(self):
         emails = scrape_email(self.get_url('plus.html'), 'www.third-bit.com')
         assert set(['gvwilson+oabutton@third-bit.com']) == emails
+
+    def test_springerlink(self):
+        emails = scrape_email(self.get_url('springerlink.html'))
+        self.assertEquals(set(['kamkin.a@g23.relcom', 'imaik-ort@umin.ac']), emails)
