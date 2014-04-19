@@ -35,4 +35,4 @@ class TestEmails(TestCase):
 
     def test_springerlink(self):
         emails = scrape_email(self.get_url('springerlink.html'))
-        self.assertEquals(set(['kamkin.a@g23.relcom', 'imaik-ort@umin.ac']), emails)
+        self.assertEquals(set(['kamkin.a@g23.relcom.ru', 'imaik-ort@umin.ac.jp']), emails)
