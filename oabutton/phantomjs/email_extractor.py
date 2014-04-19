@@ -65,12 +65,12 @@ def scrape_email(url, domain=None):
             if 'success' not in [m.strip() for m in split_msg[:10]]:
                 error = split_msg[1:]
                 msg = "Networking Error status_code=[%s] error=[%s]" % (status_code, error)
-                raise RuntimeError, msg
+                raise RuntimeError(msg)
 
-        possible_emails = [f[0] for f in re.findall(r'([a-z0-9_\-\+]+@[a-z0-9_\-]+(\.[a-z0-9_\-]+))',
-                stdoutdata)]
+        possible_emails = [f[0] for f in re.findall(r'([a-z0-9_\-\+]+@[a-z0-9_\-]+(\.[a-z0-9_\-]+))', stdoutdata)]
         if filter_domain:
             possible_emails = [f for f in possible_emails if not f.endswith(domain)]
+
         possible_emails = set(possible_emails)
 
         return possible_emails

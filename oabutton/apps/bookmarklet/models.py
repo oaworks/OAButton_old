@@ -115,7 +115,7 @@ class OABlockedURL(models.Model):
 def best_open_url(blocked_url):
     cursor = connection.cursor()
     try:
-        rset = cursor.execute("""
+        cursor.execute("""
         select count(open_url) open_count, open_url from
         bookmarklet_oablockedurl where blocked_url = %s group by open_url order by open_count desc
         """, [blocked_url])

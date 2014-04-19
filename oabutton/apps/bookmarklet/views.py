@@ -239,10 +239,6 @@ def email_confirm(req, slug, salt):
 
 @csrf_exempt
 def open_document(req, slug):
-    """
-    TODO: figure out how to resolve multiple submissions in the case
-    that an open_url is already registered
-    """
     if req.method == 'POST':
         form = OpenAccessForm(req.POST)  # A form bound to the POST data
         if form.is_valid():  # All validation rules pass
