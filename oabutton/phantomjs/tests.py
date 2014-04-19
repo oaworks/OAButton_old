@@ -19,19 +19,19 @@ class TestEmails(TestCase):
 
     def test_sciencemag_org(self):
         emails = scrape_email(self.get_url('sciencemag.html'), "stke.sciencemag.org")
-        assert set(['gelvin@purdue.edu']) == emails
+        self.assertEquals(set(['gelvin@purdue.edu']), emails)
 
     def test_plos(self):
         emails = scrape_email(self.get_url('plos.html'), "www.plosone.org")
-        assert set(['chenfh@wfu.edu']) == emails
+        self.assertEquals(set(['chenfh@wfu.edu']), emails)
 
     def test_thirdbit(self):
         emails = scrape_email(self.get_url('third-bit.html'), 'www.third-bit.com')
-        assert set(['gvwilson@third-bit.com']) == emails
+        self.assertEquals(set(['gvwilson@third-bit.com']), emails)
 
     def test_plus_addresses(self):
         emails = scrape_email(self.get_url('plus.html'), 'www.third-bit.com')
-        assert set(['gvwilson+oabutton@third-bit.com']) == emails
+        self.assertEquals(set(['gvwilson+oabutton@third-bit.com']), emails)
 
     def test_springerlink(self):
         emails = scrape_email(self.get_url('springerlink.html'))
