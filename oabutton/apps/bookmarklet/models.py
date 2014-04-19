@@ -65,6 +65,7 @@ class OAUser(models.Model):
 
         email = TemplateEmail(template='bookmarklet/email_confirmation.html',
                               context=context,
+                              from_email=settings.OABUTTON_EMAIL,
                               to=[self.email])
         email.send()
 
