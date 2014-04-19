@@ -1,0 +1,137 @@
+/*
+Custom CSS for the blog to roughly match the application header:
+ 
+ http://blog.openaccessbutton.org/
+
+*/
+
+#site-description {
+	border: none;
+	background: #EF5B23;
+	padding-top: .15em;
+	padding-bottom: .15em;
+}
+
+#site-description span {
+	font: 16pt tahoma;
+	color: white;
+}
+
+.wrap {
+	margin: 0;
+	padding: 0;
+	width: auto;
+	max-width: none;
+}
+
+#header {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	background: #222;
+/*position: fixed; z-index:50;*/
+}
+
+#branding {
+	background: url('//www.openaccessbutton.org/static/img/oalogo_x_white.png') no-repeat left;
+	margin: 8px 0 0 19px;
+	width: 32px;
+	padding: 0;
+	margin-bottom: 0;
+}
+
+#branding #site-title {
+	margin: 0;
+	font-size: 0;
+	height: 32px;
+	width: 32px;
+}
+
+#menu-primary .menu {
+	float: none;
+}
+
+#menu-primary {
+	float: none;
+	display: inline-block;
+	font-size: 1em;
+	margin: 0 0 -.5em !important;
+	line-height: 12px;
+	left: 0;
+	width: auto;
+	padding: 0;
+}
+
+#menu-primary .menu ul {
+	float: left;
+}
+
+#menu-primary li ul {
+	top: 40px;
+}
+
+#menu-primary li {
+	padding: 1.2em 1.6em .5em 2em;
+}
+
+#menu-primary li ul li {
+	padding: 1em 1em .5em;
+}
+
+#menu-primary li a {
+	margin: 0;
+	color: #aaa;
+}
+
+#menu-primary li a:hover {
+	color: #eee !important;
+}
+
+#menu-primary li ul a {
+	margin: 0;
+	color: #333;
+	width: 140px;
+}
+
+#menu-primary li ul a:hover {
+	color: #000 !important;
+}
+
+#menu-primary li.current-menu-item {
+	background: #000;
+}
+
+#menu-primary li.current-menu-item a {
+	color: #fff;
+}
+
+#menu-primary li li a, #menu-primary li li.current-menu-item li a {
+	padding: 5px;
+}
+
+#menu-primary li.current-menu-item li a {
+	color: #333;
+}
+
+#main {
+	margin-top: 100px;
+}
+
+#content {
+	margin-left: 20px;
+}
+
+.wf-active .hentry .entry-title { 
+  color:#777; 
+}
+
+#main, #footer {
+	margin: 0 auto;
+	width: 94%;
+}
+
+#menu-primary li a {
+	text-transform: none;
+	color: #999;
+	font-size: 11pt;
+}
