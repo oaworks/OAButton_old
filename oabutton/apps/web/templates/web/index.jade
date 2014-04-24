@@ -29,6 +29,11 @@ block body
                         a(href='#thanks') Meet the team
                     li
                         a(href='#contact') Contact and follow
+    
+    // Indiegogo header
+    .panel.panel-contribute
+        .panel-body We are hard at work building Open Access Button 2.0: please support our campaign at Indiegogo!
+            a.contribute-button(href="https://www.indiegogo.com/projects/button-2-0/contributions/new", target="_blank") Contribute&nbsp;Now
 
     header.jumbotron.subhead
         .container
@@ -88,23 +93,23 @@ block body
     #contribute
         a(name='contribute')
         .container
-            h2 Get involved.
             .row.hilite-right
-                .col-md-12
+                .col-md-4
+                    iframe(src="https://www.indiegogo.com/project/button-2-0/embedded", width="222px", height="445px", frameborder="0", scrolling="no")
+                .col-md-8
+                    h2 Get involved.
                     p
                         | The first step is using the Open Access Button (and you are using it, daily, on every paywall, right?). But don’t think that’s all there is to do! This project was made possible by developers, advocates, students and general clever folk from Open community and we need continued support to take this to the next level. Of course, the code, text, and data we’ve pulled together are openly available, so you can innovate and advocate with it. If you can, donate to the project to help us support and maintain service as well as helping us with our future development plans. Bottom line, we’d love to hear from you, so whether it’s a suggestion, virtual pat on the back, or, dare I say a bug you’ve noticed, get in touch. 
-
-            .row.buttons
-                .col-md-12
-                    a(href="mailto:oabutton+bugs@gmail.com?subject=OAButton Bug Report (version {{ VERSION }})")
-                        button.btn.btn-default.bug(type="button")
-                            | Report a bug
-                    a(href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton")
-                        button.btn.btn-warning.donate(type="button") 
-                            | Donate!
-                    a(href="mailto:oabutton+suggestion@gmail.com")
-                        button.btn.btn-success.suggest(type="button")
-                            | Suggestions
+                    .buttons
+                        a(href="mailto:oabutton+bugs@gmail.com?subject=OAButton Bug Report (version {{ VERSION }})")
+                            button.btn.btn-default.bug(type="button")
+                                | Report a bug
+                        a(href="https://www.charitycheckout.co.uk/1111824/OpenAccessButton")
+                            button.btn.btn-warning.donate(type="button") 
+                                | Donate!
+                        a(href="mailto:oabutton+suggestion@gmail.com")
+                            button.btn.btn-success.suggest(type="button")
+                                | Suggestions
 
     #thanks
         a(name='thanks')
