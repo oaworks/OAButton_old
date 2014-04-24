@@ -1,29 +1,30 @@
 [![Build
 Status](https://travis-ci.org/OAButton/OAButton.png?branch=develop)](https://travis-ci.org/OAButton/OAButton)
 
-## Open Access Button Prototype
+## Open Access Button
 
-A prototype version of the Open Access Button idea explained in [this blog](http://oabutton.wordpress.com/2013/07/06/our-project-short-version/).
+The Open Access Button idea is explained in [this blog post](http://blog.openaccessbutton.org/2013/07/06/our-project-short-version/).
 
-#### Demo
-
-~~[Have a look at the demo](http://oabutton.herokuapp.com/) - however **please do not share too widely as we're pre-launch!**~~
-
-We're live!  http://www.openaccessbutton.org
+The button is live! Check out http://www.openaccessbutton.org
 
 #### Contributing
 
 If you want to contribute, we have some [instructions for setting up your local dev environment](https://github.com/OAButton/OAButton/blob/develop/INSTRUCTIONS.md).
 
-Our code is completely open source and we invite/need developers to get involved in this amazing project. Currently we're trying to focus on attaining [our minimum viable product](https://docs.google.com/document/d/1-5NV6PoUPiB8GmxRvIO0onDnv8bV69BeDGDco9uHxik/edit) before moving into our testing phase, provisionally on 1 October 2013. That should allow us to launch on 18 November 2013, in time for the [Berlin 11 Student & Early Stage Researcher Satellite Conference](http://berlin2013.sched.org/) on the occasion of the 10th anniversary of the [Berlin Declaration on Open Access to Knowledge in the Sciences and Humanities](http://openaccess.mpg.de/286432/Berlin-Declaration)! If you have suggestions, we are more than open to them, however, and post this date, we can think about broader development.
+Our code is completely open source and we invite/need developers to get involved in this amazing project. Currently we're trying to focus on converting the current bookmarklet to a fully fledged browser plugin, and attempting to automate use as far as possible.
+The goal is for a major launch of Button 2.0 during [Open Access Week](http://openaccessweek.org) which runs from 20 -- 26 October 2014.
 
-As mentioned, we're working to a tight deadline and many people are counting on this tool launching in time, so please try to work on [high priority issues](https://github.com/OAButton/OAButton/issues). Also, we discuss the projects development more broadly on our [Google Group](http://groups.google.com/group/open-access-button). Where possible open ended questions should be made here, rather than in issues.
+If you have any suggestions or feature requests, please feel free to get in touch, and we will see what we can do.
+
+As mentioned, we're working to a tight deadline and many people are counting on this tool launching in time, so please try to work on [high priority issues](https://github.com/OAButton/OAButton/issues). We discuss the projects development more broadly on our [Google Group](http://groups.google.com/group/openaccessbuttondevelopers). Where possible, open ended questions should be made there, rather than as github issues.
 
 #### Elsewhere on the internet
 
- * [Blog](http://oabutton.wordpress.com/)
+ * [Blog](http://blog.openaccessbutton.org/)
  * [Twitter](https://twitter.com/OA_Button)
- * [Google Group](http://groups.google.com/group/open-access-button)
+ * [Google Group](http://groups.google.com/group/openaccessbuttondevelopers)
  * [Email](mailto:oabutton@gmail.com)
+ * [Facebook](https://www.facebook.com/openaccessbutton)
+ * [Crowdfunding Campaign](https://www.indiegogo.com/projects/button-2-0#home)
 
 <small>Licensed under the [MIT license](https://github.com/OAButton/OAButton/blob/develop/LICENSE.md). Powered by [django](https://www.djangoproject.com/) and [MongoDB](http://www.mongodb.org).</small>
