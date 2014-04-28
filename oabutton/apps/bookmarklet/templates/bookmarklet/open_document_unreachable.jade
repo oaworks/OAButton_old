@@ -35,12 +35,10 @@ block body
     #intro
         a(name='intro')
         .container
-            h2 Thanks!  Lets add a link to an open access version of your document to our repository!
-            .row.hilite-left
-                .col-md-12
-                    p.link-unreachable
-                        | The link you submitted was not reachable from the public intenret. Error: {{ error }}
-                        | We'll try to help you out
+            h3 The link you submitted was not reachable from the public internet.
+            a(href='/api/api/v1/open_document/{{slug}}')
+                button.btn.btn-lg.btn-primary.btn-block(type='submit')
+                    | Try Again
 
     #footer
         a(name='contact')
