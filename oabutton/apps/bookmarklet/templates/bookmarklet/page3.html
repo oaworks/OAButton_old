@@ -28,17 +28,21 @@
             <h4>Email a request for the paper directly to the author</h4>
             <p>
                 We've detected the following email addresses - if these
-                appear to be the author, please click the button to
-                request an open access version.
+                appear to be the author, please check off the
+                addresses you wish to notify and click the "Notify
+                Authors" button to request an open access version.
             </p>
-            {% for contact_email in possible_emails %}
-            <div class="row">
-                <div class="col-md-12 row-block">
-                    <button class="btn btn-primary btn-block">Ask {{ contact_email }}</button>
+            <form method="POST" action="{% url 'bookmarklet:notify_authors' key=key slug=slug %}">
+                {% for contact_email in possible_emails %}
+                <div class="row">
+                    <div class="col-md-12 row-block">
+                        <input type="checkbox" name="notify_authors" value="{{contact_email}}">Ask {{ contact_email }}
+                    </div>
                 </div>
-            </div>
-            <br />
-            {% endfor %}
+                <br />
+                {% endfor %}
+                <button class="btn btn-primary btn-block">Notify Authors</button>
+            </form>
         </div>
         <hr />
     {% endif %}

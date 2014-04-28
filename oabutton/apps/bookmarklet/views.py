@@ -12,9 +12,10 @@ import json
 import requests
 import uuid
 import datetime
+import oabutton.phantomjs.email_extractor
 from oabutton.apps.bookmarklet.forms import OpenAccessForm
 from oabutton.apps.bookmarklet.models import best_open_url
-from oabutton.phantomjs.email_extractor import scrape_email
+from oabutton.apps.bookmarklet.email_tools import send_author_notification
 
 
 @csrf_exempt
@@ -145,7 +146,11 @@ def form3(req, key, slug):
     c.update({'scholar_url': scholar_url, 'doi': doi, 'url': event.url})
 
     c.update({'open_url': best_open_url(event.url)})
+    c.update({'key': key, 'slug': slug})
 
+    # TODO: add check to make sure that the email address associated
+    # with this bookmarklet has been verified
+    scrape_email = oabutton.phantomjs.email_extractor.scrape_email
     possible_emails = tuple(scrape_email(event.url))
     c.update({"possible_emails": possible_emails})
 
@@ -207,6 +212,32 @@ def add_post(req, key):
 
 
 @csrf_exempt
+def notify_authors(req, key, slug):
+    email_addresses = req.POST.getlist('notify_authors', ())
+
+    s = good_session(key)
+    if not s:
+        return redirect('bookmarklet:form1', slug=slug)
+
+    if req.method != 'POST':
+        return redirect('bookmarklet:form1', slug=slug)
+
+    data = json.loads(s.data)
+    event = OAEvent.objects.get(id=data['event_id'])
+    blocked_url = event.url
+
+    rdict = {"results": []}
+    for email in email_addresses:
+        if send_author_notification(email, blocked_url):
+            rdict['results'].append({email: True})
+        else:
+            rdict['results'].append({email: False})
+
+    jdata = json.dumps(rdict)
+    return HttpResponse(jdata, content_type="application/json")
+
+
+@csrf_exempt
 def xref_proxy(req, doi):
     url = "http://data.crossref.org/%s" % doi
     headers = {'Accept': "application/vnd.citationstyles.csl+json"}
@@ -244,6 +275,7 @@ def email_confirm(req, slug, salt):
 
 @csrf_exempt
 def open_document(req, slug):
+    c = {'slug': slug}
     if req.method == 'POST':
         form = OpenAccessForm(req.POST)  # A form bound to the POST data
         if form.is_valid():  # All validation rules pass
@@ -258,14 +290,14 @@ def open_document(req, slug):
                 if ok:
                     return render_to_response('bookmarklet/open_document_success.jade')
                 else:
-                    return render_to_response('bookmarklet/open_document_unreachable.jade',
-                                              {'error': str(error)})
+                    c.update({'error': str(error)})
+                    return render_to_response('bookmarklet/open_document_unreachable.jade', c)
             else:
                 # the slug doesn't exist, inform the user
-                return render_to_response('bookmarklet/open_document_no_slug.jade')
+                return render_to_response('bookmarklet/open_document_no_slug.jade', c)
         else:
             # Render the form with errors showing up
-            c = {'form': form}
+            c.update({'form': form})
             return render_to_response('bookmarklet/open_document.jade', c)
     else:
         # Render the form on GET
@@ -274,9 +306,8 @@ def open_document(req, slug):
             obj = blocked_urls[0]
             blocked_url = obj.blocked_url
             author_email = obj.author_email
-            c = {'blocked_url': blocked_url,
-                 'author_email': author_email,
-                 'slug': slug}
+            c.update({'blocked_url': blocked_url,
+                      'author_email': author_email})
             form = OpenAccessForm(c)
             c['form'] = form
             return render_to_response('bookmarklet/open_document.jade', c)
