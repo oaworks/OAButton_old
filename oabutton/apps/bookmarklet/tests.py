@@ -198,6 +198,8 @@ class APITest(TestCase):
         eq_(user.profession, 'Student')
         ok_(user.mailinglist)
 
+    @mock.patch('oabutton.phantomjs.email_extractor.scrape_email', mock.Mock(return_value=('mock@mock.com',)))
+    @mock.patch('requests.get', mock.Mock(side_effect=[MockGET(200)]))
     def test_search_doi_after_post(self):
         '''
         Tests to make sure the response to submitting the form is rendered
