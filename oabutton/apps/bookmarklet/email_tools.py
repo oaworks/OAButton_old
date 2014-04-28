@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from oabutton.apps.bookmarklet.models import OABlockedURL
 from oabutton.apps.template_email import TemplateEmail
@@ -17,8 +18,6 @@ def send_author_notification(author_email, blocked_url):
         # notified about this URL
         return
 
-    # TODO: extract author_email here using PhantomJS
-
     md5hash = hashlib.md5(author_email + blocked_url + time.asctime())
     slug = md5hash.hexdigest()
     record = OABlockedURL.objects.create(slug=slug,
@@ -26,15 +25,17 @@ def send_author_notification(author_email, blocked_url):
                                          blocked_url=blocked_url)
     record.save()
 
-    oa_free_url = reverse('bookmarklet:open_document', kwargs={'slug': slug})
+    oa_free_url = settings.HOSTNAME + reverse('bookmarklet:open_document', kwargs={'slug': slug})
 
     context = {'blocked_url': blocked_url,
                'oa_free_url': oa_free_url}
 
     email = TemplateEmail(template='bookmarklet/request_open_version.html',
                           context=context,
+                          from_email=settings.OABUTTON_EMAIL,
                           to=[author_email])
     email.send()
+    return True
 
 
 def check_paper(url, slug, created):
