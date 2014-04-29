@@ -288,10 +288,6 @@ class APITest(TestCase):
         assert url in msg.body
         mail.outbox = []
 
-        # Check that we never notify the author twice
-        send_author_notification(author_email, blocked_url)
-        self.assertEqual(len(mail.outbox), 0)
-
     @mock.patch('requests.get', mock.Mock(side_effect=[MockGET(404)]))
     def test_add_oa_document_404(self):
         '''
