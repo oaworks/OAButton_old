@@ -73,5 +73,13 @@ def scrape_email(url, domain=None):
 
         possible_emails = set([e.lower() for e in possible_emails])
 
+        # Filter out any emails that have already been sent to this
+        # URL
+        for email in list(possible_emails):
+            from oabutton.apps.bookmarklet.models import OABlockedURL
+            block_filter = OABlockedURL.objects.filter(blocked_url=url, author_email=email)
+            if block_filter.count():
+                possible_emails.remove(email)
+
         return possible_emails
     return set()

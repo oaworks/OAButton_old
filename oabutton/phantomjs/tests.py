@@ -36,3 +36,18 @@ class TestEmails(TestCase):
     def test_springerlink(self):
         emails = scrape_email(self.get_url('springerlink.html'))
         self.assertEquals(set(['kamkin.a@g23.relcom.ru', 'imaik-ort@umin.ac.jp']), emails)
+
+    def test_only_email_if_no_block(self):
+        url = self.get_url('springerlink.html')
+
+        from oabutton.apps.bookmarklet.models import OABlockedURL
+        record = OABlockedURL.objects.create(slug='foo',
+                                             author_email='kamkin.a@g23.relcom.ru',
+                                             blocked_url=url)
+        record.save()
+        record = OABlockedURL.objects.create(slug='bar',
+                                             author_email='imaik-ort@umin.ac.jp',
+                                             blocked_url=url)
+        record.save()
+        emails = scrape_email(url)
+        self.assertEquals(set(), emails)
