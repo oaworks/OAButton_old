@@ -30,15 +30,15 @@ flake8 --install-hook                # Install the flake8 pre-commit hook
                                      # Checks your code for PEP8 compliance
 ```
 
-### Set your CORE API key
+### Set up your local environment
 
-```
-export CORE_API_KEY=blahblahblah
-```
+Save a copy of `oabutton/settings_local.py.example` without the .example suffix
+in the same folder, and change the DB_USER to the username under which the
+application will start. 
 
-If you don't have a key, the app will still run, but you'll get
+If you don't have a CORE API key, the app will still run, but you'll get
 warnings and communications with [CORE](http://core.kmi.open.ac.uk/)
-will fail.  An API key isn't required to run the tests, as the API
+will fail.  An API key is not required to run the tests, as the API
 accesses are mocked out.
 
 ### Start mongodb
@@ -55,8 +55,9 @@ sudo service mongodb start
 
 ### Create the postgres role and database
 ```
-createuser -s -r postgres
-psql -c 'create database oabutton;' -U postgres
+sudo su - postgres
+createuser -s -r <username>
+psql -c 'create database oabutton;' -U <username>
 ```
 
 ### Synchronise the database
