@@ -252,7 +252,6 @@ div.referrer-based-search-line .collection-name{
 
 <!------ OAS SETUP begin ------>
 <!-- Include OAS Analytics Setup Script -->
-<SCRIPT LANGUAGE="JavaScript" src="http://oascentral.sciencemag.org/Scripts/oas_analytics.js"></SCRIPT>
 <SCRIPT LANGUAGE=JavaScript>
 <!--
 //configuration
@@ -261,6 +260,8 @@ OAS_sitepage = window.location.hostname + window.location.pathname;
 OAS_listpos = 'Top,Left1,Right1,Right2';
 var OAS_query ='tw_country_code=CA&view=abstract';
 var OAS_taxonomy = '';
+var OAS_CA = '';
+var OAS_rdl = '';
 OAS_query += '&XE' + '&' + OAS_taxonomy + OAS_rdl + "&if_nt_CookieAccept=" + OAS_CA + '&XE';
 //Jeff_test = 'recent_issue=false';
 OAS_target = '_top';
@@ -268,10 +269,6 @@ OAS_target = '_top';
 OAS_version = 10;
 OAS_rn = '001234567890'; OAS_rns = '1234567890';
 OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11);
-function OAS_NORMAL(pos) {
-document.write('<A HREF="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" TARGET=' + OAS_target + '>');
-document.write('<IMG SRC="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" BORDER=0></A>');
-}
  //-->
  </SCRIPT>
 <SCRIPT LANGUAGE=JavaScript1.1>
@@ -285,10 +282,6 @@ document.write('<SCR' + 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream
 <!--
  document.write('');
 function OAS_AD(pos) {
-if (OAS_version >= 11)
- OAS_RICH(pos);
-else
- OAS_NORMAL(pos);
 }  //-->
  </SCRIPT>
 <!------ OAS SETUP end ------>

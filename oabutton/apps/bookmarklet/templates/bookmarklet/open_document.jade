@@ -35,22 +35,24 @@ block body
     #intro
         a(name='intro')
         .container
-            h2 Thanks!  Lets add a link to an open access version of your document to our repository!
-            .row.hilite-left
-                .col-md-12
-                    p
-                        {{ form.slug }}
-                        if form.errors.author_email
-                            {{ form.errors.author_email }}
-                        {{ form.author_email }}
-                    p
-                        if form.errors.blocked_url
-                            {{ form.errors.blocked_url }}
-                        {{ form.blocked_url }}
-                    p
-                        if form.errors.open_url
-                            {{ form.errors.open_url }}
-                        {{ form.open_url }}
+            h2 Thanks!
+            h3 Lets add a link to an open access version of your document to our repository!
+            form.form-bookmarklet(action='/api/api/v1/open_document/{{ slug }}', method='post')
+                .row
+                    .col-md-12
+                        p
+                            {{ form.slug }}
+                            label E-mail address with article
+                            {{ form.author_email }}
+                        p
+                            label Paywall Article URL
+                            {{ form.blocked_url }}
+                        p
+                            label URL to an Open Access version of article
+                            {{ form.open_url }}
+                        p
+                          button.btn.btn-lg.btn-primary.btn-block(type='submit')
+                            | Submit open access version of document
 
 
     #footer

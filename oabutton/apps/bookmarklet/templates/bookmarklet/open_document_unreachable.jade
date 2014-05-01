@@ -31,11 +31,14 @@ block body
     #start
         .container.center
             block start
-
+    
     #intro
         a(name='intro')
         .container
-            h2 Your link has been added to our database! 
+            h3 The link you submitted was not reachable from the public internet.
+            a(href='/api/api/v1/open_document/{{slug}}')
+                button.btn.btn-lg.btn-primary.btn-block(type='submit')
+                    | Try Again
 
     #footer
         a(name='contact')

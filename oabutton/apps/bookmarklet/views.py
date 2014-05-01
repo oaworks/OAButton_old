@@ -12,7 +12,10 @@ import json
 import requests
 import uuid
 import datetime
+import oabutton.phantomjs.email_extractor
 from oabutton.apps.bookmarklet.forms import OpenAccessForm
+from oabutton.apps.bookmarklet.models import best_open_url
+from oabutton.apps.bookmarklet.email_tools import send_author_notification
 
 
 @csrf_exempt
@@ -83,6 +86,7 @@ def form1(req, slug):
 
     key = uuid.uuid4().hex
     s = OASession.objects.create(key=key, expire=time.time())
+    s.data = json.dumps({'user_slug': slug})
     s.save()
 
     c.update({'bookmarklet': form, 'slug': slug, 'key': key})
@@ -135,13 +139,32 @@ def form3(req, key, slug):
         return redirect('bookmarklet:form1', slug=slug)
 
     data = json.loads(s.data)
+
+    user_slug = data['user_slug']
     scholar_url = data['scholar_url']
+
     doi = data['doi']
     event = OAEvent.objects.get(id=data['event_id'])
 
     c = {}
     c.update({'scholar_url': scholar_url, 'doi': doi, 'url': event.url})
+
+    c.update({'open_url': best_open_url(event.url)})
+    c.update({'key': key, 'slug': slug})
+
+    user = OAUser.objects.get(slug=user_slug)
+    if user.email_confirmed:
+        scrape_email = oabutton.phantomjs.email_extractor.scrape_email
+        possible_emails = tuple(scrape_email(event.url))
+        c.update({"possible_emails": possible_emails})
+
     return render_to_response('bookmarklet/page3.html', c,
+                              context_instance=RequestContext(req))
+
+
+@csrf_exempt
+def form4(req):
+    return render_to_response('bookmarklet/page4.html', {},
                               context_instance=RequestContext(req))
 
 
@@ -187,15 +210,37 @@ def add_post(req, key):
                 doi = evt_dict['doi']
                 scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % doi
 
-            s.data = json.dumps({'event_id': event.id,
+            session_data = json.loads(s.data)
+            session_data.update({'event_id': event.id,
                                  'scholar_url': scholar_url,
                                  'doi': doi})
-
+            s.data = json.dumps(session_data)
             s.save()
             return redirect('bookmarklet:form2', key=key, slug=user.slug)
         else:
             return redirect('bookmarklet:form1', slug=slug)
     return redirect('homepage')
+
+
+@csrf_exempt
+def notify_authors(req, key, slug):
+    email_addresses = req.POST.getlist('notify_authors', ())
+
+    s = good_session(key)
+    if not s:
+        return redirect('bookmarklet:form1', slug=slug)
+
+    if req.method != 'POST':
+        return redirect('bookmarklet:form1', slug=slug)
+
+    data = json.loads(s.data)
+    event = OAEvent.objects.get(id=data['event_id'])
+    blocked_url = event.url
+
+    for email in email_addresses:
+        send_author_notification(email, blocked_url)
+
+    return redirect('bookmarklet:form4')
 
 
 @csrf_exempt
@@ -236,6 +281,7 @@ def email_confirm(req, slug, salt):
 
 @csrf_exempt
 def open_document(req, slug):
+    c = {'slug': slug}
     if req.method == 'POST':
         form = OpenAccessForm(req.POST)  # A form bound to the POST data
         if form.is_valid():  # All validation rules pass
@@ -245,13 +291,19 @@ def open_document(req, slug):
                 obj = blocked_urls[0]
                 obj.open_url = data['open_url']
                 obj.save()
-                return render_to_response('bookmarklet/open_document_success.jade')
+                ok, error = obj.check_oa_url()
+
+                if ok:
+                    return render_to_response('bookmarklet/open_document_success.jade')
+                else:
+                    c.update({'error': str(error)})
+                    return render_to_response('bookmarklet/open_document_unreachable.jade', c)
             else:
                 # the slug doesn't exist, inform the user
-                return render_to_response('bookmarklet/open_document_no_slug.jade')
+                return render_to_response('bookmarklet/open_document_no_slug.jade', c)
         else:
             # Render the form with errors showing up
-            c = {'form': form}
+            c.update({'form': form})
             return render_to_response('bookmarklet/open_document.jade', c)
     else:
         # Render the form on GET
@@ -260,9 +312,8 @@ def open_document(req, slug):
             obj = blocked_urls[0]
             blocked_url = obj.blocked_url
             author_email = obj.author_email
-            c = {'blocked_url': blocked_url,
-                 'author_email': author_email,
-                 'slug': slug}
+            c.update({'blocked_url': blocked_url,
+                      'author_email': author_email})
             form = OpenAccessForm(c)
             c['form'] = form
             return render_to_response('bookmarklet/open_document.jade', c)

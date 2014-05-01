@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from views import form1, form2, form3
+from views import form1, form2, form3, form4, notify_authors
 from views import add_post
 from views import generate_bookmarklet
 from views import signin
@@ -17,6 +17,8 @@ urlpatterns = patterns('',
                        url(r'^form/page1/(?P<slug>.*)/$', form1, name="form1"),
                        url(r'^form/page2/(?P<key>.*)/_slug_(?P<slug>.*)/$', form2, name="form2"),
                        url(r'^form/page3/(?P<key>.*)/_slug_(?P<slug>.*)/$', form3, name="form3"),
+                       url(r'^form/page4/$', form4, name="form4"),
+                       url(r'^form/notify_authors/(?P<key>.*)/_slug_(?P<slug>.*)/$', notify_authors, name="notify_authors"),
 
                        url(r'^confirmation/(?P<slug>.*)_(?P<salt>.*)/$',
                            email_confirm,

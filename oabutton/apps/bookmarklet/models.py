@@ -1,10 +1,12 @@
 from django.core.urlresolvers import reverse
+from django.db import connection
 from django.db import models
 from oabutton.apps.template_email import TemplateEmail
 
 import binascii
 import datetime
 import os
+import requests
 
 
 class OAEvent(models.Model):
@@ -63,6 +65,7 @@ class OAUser(models.Model):
 
         email = TemplateEmail(template='bookmarklet/email_confirmation.html',
                               context=context,
+                              from_email=settings.OABUTTON_EMAIL,
                               to=[self.email])
         email.send()
 
@@ -85,3 +88,50 @@ class OABlockedURL(models.Model):
     open_url = models.URLField(max_length=2000, db_index=True)
 
     created = models.DateTimeField(auto_now=True, default=datetime.datetime.now)
+
+    def check_oa_url(self):
+        """
+        Check that the Open Access URL is at least readable (HTTP
+        200).
+
+        Any HTTP error or status != 200 will clear the open_url
+        setting.
+        """
+        if self.open_url:
+            try:
+                r = requests.get(self.open_url)
+                # Any 2xx status is ok
+                if str(r.status_code)[0] == '2':
+                    return True, None
+                else:
+                    invalid = InvalidOALink(url=self.open_url, src=self)
+                    invalid.save()
+                    self.open_url = ""
+                    self.save()
+                    return False, requests.exceptions.HTTPError(status=r.status_code)
+            except Exception, e:
+                self.open_url = ""
+                self.save()
+                return False, e
+        return False, RuntimeError("No Open URL is set")
+
+
+class InvalidOALink(models.Model):
+    src = models.ForeignKey(OABlockedURL)
+    url = models.URLField(max_length=2000)
+
+
+def best_open_url(blocked_url):
+    cursor = connection.cursor()
+    try:
+        cursor.execute("""
+        select count(open_url) open_count, open_url from
+        bookmarklet_oablockedurl where blocked_url = %s group by open_url order by open_count desc
+        """, [blocked_url])
+        if cursor.rowcount:
+            row = cursor.fetchone()
+            return row[1]
+        else:
+            return None
+    finally:
+        cursor.close()

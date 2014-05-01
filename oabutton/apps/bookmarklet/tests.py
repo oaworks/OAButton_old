@@ -14,15 +14,20 @@ import dateutil.parser
 import json
 import re
 
+import mock
+
 from oabutton.apps.bookmarklet.email_tools import send_author_notification
 from oabutton.apps.bookmarklet.models import OAEvent, OAUser, OASession
 from oabutton.apps.bookmarklet.models import OABlockedURL
+from oabutton.apps.bookmarklet.models import best_open_url
 
-from os.path import split, join
+
+MOCK_URL = "http://this.is.mocked.by.mock/foo/"
 
 
-FIXTURE_PATH = join(split(__file__)[0], 'fixtures')
-MOCK_URL = "file://" + join(FIXTURE_PATH, 'foo.html')
+class MockGET(object):
+    def __init__(self, status_code):
+        self.status_code = status_code
 
 
 class APITest(TestCase):
@@ -183,7 +188,7 @@ class APITest(TestCase):
         response = c.post('/api/signin/', self.POST_DATA)
 
         eq_(response.status_code, 200)
-        # Extract the slug frmo the javascript URL
+        # Extract the slug from the javascript URL
         new_slug = json.loads(response.content)['url'][-35:-3]
 
         # check that we have all the signin fields
@@ -193,6 +198,8 @@ class APITest(TestCase):
         eq_(user.profession, 'Student')
         ok_(user.mailinglist)
 
+    @mock.patch('oabutton.phantomjs.email_extractor.scrape_email', mock.Mock(return_value=('mock@mock.com',)))
+    @mock.patch('requests.get', mock.Mock(side_effect=[MockGET(200)]))
     def test_search_doi_after_post(self):
         '''
         Tests to make sure the response to submitting the form is rendered
@@ -281,11 +288,39 @@ class APITest(TestCase):
         assert url in msg.body
         mail.outbox = []
 
-        # Check that we never notify the author twice
+    @mock.patch('requests.get', mock.Mock(side_effect=[MockGET(404)]))
+    def test_add_oa_document_404(self):
+        '''
+        Add a link to an open access version of the document
+        '''
+        # First send the author an email notification
+        author_email, blocked_url = 'test@test.com', 'http://test.com/some/url/'
+        open_url = 'http://some.open.com/some/url/'
         send_author_notification(author_email, blocked_url)
-        self.assertEqual(len(mail.outbox), 0)
 
-    def test_add_oa_document(self):
+        blocked = list(OABlockedURL.objects.all())
+        obj = blocked[0]
+        slug = obj.slug
+        c = Client()
+        response = c.get(reverse('bookmarklet:open_document', kwargs={'slug': slug}))
+        eq_(response.status_code, 200)
+
+        assert author_email in response.content
+        assert blocked_url in response.content
+
+        post_data = {'author_email': author_email,
+                     'blocked_url': blocked_url,
+                     'open_url': open_url,
+                     'slug': slug}
+
+        response = c.post(reverse('bookmarklet:open_document', kwargs={'slug': slug}), post_data)
+        eq_(response.status_code, 200)
+        obj = OABlockedURL.objects.get(id=obj.id)
+        eq_(obj.open_url, "")
+        self.assertTrue("The link you submitted was not reachable" in response.content)
+
+    @mock.patch('requests.get', mock.Mock(side_effect=[MockGET(200)]))
+    def test_add_oa_document_200(self):
         '''
         Add a link to an open access version of the document
         '''
@@ -314,27 +349,29 @@ class APITest(TestCase):
         obj = OABlockedURL.objects.get(id=obj.id)
         eq_(obj.open_url, open_url)
 
-    def test_add_oa_document_errors(self):
-        # First send the author an email notification
-        author_email, blocked_url = 'test@test.com', MOCK_URL
-        open_url = 'http://some.open.com/some/url/'
-        send_author_notification(author_email, blocked_url)
+        self.assertTrue("Your link has been added" in response.content)
 
-        blocked = list(OABlockedURL.objects.all())
-        obj = blocked[0]
-        slug = obj.slug
-        c = Client()
-        response = c.get(reverse('bookmarklet:open_document', kwargs={'slug': slug}))
-        eq_(response.status_code, 200)
+    def test_most_common_blocked_url_results(self):
+        """
+        Create a bunch of blocked URL objects for the same url with
+        different open_url results.
 
-        assert author_email in response.content
-        assert blocked_url in response.content
+        Return the most common open_url.
+        """
+        self.assertEquals(None, best_open_url(MOCK_URL))
+        OABlockedURL.objects.create(slug='foo',
+                                    author_email='foo@bar.com',
+                                    blocked_url=MOCK_URL,
+                                    open_url='http://this.is.good/')
 
-        post_data = {'author_email': author_email,
-                     'open_url': open_url,
-                     'slug': slug}
+        OABlockedURL.objects.create(slug='foo',
+                                    author_email='foo@bar.com',
+                                    blocked_url=MOCK_URL,
+                                    open_url='http://this.is.bad/')
 
-        response = c.post(reverse('bookmarklet:open_document', kwargs={'slug': slug}), post_data)
-        eq_(response.status_code, 200)
-        content = response.content
-        assert 'This field is required' in content
+        OABlockedURL.objects.create(slug='foo',
+                                    author_email='foo@bar.com',
+                                    blocked_url=MOCK_URL,
+                                    open_url='http://this.is.good/')
+        self.assertEquals(OABlockedURL.objects.count(), 3)
+        self.assertEquals("http://this.is.good/", best_open_url(MOCK_URL))

@@ -1,0 +1,8 @@
+{% extends "bookmarklet/layout.html" %}{% block content %}
+<div class="raleway-font">
+    <h2>Thanks! Authors have been notified</h2>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/success.js"></script>
+{% endblock %}
+{% block body_attrs %}data-doi="{{doi|urlencode}}"{% endblock %}

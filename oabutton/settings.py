@@ -21,6 +21,7 @@ HOSTNAME = 'http://localhost:8000'
 DB_USER = 'postgres'
 DB_HOST = 'localhost'
 SECRET_KEY = 'some_secrete_clobbered_by_settings_local'
+OABUTTON_EMAIL = 'some_fake_email@some.fake.host.com'
 # End override vars
 
 try:

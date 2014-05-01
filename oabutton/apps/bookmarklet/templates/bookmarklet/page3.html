@@ -1,6 +1,14 @@
 {% extends "bookmarklet/layout.html" %}{% block content %}
 <div class="raleway-font">
     <h2>Thanks!</h2>
+
+    {% if open_url %}
+    We've found an open access version of your link.
+    <p>
+    You can go here : {{ open_url }}
+    {% endif %}
+
+
     <p>Below are a number of ways to get access to your paper, unfortunately
     they won't always work but it's worth a shot.
     </p>
@@ -15,21 +23,29 @@
 
     <hr />
 
-    {% comment %}
-
-    // Disabling this for now as we don't have a robust email scraping
-    // service
-    <div id="email-request" class="row-block">
-        <h4>Email a request for the paper directly to the author</h4>
-        <div class="row">
-            <div class="col-md-12 row-block">
-                <button class="btn btn-primary btn-block">Ask [addres@goes.here]</button>
-            </div>
+    {% if possible_emails %}
+        <div id="email-request" class="row-block">
+            <h4>Email a request for the paper directly to the author</h4>
+            <p>
+                We've detected the following email addresses - if these
+                appear to be the author, please check off the
+                addresses you wish to notify and click the "Notify
+                Authors" button to request an open access version.
+            </p>
+            <form method="POST" action="{% url 'bookmarklet:notify_authors' key=key slug=slug %}">
+                {% for contact_email in possible_emails %}
+                <div class="row">
+                    <div class="col-md-12 row-block">
+                        <input type="checkbox" name="notify_authors" value="{{contact_email}}">Ask {{ contact_email }}
+                    </div>
+                </div>
+                <br />
+                {% endfor %}
+                <button class="btn btn-primary btn-block">Notify Authors</button>
+            </form>
         </div>
-    </div>
-    <hr />
-
-    {% endcomment %}
+        <hr />
+    {% endif %}
 
     <div>
         <h4>Searching for related documents</h4>

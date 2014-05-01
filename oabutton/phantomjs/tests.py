@@ -19,16 +19,35 @@ class TestEmails(TestCase):
 
     def test_sciencemag_org(self):
         emails = scrape_email(self.get_url('sciencemag.html'), "stke.sciencemag.org")
-        assert set(['gelvin@purdue.edu']) == emails
+        self.assertEquals(set(['gelvin@purdue.edu']), emails)
 
     def test_plos(self):
         emails = scrape_email(self.get_url('plos.html'), "www.plosone.org")
-        assert set(['chenfh@wfu.edu']) == emails
+        self.assertEquals(set(['chenfh@wfu.edu']), emails)
 
     def test_thirdbit(self):
         emails = scrape_email(self.get_url('third-bit.html'), 'www.third-bit.com')
-        assert set(['gvwilson@third-bit.com']) == emails
+        self.assertEquals(set(['gvwilson@third-bit.com']), emails)
 
     def test_plus_addresses(self):
         emails = scrape_email(self.get_url('plus.html'), 'www.third-bit.com')
-        assert set(['gvwilson+oabutton@third-bit.com']) == emails
+        self.assertEquals(set(['gvwilson+oabutton@third-bit.com']), emails)
+
+    def test_springerlink(self):
+        emails = scrape_email(self.get_url('springerlink.html'))
+        self.assertEquals(set(['kamkin.a@g23.relcom.ru', 'imaik-ort@umin.ac.jp']), emails)
+
+    def test_only_email_if_no_block(self):
+        url = self.get_url('springerlink.html')
+
+        from oabutton.apps.bookmarklet.models import OABlockedURL
+        record = OABlockedURL.objects.create(slug='foo',
+                                             author_email='kamkin.a@g23.relcom.ru',
+                                             blocked_url=url)
+        record.save()
+        record = OABlockedURL.objects.create(slug='bar',
+                                             author_email='imaik-ort@umin.ac.jp',
+                                             blocked_url=url)
+        record.save()
+        emails = scrape_email(url)
+        self.assertEquals(set(), emails)
