@@ -239,6 +239,25 @@ a[data-toggle] {
   }
 }
 
+.panel-contribute {
+  margin: 0;
+  border: 0;
+  padding-top: 5pt;
+  text-align: center;
+  .panel-body { max-width:80%; }
+  .contribute-button {
+    cursor: pointer;
+    background-color: #eb1478;
+    border: none;
+    padding: 3px 13px;
+    margin-left: 10pt;
+    color: #fff;
+  }
+  .contribute-button:hover {
+    color: #fff; font-weight: bold;
+  }
+}
+
 /* Container colors */
 #thanks { background: #ffd; }
 #intro, #footer { background: #eee; }
@@ -395,6 +414,10 @@ a[data-toggle] {
   body { padding-top: 0px; }
   header a { background-size:100%; }
   header .lead { font-size:15px; position:relative; }
+  .panel-contribute { 
+    margin-top: 1.5em; 
+    a { padding:0 1em; }
+  }
 }
 @media screen and (max-width: 520px) {
   header a { 
