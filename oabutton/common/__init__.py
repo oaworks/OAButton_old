@@ -102,13 +102,13 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Ayesha Garrett",
             "link": "http://londonlime.net/",
-            "thumb": "http://behance.vo.llnwd.net/profiles17/614780/851b0bf48a4eb7968873cfa622662c58.jpg",
+            "thumb": "/static/img/thumbs/851b0bf48a4eb7968873cfa622662c58.jpg",
             "twitter": "londonlime",
             "blurb": "Helped design much of the imaging around the project"
             }, {
             "name": "Victor Ng",
             "link": "#",
-            "thumb": "http://www.gravatar.com/avatar/c5ab90719801dfa47055338ba47f5580.png?s=144",
+            "thumb": "/static/img/thumbs/c5ab90719801dfa47055338ba47f5580.jpeg",
             "blurb": "One of our best developers, instrumental in bring it to completion. Elsevier's biggest fan"
             }, {
             "name": "Oleg Lavrovsky",
@@ -119,7 +119,7 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Tom Pollard",
             "link": "https://twitter.com/tompollard",
-            "thumb": "http://www.ucl.ac.uk/mssl/space-medicine/people/TomPollardPhoto",
+            "thumb": "/static/img/thumbs/TomPollardPhoto.jpg",
             "twitter": "tompollard",
             "blurb": "Developer. PhD student in University College London. Co-founder of Ubiquity Press"
             }, {
@@ -147,7 +147,7 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Nicholas Shockey",
             "link": "#",
-            "thumb": "http://conf11.freeculture.org/files/2011/01/Nick-Shockey1.jpg",
+            "thumb": "/static/img/thumbs/Nick-Shockey1.jpg",
             "blurb": "Director of the Right to Research Coalition and of Student Advocacy at SPARC, who provided invaluable input at all stages"
             }, {
             "name": "Medsin",
@@ -158,7 +158,7 @@ teamdata = [{"name": "Joseph McArthur",
             }, {
             "name": "Right to Research Coalition",
             "link": "http://www.righttoresearch.org/",
-            "thumb": "http://www.righttoresearch.org/bm~pix/r2r-logo.png",
+            "thumb": "/static/img/thumbs/r2r-logo.png",
             "twitter": "R2RC",
             "blurb": "An invaluable source of support, ideas and money"
             }

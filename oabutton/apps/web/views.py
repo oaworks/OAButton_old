@@ -4,9 +4,13 @@ from django.conf import settings
 from oabutton.common import SigninForm, teamdata, thanksdata
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.views.decorators.cache import cache_page
+
+
 
 
 @csrf_exempt
+@cache_page(60 * 15)
 def homepage(req):
     # Need to lazy import the OAEvent model so that tests work with
     # mocks
