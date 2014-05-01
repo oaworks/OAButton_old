@@ -86,6 +86,7 @@ def form1(req, slug):
 
     key = uuid.uuid4().hex
     s = OASession.objects.create(key=key, expire=time.time())
+    s.data = json.dumps({'user_slug': slug})
     s.save()
 
     c.update({'bookmarklet': form, 'slug': slug, 'key': key})
@@ -138,7 +139,10 @@ def form3(req, key, slug):
         return redirect('bookmarklet:form1', slug=slug)
 
     data = json.loads(s.data)
+
+    user_slug = data['user_slug']
     scholar_url = data['scholar_url']
+
     doi = data['doi']
     event = OAEvent.objects.get(id=data['event_id'])
 
@@ -148,13 +152,19 @@ def form3(req, key, slug):
     c.update({'open_url': best_open_url(event.url)})
     c.update({'key': key, 'slug': slug})
 
-    # TODO: add check to make sure that the email address associated
-    # with this bookmarklet has been verified
-    scrape_email = oabutton.phantomjs.email_extractor.scrape_email
-    possible_emails = tuple(scrape_email(event.url))
-    c.update({"possible_emails": possible_emails})
+    user = OAUser.objects.get(slug=user_slug)
+    if user.email_confirmed:
+        scrape_email = oabutton.phantomjs.email_extractor.scrape_email
+        possible_emails = tuple(scrape_email(event.url))
+        c.update({"possible_emails": possible_emails})
 
     return render_to_response('bookmarklet/page3.html', c,
+                              context_instance=RequestContext(req))
+
+
+@csrf_exempt
+def form4(req):
+    return render_to_response('bookmarklet/page4.html', {},
                               context_instance=RequestContext(req))
 
 
@@ -200,10 +210,11 @@ def add_post(req, key):
                 doi = evt_dict['doi']
                 scholar_url = 'http://scholar.google.com/scholar?cluster=http://dx.doi.org/%s' % doi
 
-            s.data = json.dumps({'event_id': event.id,
+            session_data = json.loads(s.data)
+            session_data.update({'event_id': event.id,
                                  'scholar_url': scholar_url,
                                  'doi': doi})
-
+            s.data = json.dumps(session_data)
             s.save()
             return redirect('bookmarklet:form2', key=key, slug=user.slug)
         else:
@@ -226,15 +237,10 @@ def notify_authors(req, key, slug):
     event = OAEvent.objects.get(id=data['event_id'])
     blocked_url = event.url
 
-    rdict = {"results": []}
     for email in email_addresses:
-        if send_author_notification(email, blocked_url):
-            rdict['results'].append({email: True})
-        else:
-            rdict['results'].append({email: False})
+        send_author_notification(email, blocked_url)
 
-    jdata = json.dumps(rdict)
-    return HttpResponse(jdata, content_type="application/json")
+    return redirect('bookmarklet:form4')
 
 
 @csrf_exempt

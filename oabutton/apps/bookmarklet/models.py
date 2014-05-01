@@ -100,9 +100,12 @@ class OABlockedURL(models.Model):
         if self.open_url:
             try:
                 r = requests.get(self.open_url)
-                if r.status_code == 200:
+                # Any 2xx status is ok
+                if str(r.status_code)[0] == '2':
                     return True, None
                 else:
+                    invalid = InvalidOALink(url=self.open_url, src=self)
+                    invalid.save()
                     self.open_url = ""
                     self.save()
                     return False, requests.exceptions.HTTPError(status=r.status_code)
@@ -111,6 +114,11 @@ class OABlockedURL(models.Model):
                 self.save()
                 return False, e
         return False, RuntimeError("No Open URL is set")
+
+
+class InvalidOALink(models.Model):
+    src = models.ForeignKey(OABlockedURL)
+    url = models.URLField(max_length=2000)
 
 
 def best_open_url(blocked_url):
