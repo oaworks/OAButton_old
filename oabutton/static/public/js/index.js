@@ -12,9 +12,7 @@ $(document).ready(function() {
                             touchZoom: false,
                             zoom: 2
                         });
-                        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-                                }).addTo(map);
+                        L.tileLayer('http://{s}.tiles.mapbox.com/v3/hubbox.i8kbgd2g/{z}/{x}/{y}.png').addTo(map);
 
                         var oaIcon = L.icon({
                             iconUrl: 'static/img/noalogo.png',
