@@ -12,8 +12,8 @@ $(document).ready(function() {
                             touchZoom: false,
                             zoom: 2
                         });
-                        L.tileLayer('https://ssl_tiles.cloudmade.com/cee9bfb83d854a2f89a4a2445aa9f595/997/256/{z}/{x}/{y}.png', {
-                                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+                        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
                                 }).addTo(map);
 
                         var oaIcon = L.icon({
