@@ -3,9 +3,12 @@
     <h2>Thanks!</h2>
 
     {% if open_url %}
-    We've found an open access version of your link.
     <p>
-    You can go here : {{ open_url }}
+    We've found an open access version of your link.
+    </p>
+    <p>
+    You can go here : <a href="{{open_url}}">{{ open_url }}</a>
+    </p>
     {% endif %}
 
 
