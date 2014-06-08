@@ -12,7 +12,7 @@ $(document).ready(function() {
                             touchZoom: false,
                             zoom: 2
                         });
-                        L.tileLayer('http://{s}.tiles.mapbox.com/v3/hubbox.i8kbgd2g/{z}/{x}/{y}.png').addTo(map);
+                        L.tileLayer('http://{s}.tiles.mapbox.com/v3/crankycoder.ieh8j164/{z}/{x}/{y}.png').addTo(map);
 
                         var oaIcon = L.icon({
                             iconUrl: 'static/img/noalogo.png',
