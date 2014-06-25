@@ -18,6 +18,5 @@ We have some [instructions for setting up](INSTRUCTIONS.md) your local dev envir
  * [Google Group](http://groups.google.com/group/openaccessbuttondevelopers)
  * [Email](mailto:oabutton@gmail.com)
  * [Facebook](https://www.facebook.com/openaccessbutton)
- * [Crowdfunding Campaign](https://www.indiegogo.com/projects/button-2-0#home)
 
 <small>Licensed under the [MIT license](https://github.com/OAButton/OAButton/blob/develop/LICENSE.md). Powered by [Django](https://www.djangoproject.com/) and [MongoDB](http://www.mongodb.org).</small>
