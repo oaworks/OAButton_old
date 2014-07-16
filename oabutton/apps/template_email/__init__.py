@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader, Context
-
+from socket import gaierror
 
 class TemplateEmail(EmailMultiAlternatives):
     """
@@ -63,4 +63,8 @@ class TemplateEmail(EmailMultiAlternatives):
                 self.to[i] = '"%s %s" <%s>' % (user.first_name, user.last_name,
                                                user.email)
 
-        super(TemplateEmail, self).send(*args, **kwargs)
+        try:
+            super(TemplateEmail, self).send(*args, **kwargs)
+        except gaierror:
+            # TODO: logging?
+            return False
