@@ -10,7 +10,7 @@ $(function() {
     rounded_lat = Math.round(position.coords.latitude * 10) / 10;
     rounded_long = Math.round(position.coords.longitude * 10) / 10;
     $('#id_coords').val([rounded_lat, rounded_long]);
-    $('#id_location').attr({'placeholder': 'Detected from browser', 'required': false, 'readonly': 'readonly'});
+    $('#id_location').attr({'placeholder': 'Detected from browser', 'required': 'false', 'readonly': 'readonly'});
   }
 
   function denyAccess(error) { 
@@ -163,6 +163,11 @@ $(function() {
   rememberDetails();
 
   function geocode(form) {
+    // Geolocation is optional
+    if ($('#id_location').val() == "")
+      return false;
+
+    // Geocode the location if provided
     return $.ajax({
       url: 'https://maps.googleapis.com/maps/api/geocode/json',
       data: {
@@ -180,6 +185,8 @@ $(function() {
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(jqXHR, textStatus, errorThrown);
+        // Unable to geocode; clear form and submit
+        $('#id_location').val('');
         form.submit();
       }
     });
@@ -189,10 +196,9 @@ $(function() {
     var form = $(this);
 
     // Do geocoding only if needed
-    if (!$('#id_coords').val()) {
-      event.preventDefault();
-      geocode(form);
-    }
+    if (!$('#id_coords').val())
+      if (geocode(form) !== false)
+        event.preventDefault();
   }
 
   $('#id_accessed').val(new Date().toISOString());
