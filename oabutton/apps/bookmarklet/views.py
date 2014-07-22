@@ -246,13 +246,15 @@ def notify_authors(req, key, slug):
 @csrf_exempt
 def xref_proxy(req, doi):
     url = "http://data.crossref.org/%s" % doi
-    headers = {'Accept': "application/vnd.citationstyles.csl+json"}
+    headers = {'Accept': "application/vnd.citationstyles.csl+json;q=1.0"}
+
+
     r = requests.get(url, headers=headers)
     return HttpResponse(r.text, content_type="application/json")
 
 
 @csrf_exempt
-def xref_proxy_simple(req, doi):
+def xref_proxy(req, doi):
     url = "http://data.crossref.org/%s" % doi
     headers = {'Accept': "application/json"}
     r = requests.get(url, headers=headers)

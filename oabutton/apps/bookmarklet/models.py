@@ -59,8 +59,7 @@ class OAUser(models.Model):
         self.salt = binascii.b2a_hex(os.urandom(15))[:12]
         self.save()
 
-        context = {'name': self.name,
-                   'hostname': settings.HOSTNAME,
+        context = {'hostname': settings.HOSTNAME,
                    'confirm_url': self.get_confirm_path()}
 
         email = TemplateEmail(template='bookmarklet/email_confirmation.html',
