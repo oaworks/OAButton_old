@@ -5,7 +5,6 @@ from oabutton.apps.bookmarklet.models import OAUser, OAEvent
 from oabutton.apps.bookmarklet.models import best_open_url
 from oabutton.util import deprecated
 from validate_email import validate_email
-import datetime
 import json
 import re
 import requests
@@ -74,10 +73,14 @@ def blocked(req):
     try:
         user = OAUser.objects.get(slug=token, email=email)
         evt_dict = {}
-        evt_dict['coords_lat'] = float(post_data['coords_lat'])
-        evt_dict['coords_lng'] = float(post_data['coords_lng'])
-        evt_dict['accessed'] = datetime.datetime.now()
+        #evt_dict['coords_lat'] = float(post_data['coords_lat'])
+        #evt_dict['coords_lng'] = float(post_data['coords_lng'])
+        #evt_dict['accessed'] = datetime.datetime.now()
 
+        evt_dict['doi'] = post_data['doi']
+        evt_dict['url'] = post_data['url']
+
+        # Backfilled from user data
         evt_dict['user_email'] = user.email
         evt_dict['user_name'] = user.name
         evt_dict['user_profession'] = user.profession
