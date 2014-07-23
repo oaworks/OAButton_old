@@ -104,6 +104,16 @@ def oa_status(req):
          'token': token,
          'url': url}
 
+    Response :
+
+    {
+    'status': 'ok',
+    'open_url': url ,  # will be an empty string if none available
+    'block_count': 10
+    }
+
+
+    }
     You'll get a HTTP 200 with the URL as the response,
     or an HTTP 200 with *no* URL.  Not
     """
@@ -118,6 +128,9 @@ def oa_status(req):
     result = {'status': 'ok'}
     if open_url is not None:
         result.update({'open_url': open_url})
+    else:
+        result.update({'open_url': ''})
+    result.update({'blocked_count': OAEvent})
 
     return HttpResponse(json.dumps(result),
                         content_type="application/json")
@@ -128,6 +141,8 @@ def doi_stumble(req):
     email, token, err = check_security(post_data)
     if err:
         return err
+    # TODO: just accept everything for now.  I'll sort this out later.
+    return HttpOKJson()
 
 
 #
