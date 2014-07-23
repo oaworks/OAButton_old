@@ -12,6 +12,7 @@ urlpatterns = patterns('',
                        # I just jammed this in here while i sort out all the URL
                        # mappings.
                        url(r'^api/', include('oabutton.apps.bookmarklet.urls', namespace='bookmarklet')),
+                       url(r'^apiv2/', include('oabutton.apps.api.urls', namespace='bookmarklet')),
 
                        url(r'^metadata/', include(
                            'oabutton.apps.metadata.urls')),
