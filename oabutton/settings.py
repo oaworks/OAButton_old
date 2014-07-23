@@ -168,6 +168,10 @@ INSTALLED_APPS = (
     # The web app is the main website
     'oabutton.apps.web',
 
+    # New REST+JSON api
+    'oabutton.apps.api',
+
+
     'oabutton.apps.metadata',
 
     'oabutton.apps.template_email',
