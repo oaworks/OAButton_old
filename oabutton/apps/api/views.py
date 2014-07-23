@@ -3,7 +3,6 @@ from django.http import HttpResponseServerError
 from django.shortcuts import render_to_response
 from oabutton.apps.bookmarklet.models import OAUser, OAEvent
 from oabutton.apps.bookmarklet.models import best_open_url
-from oabutton.util import deprecated
 from validate_email import validate_email
 import json
 import re
@@ -130,7 +129,7 @@ def oa_status(req):
         result.update({'open_url': open_url})
     else:
         result.update({'open_url': ''})
-    result.update({'blocked_count': OAEvent})
+    result.update({'blocked_count': OAEvent.objects.filter(url=url).count()})
 
     return HttpResponse(json.dumps(result),
                         content_type="application/json")
@@ -160,55 +159,6 @@ def _verify_email_confirmed(email, token):
     except:
         # Who cares. Just continue along.
         return False
-
-
-@deprecated
-def _xref_proxy(req, doi):
-    """
-
-    This was only needed historically because of the bookmarklet.
-
-    Bookmarklets have weird cross-domain rules.  The addon should make this request directly
-    instead and pass the data back into the calling script.
-
-    $ curl -LH "Accept: application/rdf+xml;q=0.5, application/vnd.citationstyles.csl+json;q=1.0" http://dx.doi.org/10.1126/scisignal.2004518
-
-    Sample response:
-        {u'DOI': u'10.1126/scisignal.2004518',
-         u'ISSN': [u'1945-0877', u'1937-9145'],
-         u'URL': u'http://dx.doi.org/10.1126/scisignal.2004518',
-         u'author': [{u'family': u'Sardesai', u'given': u'N.'},
-          {u'family': u'Lee', u'given': u'L.-Y.'},
-          {u'family': u'Chen', u'given': u'H.'},
-          {u'family': u'Yi', u'given': u'H.'},
-          {u'family': u'Olbricht', u'given': u'G. R.'},
-          {u'family': u'Stirnberg', u'given': u'A.'},
-          {u'family': u'Jeffries', u'given': u'J.'},
-          {u'family': u'Xiong', u'given': u'K.'},
-          {u'family': u'Doerge', u'given': u'R. W.'},
-          {u'family': u'Gelvin', u'given': u'S. B.'}],
-         u'container-title': u'Science Signaling',
-         u'deposited': {u'date-parts': [[2013, 12, 17]], u'timestamp': 1387238400000},
-         u'indexed': {u'date-parts': [[2014, 5, 23]], u'timestamp': 1400848880311},
-         u'issue': u'302',
-         u'issued': {u'date-parts': [[2013, 11, 19]]},
-         u'member': u'http://id.crossref.org/member/221',
-         u'page': u'ra100-ra100',
-         u'prefix': u'http://id.crossref.org/prefix/10.1126',
-         u'publisher': u'American Association for the Advancement of Science (AAAS)',
-         u'reference-count': 58,
-         u'score': 1.0,
-         u'source': u'CrossRef',
-         u'subject': [u'Medicine(all)'],
-         u'subtitle': [],
-         u'title': u'Cytokinins Secreted by Agrobacterium Promote Transformation by Repressing a Plant Myb Transcription Factor',
-         u'type': u'journal-article',
-         u'volume': u'6'}
-    """
-    url = "http://data.crossref.org/%s" % doi
-    headers = {'Accept': "application/rdf+xml;q=0.5, application/vnd.citationstyles.csl+json;q=1.0"}
-    r = requests.get(url, headers=headers)
-    return HttpResponse(r.text, content_type="application/json")
 
 
 def HttpOKJson():
