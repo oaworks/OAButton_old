@@ -40,7 +40,8 @@ class Bookmarklet(forms.Form):
             widget=forms.TextInput(attrs={
                 'placeholder': "e.g. London, United Kingdom",
                 'class': "form-control input-block-level",
-                'required': True}))
+                # 'required': False
+            }))
 
     doi = forms.CharField(required=False, label="Digital Object Identifier (DOI)",
             widget=forms.TextInput(attrs={'class': "form-control input-block-level"},

@@ -143,7 +143,7 @@ VirtualBox and Vagrant, and cloning the [git repository][repo]:
 5. Activate the virtualenv environment: `source env/bin/activate`
 6. Start the development server: `python manage.py runserver
    192.168.33.10:8000`
-    * Note the IP address on the end: if you omit this, 
+    * Note the IP address on the end: if you omit this, the server will not be accessible from your real machine
 7. Point your web browser to <http://192.168.33.10:8000>
 
 When you've finished working, you can quit the webserver if it's still
