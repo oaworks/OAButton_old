@@ -2,28 +2,27 @@
 var oabSuccess = (function($) {
 
   function parseCrossRef(entry, doi) {
-    var metadata = {'doi': doi},
-        item = entry["pam:message"]["pam:article"];
+    var metadata = {'doi': doi};
 
-    if (item["dc:title"]) {
-      metadata["title"] = item["dc:title"];
+    if (entry["title"]) {
+      metadata["title"] = entry["title"];
     }
 
-    if (item["dc:creator"]) {
-      if (!$.isArray(item["dc:creator"])) {
-        item["dc:creator"] = [item["dc:creator"]];
+    if (entry["author"]) {
+      if (!$.isArray(entry["author"])) {
+        entry["author"] = [entry["author"]];
       }
 
-      metadata["authors"] = formatAuthorList(item["dc:creator"]);
+      metadata["authors"] = formatAuthorList(entry["author"]);
     }
 
-    if (item["prism:publicationName"]) {
-      metadata["publication"] = item["prism:publicationName"];
+    if (entry["container-title"]) {
+      metadata["publication"] = entry["container-title"];
     }
 
-    if (item["prism:publicationDate"]) {
+    if (entry["issued"]) {
       // TODO: zero-pad or reformat the date, using Moment.js?
-      metadata["date"] = item["prism:publicationDate"];
+      metadata["date"] = entry["issued"]["date-parts"];
     }
 
     return metadata;
@@ -48,8 +47,8 @@ var oabSuccess = (function($) {
           url: '/api/xref_proxy_simple/' + encodeURIComponent(doi),
           dataType: "json",
           success: function(response) {
-            if (response.feed.entry) {
-              var metadata = parseCrossRef(response.feed.entry, doi);
+            if (response) {
+              var metadata = parseCrossRef(response, doi);
 
               addPubMedCentralLink(metadata);
               addScholarDOILink(metadata);
