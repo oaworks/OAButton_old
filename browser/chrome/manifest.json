@@ -1,0 +1,21 @@
+{
+	"manifest_version": 2,
+	"name": "Open Access Button",
+	"version": "0.1",
+	"description": "Capture individual moments of injustice",
+	"permissions": ["activeTab"],
+	"icons": {
+		"16": "img/oa16.png",
+		"32": "img/oa32.png",
+		"48": "img/oa48.png",
+		"128": "img/oa128.png"
+	},
+	"browser_action": {
+		"default_icon": "img/oa16.png",
+		"default_title": "I'd like to read this article"
+	},
+	"background": {
+		"scripts": ["events.js"],
+		"persistent": false
+	}
+}
