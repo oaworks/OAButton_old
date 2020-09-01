@@ -1,4 +1,4 @@
-Django==1.5.2
+Django==1.11.29
 South==0.8.4
 dj-static==0.0.5
 psycopg2==2.5.1
